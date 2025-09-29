@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOTALCARE - Customer Support Ticket</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+        .tabs {
+            display: flex;
+            background-color: #e9ecef;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+        .tab-button {
+            padding: 15px 20px;
+            border: none;
+            background: none;
+            color: #495057;
+            cursor: pointer;
+            font-weight: bold;
+            flex: 1;
+            text-align: center;
+        }
+        .tab-button.active {
+            background-color: white;
+            color: #007bff;
+            border-bottom: 3px solid #007bff;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #495057;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .form-actions button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .submit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .reset-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #495057;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .edit-btn {
+            background-color: #ffc107;
+            color: white;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        .search-bar {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        .search-bar button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <img src="https://via.placeholder.com/150x50?text=TOTALCARE+Logo" alt="TOTALCARE Logo">
+        <h1>Customer Support Ticket</h1>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-button active" onclick="openTab('create-ticket')">Create Ticket</button>
+    </div>
+
+    <!-- Create Ticket Tab -->
+    <div id="create-ticket" class="tab-content active">
+        <form id="ticket-form">
+            <div class="form-group">
+                <label for="customer-name">Full Name *</label>
+                <input type="text" id="customer-name" name="customer-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="policy-number">Policy Number</label>
+                <input type="text" id="policy-number" name="policy-number">
+            </div>
+
+            <div class="form-group">
+                <label for="inquiry-type">Inquiry Type *</label>
+                <select id="inquiry-type" name="inquiry-type" required>
+                    <option value="">Select Inquiry Type</option>
+                    <option value="policy">Policy Inquiry</option>
+                    <option value="claim">Claim Assistance</option>
+                    <option value="payment">Payment Issue</option>
+                    <option value="general">General Complaint</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department *</label>
+                <select id="department" name="department" required>
+                    <option value="">Select Department</option>
+                    <option value="customer-service">Customer Services</option>
+                    <option value="claims">Claims</option>
+                    <option value="payments">Payments</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-number">Contact Number *</label>
+                <input type="tel" id="contact-number" name="contact-number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject *</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description *</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn" id="submit-btn">Submit Ticket</button>
+                <button type="reset" class="reset-btn">Reset Form</button>
+            </div>
+        </form>
+
+        <div id="success-message" class="success-message">
+            Your ticket has been submitted successfully! Your ticket ID is: <span id="ticket-id"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentEditId = null;
+    const apiBaseUrl = 'http://localhost:9091';
+
+    function openTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.classList.remove('active');
+        });
+        document.getElementById(tabName).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    document.getElementById('ticket-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const ticket = {
+            customerName: document.getElementById('customer-name').value,
+            email: document.getElementById('email').value,
+            policyNumber: document.getElementById('policy-number').value,
+            inquiryType: document.getElementById('inquiry-type').value,
+            department: document.getElementById('department').value,
+            contactNumber: document.getElementById('contact-number').value,
+            subject: document.getElementById('subject').value,
+            description: document.getElementById('description').value,
+            status: 'open'
+        };
+
+        let response;
+        if (currentEditId) {
+            response = await fetch(`${apiBaseUrl}/tickets/${currentEditId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ticket)
+            });
+        } else {
+            response = await fetch(`${apiBaseUrl}/tickets`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ticket)
+            });
+        }
+
+        if (response.ok) {
+            const savedTicket = await response.json();
+            document.getElementById('ticket-id').textContent = savedTicket.id;
+            document.getElementById('success-message').style.display = 'block';
+            document.getElementById('ticket-form').reset();
+            document.getElementById('submit-btn').textContent = 'Submit Ticket';
+            currentEditId = null;
+        } else {
+            alert('Error saving ticket');
+        }
+    });
+
+    async function editTicket(ticketId) {
+        const response = await fetch(`${apiBaseUrl}/tickets/${ticketId}`);
+        if (response.ok) {
+            const ticket = await response.json();
+            document.getElementById('customer-name').value = ticket.customerName;
+            document.getElementById('email').value = ticket.email;
+            document.getElementById('policy-number').value = ticket.policyNumber;
+            document.getElementById('inquiry-type').value = ticket.inquiryType;
+            document.getElementById('department').value = ticket.department;
+            document.getElementById('contact-number').value = ticket.contactNumber;
+            document.getElementById('subject').value = ticket.subject;
+            document.getElementById('description').value = ticket.description;
+            document.getElementById('submit-btn').textContent = 'Update Ticket';
+            currentEditId = ticketId;
+
+            // Switch to create tab for editing
+            openTab('create-ticket');
+        } else {
+            alert('Error loading ticket');
+        }
+    }
+</script>
+</body>
+</html>
