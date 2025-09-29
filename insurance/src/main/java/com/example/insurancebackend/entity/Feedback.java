@@ -1,39 +1,31 @@
 package com.example.insurancebackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "feedbacks")
-@Getter
-@Setter
+@Data
 public class Feedback {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "feedback_id")
     private Long id;
 
-    @Column(name = "f_name", nullable = false)
-    private String fName;
+    @Column(name = "f_name")
+    private String name;
 
-    @Column(nullable = false)
-    private Integer rating;
+    @Column(name = "rating")
+    private int rating;
 
-    @Column(name = "review_text", nullable = false)
+    @Column(name = "review_text")
     private String reviewText;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    // Default constructor needed by JPA
-    public Feedback() {}
-
-    // Convenience constructor
-    public Feedback(String fName, Integer rating, String reviewText) {
-        this.fName = fName;
-        this.rating = rating;
-        this.reviewText = reviewText;
-        this.createdAt = LocalDateTime.now();
-    }
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime createdAt;
 }
