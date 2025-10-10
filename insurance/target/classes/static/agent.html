@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agent Payment Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            /* Pro Theme — Purple + Ash */
+            --ash: #B2BEB5;
+            --ash-2: #c7d0ca;
+            --ash-dark: #8C9890;
+            --accent: #7C3AED;
+            --accent-2: #8B5CF6;
+            --accent-dark: #5B21B6;
+            --accent-soft: #A78BFA;
+
+            --light: #f5f6f8;
+            --white: #ffffff;
+            --dark: #0f172a;
+            --text: #1f2937;
+            --text-light: #6b7280;
+
+            --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
+            --shadow-md: 0 14px 30px rgba(17, 24, 39, 0.10);
+            --shadow-lg: 0 22px 45px rgba(17, 24, 39, 0.14);
+            --glow: 0 10px 25px rgba(124, 58, 237, 0.22);
+
+            --transition: all .3s ease;
+            --radius: 18px;
+            --radius-lg: 22px;
+
+            /* Light mode variables */
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        .dark-mode {
+            /* Dark mode variables */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        html,body {
+            margin:0;
+            padding:0;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        body {
+            min-height: 100dvh;
+            display:flex;
+            flex-direction:column;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: .2px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(140,152,144,0.92) 0%, rgba(124,58,237,0.92) 100%);
+            color: #fff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: var(--shadow);
+            backdrop-filter: saturate(140%) blur(6px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            letter-spacing: .3px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #fff;
+            filter: drop-shadow(0 4px 10px rgba(255,255,255,.25));
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            position: relative;
+            padding: .5rem 0;
+            transition: var(--transition);
+            opacity: .95;
+            letter-spacing: .25px;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background-color: #fff;
+            transition: var(--transition);
+            opacity: .9;
+            box-shadow: 0 2px 8px rgba(255,255,255,.65);
+        }
+
+        nav ul li a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+
+        .mode-toggle {
+            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.14));
+            color: #fff;
+            border: 2px solid rgba(255,255,255,.85);
+            padding: .6rem .9rem;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
+        }
+
+        .mode-toggle:hover {
+            background: #fff;
+            color: var(--accent);
+            box-shadow: 0 10px 20px rgba(255,255,255,.25);
+            transform: translateY(-1px);
+        }
+
+        .mode-toggle.active {
+            background: #fff;
+            color: var(--accent);
+        }
+
+        .cta-button {
+            --shine: linear-gradient(120deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.65) 20%, rgba(255,255,255,.0) 40%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: #fff;
+            border: none;
+            padding: .9rem 1.25rem;
+            border-radius: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+            letter-spacing: .3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 60%;
+            height: 220%;
+            background: var(--shine);
+            transform: rotate(25deg) translateX(-40%);
+            transition: transform .6s ease;
+            pointer-events: none;
+        }
+
+        .cta-button:hover::after {
+            transform: rotate(25deg) translateX(280%);
+        }
+
+        main.container {
+            max-width: 1300px;
+            width:100%;
+            margin: 40px auto 70px;
+            padding: 0 28px;
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            gap: 28px;
+        }
+
+        .page-head {
+            display:flex;
+            flex-wrap:wrap;
+            align-items:center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .page-title {
+            font-size: clamp(1.55rem, 1.2rem + 1.2vw, 2.05rem);
+            font-weight: 600;
+            display:flex;
+            align-items:center;
+            gap:14px;
+            background: var(--bg-secondary);
+            padding: 14px 22px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            border:1px solid var(--border-color);
+        }
+
+        .page-title i {
+            color: var(--accent);
+            font-size:1.4rem;
+            filter: drop-shadow(0 2px 6px rgba(124, 58, 237, 0.4));
+        }
+
+        .subtitle-chip {
+            font-size:.65rem;
+            font-weight:700;
+            letter-spacing:1.3px;
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+            padding:10px 16px;
+            border-radius: 50px;
+            border:1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            text-transform: uppercase;
+        }
+
+        .toolbar {
+            background: var(--bg-secondary);
+            border:1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            border-radius: var(--radius-lg);
+            padding: 22px clamp(18px,3vw,30px);
+            display:grid;
+            grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+            gap: 22px clamp(16px,2vw,30px);
+            position:relative;
+        }
+
+        .toolbar::after {
+            content:"";
+            position:absolute;
+            inset:0;
+            pointer-events:none;
+            border-radius: inherit;
+            background:
+                    radial-gradient(at 15% 20%, rgba(124, 58, 237, 0.08), transparent 60%),
+                    radial-gradient(at 80% 75%, rgba(178, 190, 181, 0.07), transparent 55%);
+            mix-blend-mode: overlay;
+        }
+
+        .group { display:flex; flex-direction:column; gap:8px; }
+        .group label {
+            font-size:.6rem;
+            font-weight:700;
+            letter-spacing:1px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .group input,
+        .group select {
+            border:1px solid var(--border-color);
+            background: var(--bg-secondary);
+            padding:12px 14px;
+            font-size:.78rem;
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .group input:focus,
+        .group select:focus {
+            outline:none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, .15);
+        }
+
+        .toolbar-actions {
+            display:flex;
+            gap:12px;
+            align-items:flex-end;
+        }
+
+        .btn {
+            --btn-bg: var(--accent);
+            --btn-bg-hover: var(--accent-dark);
+            border:none;
+            background: var(--btn-bg);
+            color:#fff;
+            font-weight:600;
+            font-size:.7rem;
+            letter-spacing:.9px;
+            text-transform: uppercase;
+            padding:14px 20px;
+            border-radius: var(--radius);
+            display:flex;
+            align-items:center;
+            gap:8px;
+            cursor:pointer;
+            box-shadow: var(--glow);
+            transition: var(--transition);
+            position:relative;
+            overflow:hidden;
+        }
+
+        .btn::before {
+            content:"";
+            position:absolute;
+            inset:0;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 60%);
+            opacity:0;
+            transition: .5s;
+        }
+
+        .btn:hover {
+            background: var(--btn-bg-hover);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn:hover::before { opacity:.3; }
+        .btn:active { transform: translateY(-1px); }
+
+        .btn.secondary {
+            --btn-bg: #64748b;
+            --btn-bg-hover:#4b5b6f;
+            box-shadow: 0 6px 14px -4px rgba(100,116,139,0.45);
+        }
+
+        .data-card {
+            background: var(--bg-secondary);
+            border:1px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--radius-lg);
+            overflow:hidden;
+            display:flex;
+            flex-direction:column;
+            position:relative;
+        }
+
+        .data-card-header {
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:space-between;
+            align-items:center;
+            gap:16px;
+            padding: 22px clamp(18px,3vw,30px);
+            border-bottom:1px solid var(--border-color);
+            background: var(--bg-secondary);
+        }
+
+        .data-card-header h3 {
+            margin:0;
+            font-weight:600;
+            font-size:1rem;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            letter-spacing:.5px;
+        }
+
+        .data-card-header h3 i { color: var(--accent); }
+
+        .pill {
+            font-size:.6rem;
+            padding:6px 12px;
+            font-weight:700;
+            border-radius: 40px;
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--accent);
+            letter-spacing:.8px;
+        }
+
+        .header-btns { display:flex; flex-wrap:wrap; gap:10px; }
+
+        .table-wrapper {
+            width:100%;
+            overflow:auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) transparent;
+        }
+
+        .table-wrapper::-webkit-scrollbar { height:10px; width:10px; }
+        .table-wrapper::-webkit-scrollbar-track { background: transparent; }
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--accent),var(--accent-dark));
+            border-radius: 14px;
+        }
+
+        table { width:100%; border-collapse:collapse; font-size:.77rem; }
+        thead {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15),rgba(178, 190, 181, 0.10));
+            position:sticky; top:0; z-index:5; backdrop-filter: blur(7px);
+        }
+
+        th, td { padding:14px 16px; text-align:left; border-bottom:1px solid var(--border-color); }
+        th {
+            font-weight:700;
+            font-size:.58rem;
+            letter-spacing:1.6px;
+            text-transform:uppercase;
+            color: var(--text-secondary);
+            position:relative;
+            user-select:none;
+            cursor:pointer;
+        }
+
+        th:hover { color: var(--accent); }
+        tbody tr { transition: var(--transition); animation: rowIntro .5s ease; }
+        @keyframes rowIntro { from { opacity:0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
+        tbody tr:nth-child(even) { background: rgba(124, 58, 237, 0.03); }
+        tbody tr:hover { background: rgba(124, 58, 237, 0.08); }
+        tbody tr.selected-row { animation: pulseRow 1.6s ease-in-out infinite; }
+        @keyframes pulseRow {
+            0%,100% { box-shadow: inset 0 0 0 0 rgba(124, 58, 237, 0); }
+            50% { box-shadow: inset 0 0 0 2px rgba(124, 58, 237, 0.45); }
+        }
+
+        .truncate { max-width:170px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+        .badge-method {
+            font-size:.55rem; font-weight:700; padding:6px 10px; border-radius: 40px;
+            letter-spacing:.8px; text-transform:uppercase; background:#e2e8f0; color:#334155;
+        }
+
+        .badge-method.m-card { background:#dbeafe; color:#1e40af; }
+        .badge-method.m-googlepay { background:#dcfce7; color:#166534; }
+        .badge-method.m-cash { background:#f1f5f9; color:#475569; }
+
+        .status-pill {
+            font-size:.55rem; font-weight:700; padding:6px 10px; border-radius: 40px;
+            letter-spacing:1px; display:inline-flex; align-items:center; gap:6px;
+        }
+
+        .st-success { background:#dcfce7; color:#166534; }
+        .st-pending { background:#fff7ed; color:#c2410c; }
+        .st-failed { background:#fee2e2; color:#b91c1c; }
+        .st-refunded { background:#e0f2fe; color:#075985; }
+
+        .actions { display:flex; gap:6px; justify-content:flex-start; }
+        .btn-icon {
+            width:34px; height:34px; border:none; border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            cursor:pointer; font-size:.8rem; color:#fff; position:relative;
+            background: var(--accent);
+            box-shadow: 0 4px 10px -2px rgba(124, 58, 237, 0.4);
+            transition: var(--transition);
+        }
+
+        .btn-icon:hover { transform: translateY(-3px); }
+        .btn-icon:active { transform: translateY(-1px); }
+        .btn-edit { background: linear-gradient(135deg,#7C3AED,#5B21B6); }
+        .btn-view { background: linear-gradient(135deg,#64748b,#475569); }
+        .btn-del { background: linear-gradient(135deg,#dc2626,#b91c1c); }
+
+        .empty-state { text-align:center; padding:50px 20px; font-size:.85rem; color: var(--text-secondary); }
+        .empty-state i { font-size:2.3rem; margin-bottom:12px; opacity:.5; }
+
+        .pagination {
+            display:flex; justify-content:flex-end; gap:8px;
+            padding: 18px 26px; background: var(--bg-secondary);
+            border-top:1px solid var(--border-color); flex-wrap:wrap;
+        }
+
+        .pagination button {
+            border:1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            padding:8px 13px;
+            border-radius: 10px;
+            cursor:pointer;
+            font-size:.6rem;
+            font-weight:700;
+            letter-spacing:.9px;
+            text-transform:uppercase;
+            transition: var(--transition);
+        }
+
+        .pagination button:hover { background: rgba(124, 58, 237, 0.1); color: var(--accent); }
+        .pagination button.active-page {
+            background: var(--accent);
+            border-color: var(--accent);
+            color:#fff;
+            box-shadow: 0 4px 12px -3px rgba(124, 58, 237, 0.6);
+        }
+
+        .notification {
+            position:fixed;
+            top:22px; right:22px;
+            padding:16px 20px;
+            background: var(--accent);
+            border-radius: 16px;
+            color:#fff;
+            font-size:.75rem;
+            font-weight:600;
+            letter-spacing:.6px;
+            display:none;
+            z-index: 3000;
+            box-shadow: var(--shadow-lg);
+            animation: slideIn .55s ease;
+        }
+
+        .notification.error {
+            background: #dc2626;
+            box-shadow: 0 12px 30px -6px rgba(220,38,38,0.55);
+        }
+
+        @keyframes slideIn { from { transform: translateY(-14px); opacity:0; } to { transform: translateY(0); opacity:1; } }
+
+        .modal-overlay {
+            position:fixed; inset:0;
+            display:flex; align-items:flex-start; justify-content:center;
+            padding: clamp(30px,5vh,70px) 22px;
+            background: radial-gradient(circle at 30% 25%, rgba(124, 58, 237, 0.18), rgba(0,0,0,0.85));
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
+            z-index: 2500;
+            opacity:0; visibility:hidden;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active { opacity:1; visibility:visible; }
+
+        .modal {
+            width:100%; max-width: 680px;
+            background: var(--bg-secondary);
+            border:1px solid rgba(124, 58, 237, 0.12);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(30px) scale(.98);
+            opacity:0;
+            transition: var(--transition);
+            display:flex; flex-direction:column; overflow:hidden;
+        }
+
+        .modal-overlay.active .modal { transform: translateY(0) scale(1); opacity:1; }
+
+        .modal-header {
+            padding: 24px 30px 18px;
+            display:flex; justify-content:space-between; align-items:center; gap:14px;
+            border-bottom:1px solid var(--border-color);
+        }
+
+        .modal-header h2 {
+            margin:0; font-size:1rem; font-weight:600;
+            display:flex; gap:12px; align-items:center; color: var(--text-primary);
+        }
+
+        .modal-header h2 i { color: var(--accent); font-size:1.1rem; }
+
+        .modal-close {
+            border:none; background: rgba(255,255,255,0.15);
+            color: var(--text-secondary);
+            width:44px; height:44px;
+            display:flex; align-items:center; justify-content:center;
+            cursor:pointer; border-radius: 14px;
+            font-size:1rem; transition: var(--transition);
+        }
+
+        .modal-close:hover { background: var(--accent); color:#fff; transform: scale(1.05); }
+
+        .modal-body {
+            padding: 26px 30px 10px;
+            display:flex; flex-direction:column; gap:26px;
+            max-height:55vh; overflow:auto; scrollbar-width: thin;
+        }
+
+        .modal-footer {
+            padding: 20px 30px 26px;
+            display:flex; justify-content:flex-end;
+            gap:12px; flex-wrap:wrap;
+            border-top:1px solid var(--border-color);
+        }
+
+        .detail-grid {
+            display:grid;
+            grid-template-columns: 170px 1fr;
+            gap:10px 22px;
+            font-size:.72rem;
+        }
+
+        .detail-label { font-weight:600; color: var(--text-secondary); text-align:right; letter-spacing:.5px; }
+        .detail-value { font-weight:500; color: var(--text-primary); word-break:break-word; }
+
+        @media (max-width: 700px){ .detail-grid { grid-template-columns:1fr; } .detail-label{text-align:left;} }
+
+        .edit-form .grid {
+            display:grid;
+            grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+            gap:18px 20px;
+        }
+
+        .edit-form .form-group { display:flex; flex-direction:column; gap:7px; }
+        .edit-form label {
+            font-size:.55rem;
+            font-weight:700;
+            letter-spacing:1px;
+            text-transform:uppercase;
+            color: var(--text-secondary);
+        }
+
+        .edit-form input,
+        .edit-form select,
+        .edit-form textarea {
+            border:1px solid var(--border-color);
+            background: var(--bg-secondary);
+            padding:12px 14px;
+            font-size:.75rem;
+            border-radius: var(--radius);
+            resize: vertical;
+            min-height:46px;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .edit-form textarea { min-height:90px; }
+        .edit-form input:focus,
+        .edit-form select:focus,
+        .edit-form textarea:focus {
+            outline:none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, .15);
+        }
+
+        .btn-primary { --btn-bg: var(--accent); --btn-bg-hover: var(--accent-dark); }
+        .btn-danger { --btn-bg: #dc2626; --btn-bg-hover: #b91c1c; }
+        .btn-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border:1px solid var(--border-color);
+            box-shadow:none;
+        }
+
+        .btn-outline:hover { background: rgba(124, 58, 237, 0.1); color: var(--accent); }
+
+        footer {
+            text-align:center;
+            padding: 40px 20px 50px;
+            font-size:.7rem;
+            color: var(--text-secondary);
+            letter-spacing:.6px;
+            border-top:1px solid var(--border-color);
+            margin-top:auto;
+            background: linear-gradient(180deg,transparent,rgba(31,41,55,0.12));
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg), var(--glow);
+        }
+
+        @media (max-width: 860px){
+            .toolbar { grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); }
+            .actions { flex-wrap:wrap; }
+            .page-title { width:100%; }
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: .6rem;
+            }
+            nav ul {
+                margin-top: .5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            nav ul li {
+                margin: .25rem .5rem;
+            }
+        }
+
+        @media (max-width: 540px){
+            .nav-bar { padding:12px 18px; }
+            .toolbar { padding: 20px 18px; }
+            .data-card-header { padding: 18px; }
+            th, td { padding:11px 12px; }
+            .pagination { padding: 16px 18px; }
+        }
+    </style>
+</head>
+<body>
+<div class="notification" id="notification"></div>
+
+<!-- View Modal -->
+<div class="modal-overlay" id="viewModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2><i class="fas fa-receipt"></i> Payment Details</h2>
+            <button class="modal-close" data-close-view><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="detail-grid" id="viewDetailGrid"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" data-close-view><i class="fas fa-circle-xmark"></i> Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2><i class="fas fa-pen-to-square"></i> Edit Payment</h2>
+            <button class="modal-close" data-close-edit><i class="fas fa-times"></i></button>
+        </div>
+        <form class="edit-form" id="editForm">
+            <div class="modal-body">
+                <div class="grid">
+                    <div class="form-group">
+                        <label>Transaction ID</label>
+                        <input type="text" id="editTransactionId" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer</label>
+                        <input type="text" id="editCustomerName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Policy</label>
+                        <input type="text" id="editPolicyNumber" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount (USD)</label>
+                        <input type="number" step="0.01" id="editAmount" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Method</label>
+                        <select id="editMethod" required>
+                            <option value="cash">Cash</option>
+                            <option value="card">Card</option>
+                            <option value="googlepay">Google Pay</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="editStatus" required>
+                            <option value="PENDING">PENDING</option>
+                            <option value="SUCCESS">SUCCESS</option>
+                            <option value="FAILED">FAILED</option>
+                            <option value="REFUNDED">REFUNDED</option>
+                            <option value="CANCELED">CANCELED</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="grid-column:1/-1;">
+                    <label>Note</label>
+                    <textarea id="editNote" placeholder="Add / modify note..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-close-edit><i class="fas fa-ban"></i> Cancel</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-floppy-disk"></i> Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2><i class="fas fa-trash-alt"></i> Delete Payment</h2>
+            <button class="modal-close" data-close-delete><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body" id="deleteMessage" style="font-size:.75rem;line-height:1.5;"></div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" data-close-delete><i class="fas fa-circle-xmark"></i> Cancel</button>
+            <button class="btn btn-danger" id="confirmDeleteBtn"><i class="fas fa-trash"></i> Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- HEADER -->
+<header>
+    <div class="container header-content">
+        <a class="logo" href="home.html" aria-label="TOTALCARE Home">
+            <i class="fas fa-shield-heart"></i>
+            <span>TOTALCARE</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="agent.html">Agent Dashboard</a></li>
+                <li><a href="payment.html">Payment Management</a></li>
+
+            </ul>
+        </nav>
+        <div class="actions">
+            <button class="cta-button" onclick="window.location.href='login.html'">
+                <i class="fas fa-cog"></i> Sign Out
+            </button>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <div class="page-head">
+        <div class="page-title">
+            <i class="fas fa-user-shield"></i>
+            <span>Agent Payment Management</span>
+        </div>
+        <div class="subtitle-chip">Manage • View • Edit • Delete Payments</div>
+    </div>
+
+    <div class="toolbar">
+        <div class="group">
+            <label for="searchInput">Search</label>
+            <input type="text" id="searchInput" placeholder="Txn / Customer / Policy / NIC">
+        </div>
+        <div class="group">
+            <label for="statusFilter">Status</label>
+            <select id="statusFilter">
+                <option value="">All</option>
+                <option value="PENDING">Pending</option>
+                <option value="SUCCESS">Success</option>
+                <option value="FAILED">Failed</option>
+                <option value="REFUNDED">Refunded</option>
+                <option value="CANCELED">Canceled</option>
+            </select>
+        </div>
+        <div class="group">
+            <label for="methodFilter">Method</label>
+            <select id="methodFilter">
+                <option value="">All</option>
+                <option value="cash">Cash</option>
+                <option value="card">Card</option>
+                <option value="googlepay">Google Pay</option>
+            </select>
+        </div>
+        <div class="toolbar-actions">
+            <button class="btn" id="applyFiltersBtn"><i class="fas fa-filter"></i> Apply</button>
+            <button class="btn secondary" id="resetFiltersBtn"><i class="fas fa-rotate-left"></i> Reset</button>
+        </div>
+    </div>
+
+    <div class="data-card" id="paymentsCard">
+        <div class="data-card-header">
+            <h3><i class="fas fa-table"></i> Payments <span class="pill" id="rowCount">0 ROWS</span></h3>
+            <div class="header-btns">
+                <span class="pill" id="activeFiltersSummary" style="display:none;"></span>
+                <button class="btn" id="refreshBtn"><i class="fas fa-rotate"></i> Refresh</button>
+                <button class="btn" id="exportBtn" style="background:linear-gradient(135deg,#7c3aed,#2563eb);box-shadow:0 6px 14px -4px rgba(124,58,237,0.55);"><i class="fas fa-file-export"></i> Export</button>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table id="paymentsTable">
+                <thead>
+                <tr>
+                    <th data-sort="transactionCode">Transaction</th>
+                    <th data-sort="policyNumber">Policy</th>
+                    <th data-sort="customerName">Customer</th>
+                    <th data-sort="nic">NIC</th>
+                    <th data-sort="amount">Amount</th>
+                    <th data-sort="paymentMethod">Method</th>
+                    <th data-sort="status">Status</th>
+                    <th data-sort="createdAt">Created</th>
+                    <th style="text-align:center;">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="paymentsTbody"></tbody>
+            </table>
+        </div>
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <i class="fas fa-folder-open"></i>
+            No payments match your criteria.
+        </div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+</main>
+
+<footer>
+    Life Insurance Management System &copy; 2025 • Modern Agent Console<br>
+    <span style="opacity:.6;">Secure Processing • Audit Ready • Responsive UI</span>
+</footer>
+
+<!-- Dark Mode Toggle -->
+<button class="dark-mode-toggle" id="darkModeToggle">
+    <i class="fas fa-moon"></i>
+</button>
+
+<script>
+    const API_BASE = (() => {
+        try {
+            const o = window.location.origin;
+            if (o.includes('localhost') || o.includes('127.0.0.1')) return 'http://localhost:9091';
+            return o;
+        } catch { return 'http://localhost:9091'; }
+    })();
+    const PAGE_SIZE = 10;
+
+    let paymentsRaw = [];
+    let filtered = [];
+    let currentPage = 1;
+    let currentSort = { key: 'createdAt', dir: 'desc' };
+    let currentEditPayment = null;
+    let deleteTarget = null;
+
+    const tbody = document.getElementById('paymentsTbody');
+    const rowCount = document.getElementById('rowCount');
+    const emptyState = document.getElementById('emptyState');
+    const paginationEl = document.getElementById('pagination');
+    const activeFiltersSummary = document.getElementById('activeFiltersSummary');
+    const notificationEl = document.getElementById('notification');
+
+    const fmtAmount = n => '$' + Number(n || 0).toFixed(2);
+    const esc = s => String(s ?? '').replace(/[<>&"]/g, c=>({ '<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;' }[c]));
+    const formatDate = iso => {
+        if(!iso) return '-';
+        try {
+            const d = new Date(iso);
+            return isNaN(d.getTime()) ? iso : d.toLocaleString();
+        } catch { return iso; }
+    };
+    function showNotification(msg,type='success'){
+        notificationEl.textContent = msg;
+        notificationEl.className = 'notification ' + type;
+        notificationEl.style.display = 'block';
+        setTimeout(()=> notificationEl.style.display='none', 4200);
+    }
+    function badgeStatus(status){
+        const s = (status||'').toUpperCase();
+        let cls = 'st-pending';
+        if (s==='SUCCESS') cls='st-success';
+        else if (s==='FAILED') cls='st-failed';
+        else if (s==='REFUNDED') cls='st-refunded';
+        else if (s==='CANCELED') cls='st-failed';
+        return `<span class="status-pill ${cls}">${esc(s)}</span>`;
+    }
+    function badgeMethod(method){
+        if(!method) return '-';
+        const m = method.toLowerCase();
+        return `<span class="badge-method m-${m}">${esc(m)}</span>`;
+    }
+    function highlight(text, term){
+        if(!term) return esc(text);
+        const safe = esc(text);
+        const re = new RegExp('('+term.replace(/[.*+?^${}()|[\\]\\\\]/g,'\\\\$&')+')','ig');
+        return safe.replace(re,'<mark style="background:#fde68a;color:#92400e;padding:2px 4px;border-radius:4px;">$1</mark>');
+    }
+
+    function applyFilters(){
+        const q = document.getElementById('searchInput').value.trim().toLowerCase();
+        const status = document.getElementById('statusFilter').value;
+        const method = document.getElementById('methodFilter').value;
+
+        filtered = paymentsRaw.filter(p=>{
+            if(status && (p.status||'').toUpperCase()!==status) return false;
+            if(method && (p.paymentMethod||'').toLowerCase()!==method) return false;
+            if(q){
+                const fields = [
+                    p.transactionCode, p.customerName, p.policyNumber, p.nic
+                ].map(x=>(x||'').toLowerCase());
+                if(!fields.some(v=>v.includes(q))) return false;
+            }
+            return true;
+        });
+
+        summarizeFilters();
+        sortData();
+        currentPage = 1;
+        renderTable();
+    }
+    function resetFilters(){
+        ['searchInput','statusFilter','methodFilter'].forEach(id=>document.getElementById(id).value='');
+        applyFilters();
+    }
+    function summarizeFilters(){
+        const parts = [];
+        const s = statusFilter.value;
+        const m = methodFilter.value;
+        const q = searchInput.value.trim();
+        if(q) parts.push('Search:'+q);
+        if(s) parts.push('Status:'+s);
+        if(m) parts.push('Method:'+m);
+        if(parts.length){
+            activeFiltersSummary.textContent = parts.join(' | ');
+            activeFiltersSummary.style.display = 'inline-block';
+        } else {
+            activeFiltersSummary.style.display = 'none';
+        }
+    }
+
+    function sortData(){
+        const { key, dir } = currentSort;
+        filtered.sort((a,b)=>{
+            if(key==='amount'){
+                const na = Number(a.amount||0);
+                const nb = Number(b.amount||0);
+                return dir==='asc'? na-nb : nb-na;
+            }
+            const va=(a[key]??'').toString().toLowerCase();
+            const vb=(b[key]??'').toString().toLowerCase();
+            if(va<vb) return dir==='asc' ? -1 : 1;
+            if(va>vb) return dir==='asc' ? 1 : -1;
+            return 0;
+        });
+    }
+    function handleSortClick(e){
+        const th = e.target.closest('th[data-sort]');
+        if(!th) return;
+        const k = th.getAttribute('data-sort');
+        if(currentSort.key===k){
+            currentSort.dir = currentSort.dir==='asc'?'desc':'asc';
+        } else {
+            currentSort.key = k;
+            currentSort.dir = 'asc';
+        }
+        sortData();
+        renderTable();
+        updateSortIndicators();
+    }
+    function updateSortIndicators(){
+        document.querySelectorAll('th[data-sort]').forEach(th=>{
+            th.innerHTML = th.getAttribute('data-sort').replace(/([A-Z])/g,' $1').trim();
+        });
+        const active = document.querySelector(`th[data-sort="${currentSort.key}"]`);
+        if(active){
+            const base = active.getAttribute('data-sort');
+            const label = base.replace(/([A-Z])/g,' $1').trim();
+            const arrow = currentSort.dir==='asc'?'▲':'▼';
+            active.innerHTML = label + ' ' + `<span style="color:var(--accent);font-size:.6rem;">${arrow}</span>`;
+        }
+    }
+
+    function renderTable(){
+        tbody.innerHTML='';
+        const total = filtered.length;
+        rowCount.textContent = total + ' ROW' + (total===1?'':'S');
+        const start = (currentPage-1)*PAGE_SIZE;
+        const pageData = filtered.slice(start, start + PAGE_SIZE);
+        const q = searchInput.value.trim();
+        if(!pageData.length){
+            emptyState.style.display='block';
+        } else {
+            emptyState.style.display='none';
+            pageData.forEach(p=>{
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                        <td class="truncate" title="${esc(p.transactionCode||'-')}">${highlight(p.transactionCode||'-',q)}</td>
+                        <td class="truncate" title="${esc(p.policyNumber||'-')}">${highlight(p.policyNumber||'-',q)}</td>
+                        <td class="truncate" title="${esc(p.customerName||'-')}">${highlight(p.customerName||'-',q)}</td>
+                        <td class="truncate" title="${esc(p.nic||'-')}">${highlight(p.nic||'-',q)}</td>
+                        <td>${fmtAmount(p.amount)}</td>
+                        <td>${badgeMethod(p.paymentMethod)}</td>
+                        <td>${badgeStatus(p.status)}</td>
+                        <td title="${esc(p.createdAt||'')}">${formatDate(p.createdAt)}</td>
+                        <td style="text-align:center;">
+                            <div class="actions">
+                                <button class="btn-icon btn-view" data-view="${p.paymentId||p.id||''}" title="View"><i class="fas fa-eye"></i></button>
+                                <button class="btn-icon btn-edit" data-edit="${p.paymentId||p.id||''}" title="Edit"><i class="fas fa-pen"></i></button>
+                                <button class="btn-icon btn-del" data-del="${p.paymentId||p.id||''}" title="Delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    `;
+                tbody.appendChild(tr);
+            });
+        }
+        renderPagination();
+    }
+    function renderPagination(){
+        paginationEl.innerHTML='';
+        const pages = Math.ceil(filtered.length / PAGE_SIZE) || 1;
+        function btn(label, page, disabled=false, active=false){
+            const b=document.createElement('button');
+            b.textContent=label;
+            if(disabled){ b.disabled=true; b.style.opacity='.5'; }
+            if(active) b.classList.add('active-page');
+            b.addEventListener('click', ()=>{ currentPage=page; renderTable(); });
+            paginationEl.appendChild(b);
+        }
+        btn('Prev', Math.max(1,currentPage-1), currentPage===1);
+        const windowSize=5;
+        let start=Math.max(1,currentPage-Math.floor(windowSize/2));
+        let end=Math.min(pages,start+windowSize-1);
+        if(end-start+1<windowSize){ start=Math.max(1,end-windowSize+1); }
+        for(let p=start;p<=end;p++){ btn(p,p,false,p===currentPage); }
+        btn('Next', Math.min(pages,currentPage+1), currentPage===pages);
+    }
+
+    async function loadPayments(){
+        showNotification('Loading payments...');
+        try {
+            const res = await fetch(`${API_BASE}/payments`);
+            if(!res.ok) throw new Error('Failed to load payments');
+            const data = await res.json();
+            paymentsRaw = Array.isArray(data) ? data : (data.items || data.data || []);
+            filtered = [...paymentsRaw];
+            sortData();
+            currentPage=1;
+            renderTable();
+            updateSortIndicators();
+            showNotification('Payments loaded: '+paymentsRaw.length);
+        } catch(e){
+            console.error(e);
+            paymentsRaw=[]; filtered=[];
+            renderTable();
+            showNotification(e.message || 'Error loading data','error');
+        }
+    }
+
+    function openViewModal(id){
+        const payment = paymentsRaw.find(p => (p.paymentId||p.id)==id);
+        if(!payment) return;
+        const grid = document.getElementById('viewDetailGrid');
+        grid.innerHTML='';
+        const rows = [
+            ['Transaction ID', payment.transactionCode || payment.id || '-'],
+            ['Customer', payment.customerName || payment.userFullname || '-'],
+            ['NIC', payment.nic || payment.userNic || '-'],
+            ['Policy', payment.policyNumber || '-'],
+            ['Amount', fmtAmount(payment.amount)],
+            ['Method', (payment.paymentMethod||'-').toUpperCase()],
+            ['Status', payment.status || '-'],
+            ['Note', payment.note || '-'],
+            ['Created', formatDate(payment.createdAt)],
+            ['Updated', formatDate(payment.updatedAt)]
+        ];
+        rows.forEach(([l,v])=>{
+            const dl=document.createElement('div');
+            dl.className='detail-label';
+            dl.textContent=l;
+            const dv=document.createElement('div');
+            dv.className='detail-value';
+            dv.innerHTML=esc(v);
+            grid.appendChild(dl); grid.appendChild(dv);
+        });
+        viewModal.classList.add('active');
+        document.body.style.overflow='hidden';
+    }
+    function closeViewModal(){
+        viewModal.classList.remove('active');
+        document.body.style.overflow='auto';
+    }
+
+    function openEditModal(id){
+        currentEditPayment = paymentsRaw.find(p => (p.paymentId||p.id)==id);
+        if(!currentEditPayment) return;
+        editTransactionId.value = currentEditPayment.transactionCode || currentEditPayment.id || '';
+        editCustomerName.value = currentEditPayment.customerName || currentEditPayment.userFullname || '';
+        editPolicyNumber.value = currentEditPayment.policyNumber || '';
+        editAmount.value = currentEditPayment.amount || 0;
+        editMethod.value = (currentEditPayment.paymentMethod||'').toLowerCase();
+        editStatus.value = (currentEditPayment.status||'').toUpperCase();
+        editNote.value = currentEditPayment.note || '';
+        editModal.classList.add('active');
+        document.body.style.overflow='hidden';
+    }
+    function closeEditModal(){
+        currentEditPayment=null;
+        editModal.classList.remove('active');
+        document.body.style.overflow='auto';
+    }
+
+    function openDeleteModal(id){
+        deleteTarget = paymentsRaw.find(p => (p.paymentId||p.id)==id);
+        if(!deleteTarget) return;
+        deleteMessage.innerHTML = `
+                <p style="margin:0 0 14px;">Delete this payment permanently?</p>
+                <div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.35);padding:12px 14px;border-radius:14px;font-size:.68rem;line-height:1.5;">
+                    <strong>Transaction:</strong> ${esc(deleteTarget.transactionCode || deleteTarget.id || '-')}<br>
+                    <strong>Customer:</strong> ${esc(deleteTarget.customerName || deleteTarget.userFullname || '-')}<br>
+                    <strong>Amount:</strong> ${fmtAmount(deleteTarget.amount)}
+                </div>
+                <p style="margin:14px 0 0;font-size:.6rem;color:#b91c1c;font-weight:700;letter-spacing:.8px;text-transform:uppercase;">
+                    This action cannot be undone.
+                </p>
+            `;
+        deleteModal.classList.add('active');
+        document.body.style.overflow='hidden';
+    }
+    function closeDeleteModal(){
+        deleteTarget=null;
+        deleteModal.classList.remove('active');
+        document.body.style.overflow='auto';
+    }
+
+    editForm.addEventListener('submit', async e=>{
+        e.preventDefault();
+        if(!currentEditPayment) return;
+        const pid = currentEditPayment.paymentId || currentEditPayment.id;
+        const payload = {
+            amount: parseFloat(editAmount.value)||0,
+            paymentMethod: editMethod.value,
+            status: editStatus.value,
+            note: editNote.value || null
+        };
+        try {
+            showNotification('Saving...');
+            const res = await fetch(`${API_BASE}/payments/${pid}`, {
+                method:'PUT',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify(payload)
+            });
+            if(!res.ok) throw new Error('Update failed');
+            const updated = await res.json();
+            const idx = paymentsRaw.findIndex(p => (p.paymentId||p.id)==pid);
+            if(idx>-1) paymentsRaw[idx] = {...paymentsRaw[idx], ...updated};
+            applyFilters();
+            closeEditModal();
+            showNotification('Payment updated');
+        } catch(err){
+            showNotification(err.message||'Error updating','error');
+        }
+    });
+
+    confirmDeleteBtn.addEventListener('click', async ()=>{
+        if(!deleteTarget) return;
+        const pid = deleteTarget.paymentId || deleteTarget.id;
+        try {
+            showNotification('Deleting...');
+            const res = await fetch(`${API_BASE}/payments/${pid}`, { method:'DELETE' });
+            if(!res.ok) throw new Error('Delete failed');
+            paymentsRaw = paymentsRaw.filter(p => (p.paymentId||p.id)!=pid);
+            applyFilters();
+            closeDeleteModal();
+            showNotification('Payment deleted');
+        } catch(err){
+            showNotification(err.message||'Error deleting','error');
+        }
+    });
+
+    function exportCSV(){
+        if(!filtered.length){
+            showNotification('No data to export','error');
+            return;
+        }
+        const headers = ['Transaction ID','Policy Number','Customer Name','NIC','Amount','Method','Status','Created At','Updated At','Note'];
+        const rows = filtered.map(p=>[
+            p.transactionCode || p.id || '',
+            p.policyNumber || '',
+            p.customerName || p.userFullname || '',
+            p.nic || p.userNic || '',
+            p.amount || 0,
+            p.paymentMethod || '',
+            p.status || '',
+            p.createdAt || '',
+            p.updatedAt || '',
+            (p.note||'').replace(/"/g,'""')
+        ]);
+        const csv = [headers,...rows].map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
+        const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+        const url=URL.createObjectURL(blob);
+        const a=document.createElement('a');
+        a.href=url; a.download='payments_export.csv';
+        document.body.appendChild(a); a.click(); a.remove();
+        URL.revokeObjectURL(url);
+        showNotification('Exported CSV');
+    }
+
+    document.getElementById('applyFiltersBtn').addEventListener('click',applyFilters);
+    document.getElementById('resetFiltersBtn').addEventListener('click',resetFilters);
+    document.getElementById('refreshBtn').addEventListener('click',loadPayments);
+    document.getElementById('exportBtn').addEventListener('click',exportCSV);
+    document.getElementById('searchInput').addEventListener('input',applyFilters);
+    document.querySelector('#paymentsTable thead').addEventListener('click',handleSortClick);
+
+    tbody.addEventListener('click', e=>{
+        const btn = e.target.closest('button');
+        if(!btn) return;
+        if(btn.dataset.view) openViewModal(btn.dataset.view);
+        if(btn.dataset.edit) openEditModal(btn.dataset.edit);
+        if(btn.dataset.del) openDeleteModal(btn.dataset.del);
+    });
+
+    document.querySelectorAll('[data-close-view]').forEach(b=>b.addEventListener('click',closeViewModal));
+    document.querySelectorAll('[data-close-edit]').forEach(b=>b.addEventListener('click',closeEditModal));
+    document.querySelectorAll('[data-close-delete]').forEach(b=>b.addEventListener('click',closeDeleteModal));
+
+    ['viewModal','editModal','deleteModal'].forEach(id=>{
+        const overlay=document.getElementById(id);
+        overlay.addEventListener('click',e=>{
+            if(e.target===overlay){
+                if(id==='viewModal') closeViewModal();
+                if(id==='editModal') closeEditModal();
+                if(id==='deleteModal') closeDeleteModal();
+            }
+        });
+    });
+
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    function toggleDarkMode() {
+        body.classList.toggle('dark-mode');
+        const isDarkMode = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode);
+
+        // Update button icon
+        const icon = darkModeToggle.querySelector('i');
+        icon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    // Initialize dark mode from localStorage
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (savedDarkMode) {
+        body.classList.add('dark-mode');
+        const icon = darkModeToggle.querySelector('i');
+        icon.className = 'fas fa-sun';
+    }
+
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+
+    (function init(){ loadPayments(); })();
+</script>
+</body>
+</html>

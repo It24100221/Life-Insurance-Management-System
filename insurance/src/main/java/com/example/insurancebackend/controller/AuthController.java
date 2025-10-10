@@ -3,7 +3,7 @@ package com.example.insurancebackend.controller;
 import com.example.insurancebackend.dto.AuthResponse;
 import com.example.insurancebackend.dto.LoginRequest;
 import com.example.insurancebackend.dto.RegisterRequest;
-import com.example.insurancebackend.service.LoginService;
+import com.example.insurancebackend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
 public class AuthController {
-    private final LoginService loginService;
+    private final AuthService authService;
 
     @Autowired
-    public AuthController(LoginService loginService) {
-        this.loginService = loginService;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
-        AuthResponse response = loginService.register(request);
+        AuthResponse response = authService.register(request);
         if (response.getMessage().contains("successful")) {
             return ResponseEntity.ok(response);
         }
@@ -30,7 +30,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-        AuthResponse response = loginService.login(request);
+        AuthResponse response = authService.login(request);
         if (response.getMessage().contains("successful")) {
             return ResponseEntity.ok(response);
         }

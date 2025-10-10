@@ -3,6 +3,7 @@ package com.example.insurancebackend.service;
 import com.example.insurancebackend.dto.PolicyPageResponse;
 import com.example.insurancebackend.entity.Policy;
 import com.example.insurancebackend.repository.PolicyRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PolicyService {
@@ -35,6 +37,9 @@ public class PolicyService {
 
     public Policy savePolicy(Policy policy) {
         if (policy.getId() == null) {
+            if (policyRepository.existsByCode(policy.getCode())) {
+                throw new IllegalArgumentException("Policy code already exists");
+            }
             policy.setCreatedAt(LocalDateTime.now());
         }
         return policyRepository.save(policy);
@@ -53,6 +58,31 @@ public class PolicyService {
                 createSample("LIFE-003", "Senior Life Policy", 15, 75.00, 250000.00, false, "For seniors over 60")
         );
         policyRepository.saveAll(samples);
+    }
+
+    public Optional<Policy> getPolicyByCode(String code) {
+        return policyRepository.findByCode(code);
+    }
+
+    public Optional<Policy> getPolicyById(Long id) {
+        return policyRepository.findById(id);
+    }
+
+    public Policy updatePolicy(Long id, Policy updateData) {
+        return getPolicyById(id).map(existingPolicy -> {
+            String originalCode = existingPolicy.getCode();
+            existingPolicy.setCode(updateData.getCode());
+            existingPolicy.setName(updateData.getName());
+            existingPolicy.setTermYears(updateData.getTermYears());
+            existingPolicy.setPremiumMonthly(updateData.getPremiumMonthly());
+            existingPolicy.setSumAssured(updateData.getSumAssured());
+            existingPolicy.setActive(updateData.isActive());
+            existingPolicy.setDescription(updateData.getDescription());
+            if (!originalCode.equals(existingPolicy.getCode()) && policyRepository.existsByCode(existingPolicy.getCode())) {
+                throw new IllegalArgumentException("Policy code already exists");
+            }
+            return savePolicy(existingPolicy);
+        }).orElseThrow(() -> new EntityNotFoundException("Policy not found with id: " + id));
     }
 
     private Policy createSample(String code, String name, int termYears, double premium, double sum, boolean active, String desc) {

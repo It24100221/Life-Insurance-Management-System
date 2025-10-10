@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/feedbacks")
@@ -25,6 +26,18 @@ public class FeedbackController {
     public Feedback createFeedback(@RequestBody Feedback feedback) {
         feedback.setCreatedAt(LocalDateTime.now());
         return repository.save(feedback);
+    }
+
+    @PatchMapping("/{id}/respond")
+    public ResponseEntity<?> respondToFeedback(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+        return repository.findById(id)
+                .map(feedback -> {
+                    feedback.setResponse(payload.get("response"));
+                    feedback.setResponseDate(LocalDateTime.now());
+                    Feedback updatedFeedback = repository.save(feedback);
+                    return ResponseEntity.ok(updatedFeedback);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

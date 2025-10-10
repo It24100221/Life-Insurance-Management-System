@@ -3,12 +3,14 @@ package com.example.insurancebackend.controller;
 import com.example.insurancebackend.dto.PolicyPageResponse;
 import com.example.insurancebackend.entity.Policy;
 import com.example.insurancebackend.service.PolicyService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/policies")
@@ -27,15 +29,36 @@ public class PolicyController {
         return policyService.getPolicies(page, size, sortBy, sortDir, query);
     }
 
+    @GetMapping("/{code}")
+    public ResponseEntity<Policy> getPolicyByCode(@PathVariable String code) {
+        return policyService.getPolicyByCode(code)
+                .filter(Policy::isActive)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Policy> getPolicyById(@PathVariable Long id) {
+        return policyService.getPolicyById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public Policy createPolicy(@RequestBody Policy policy) {
         return policyService.savePolicy(policy);
     }
 
     @PutMapping("/{id}")
-    public Policy updatePolicy(@PathVariable Long id, @RequestBody Policy policy) {
-        policy.setId(id);
-        return policyService.savePolicy(policy);
+    public ResponseEntity<?> updatePolicy(@PathVariable Long id, @RequestBody Policy updatePolicy) {
+        try {
+            Policy updated = policyService.updatePolicy(id, updatePolicy);
+            return ResponseEntity.ok(updated);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
