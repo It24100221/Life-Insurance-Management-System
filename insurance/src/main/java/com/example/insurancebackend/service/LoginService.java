@@ -22,15 +22,15 @@ public class LoginService {
         if (loginRepository.existsByEmail(request.getEmail())) {
             return new AuthResponse(null, "Email already exists.", null);
         }
-        if (loginRepository.existsByNic(request.getNicNumber())) {
+        if (loginRepository.existsByNic(request.getNic())) {
             return new AuthResponse(null, "NIC already exists.", null);
         }
 
         Login login = new Login();
         login.setFullName(request.getFullName());
         login.setEmail(request.getEmail());
-        login.setPhone(request.getPhoneNumber());
-        login.setNic(request.getNicNumber());
+        login.setPhone(request.getPhone());
+        login.setNic(request.getNic());
         login.setPassword(BCrypt.hashpw(request.getPassword(), BCrypt.gensalt()));
         login.setRole("user");
         loginRepository.save(login);
@@ -45,6 +45,12 @@ public class LoginService {
         if (!login.isActive()) {
             return new AuthResponse(null, "Account is not active.", null);
         }
-        return new AuthResponse(null, "Login successful.", login.getRole());
+        AuthResponse resp = new AuthResponse(null, "Login successful.", login.getRole());
+        resp.setUserId(login.getUserId());
+        resp.setFullName(login.getFullName());
+        resp.setEmail(login.getEmail());
+        resp.setNic(login.getNic());
+        resp.setPhone(login.getPhone());
+        return resp;
     }
 }

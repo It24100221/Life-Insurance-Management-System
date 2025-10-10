@@ -25,6 +25,13 @@ public class Feedback {
     @Column(name = "review_text")
     private String reviewText;
 
+    @Column(name = "response")
+    private String response;
+
+    @Column(name = "response_date")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime responseDate;
+
     @Column(name = "created_at")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;

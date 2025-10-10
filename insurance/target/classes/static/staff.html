@@ -4,398 +4,961 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TOTALCARE Support Staff Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            /* Pro Theme — Purple + Ash */
+            --ash: #B2BEB5;
+            --ash-2: #c7d0ca;
+            --ash-dark: #8C9890;
+            --accent: #7C3AED;
+            --accent-2: #8B5CF6;
+            --accent-dark: #5B21B6;
+            --accent-soft: #A78BFA;
+
+            --light: #f5f6f8;
+            --white: #ffffff;
+            --dark: #0f172a;
+            --text: #1f2937;
+            --text-light: #6b7280;
+
+            --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
+            --shadow-md: 0 14px 30px rgba(17, 24, 39, 0.10);
+            --shadow-lg: 0 22px 45px rgba(17, 24, 39, 0.14);
+            --glow: 0 10px 25px rgba(124, 58, 237, 0.22);
+
+            --transition: all .3s ease;
+            --radius: 18px;
+            --radius-lg: 22px;
+
+            /* Light mode variables */
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        .dark-mode {
+            /* Dark mode variables */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f5f7f9;
-            color: #333;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: var(--bg-primary);
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: .2px;
+        }
+
         .container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
-        .header {
-            background-color: #007bff;
-            color: white;
-            padding: 20px;
-            border-radius: 8px 8px 0 0;
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(140,152,144,0.92) 0%, rgba(124,58,237,0.92) 100%);
+            color: #fff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: var(--shadow);
+            backdrop-filter: saturate(140%) blur(6px);
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .header img {
-            max-width: 150px;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        .user-info {
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
             display: flex;
             align-items: center;
+            letter-spacing: .3px;
+            color: #fff;
+            text-decoration: none;
         }
-        .user-info span {
-            margin-right: 15px;
+
+        .logo i {
+            margin-right: 10px;
+            color: #fff;
+            filter: drop-shadow(0 4px 10px rgba(255,255,255,.25));
         }
-        .logout-btn {
-            background-color: white;
-            color: #007bff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .tabs {
+
+        nav ul {
             display: flex;
-            background-color: #e9ecef;
-            border-radius: 0 0 8px 8px;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            position: relative;
+            padding: .5rem 0;
+            transition: var(--transition);
+            opacity: .95;
+            letter-spacing: .25px;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background-color: #fff;
+            transition: var(--transition);
+            opacity: .9;
+            box-shadow: 0 2px 8px rgba(255,255,255,.65);
+        }
+
+        nav ul li a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+
+        .mode-toggle {
+            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.14));
+            color: #fff;
+            border: 2px solid rgba(255,255,255,.85);
+            padding: .6rem .9rem;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
+        }
+
+        .mode-toggle:hover {
+            background: #fff;
+            color: var(--accent);
+            box-shadow: 0 10px 20px rgba(255,255,255,.25);
+            transform: translateY(-1px);
+        }
+
+        .mode-toggle.active {
+            background: #fff;
+            color: var(--accent);
+        }
+
+        .cta-button {
+            --shine: linear-gradient(120deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.65) 20%, rgba(255,255,255,.0) 40%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: #fff;
+            border: none;
+            padding: .9rem 1.25rem;
+            border-radius: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+            letter-spacing: .3px;
+            position: relative;
             overflow: hidden;
         }
+
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 60%;
+            height: 220%;
+            background: var(--shine);
+            transform: rotate(25deg) translateX(-40%);
+            transition: transform .6s ease;
+            pointer-events: none;
+        }
+
+        .cta-button:hover::after {
+            transform: rotate(25deg) translateX(280%);
+        }
+
+        /* Staff Container */
+        .staff-container {
+            padding: 2rem 0;
+            background: radial-gradient(1200px 500px at -10% -10%, rgba(124,58,237,.08), transparent 60%),
+            radial-gradient(1200px 500px at 110% -10%, rgba(178,190,181,.10), transparent 60%),
+            linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-primary) 100%);
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Cards */
+        .card {
+            background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
+            linear-gradient(135deg, rgba(124,58,237,.25), rgba(178,190,181,.25)) border-box;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .table-container {
+            max-height: 70vh;
+            overflow-y: auto;
+            border-radius: var(--radius);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-top: 1rem;
+            box-shadow: var(--shadow);
+        }
+
         .tab-button {
             padding: 15px 20px;
             border: none;
             background: none;
-            color: #495057;
+            color: var(--text-secondary);
             cursor: pointer;
             font-weight: bold;
             flex: 1;
             text-align: center;
+            transition: var(--transition);
         }
+
         .tab-button.active {
-            background-color: white;
-            color: #007bff;
-            border-bottom: 3px solid #007bff;
+            background-color: var(--accent);
+            color: white;
         }
+
         .tab-content {
             display: none;
             padding: 20px;
-            background-color: white;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            background-color: var(--bg-secondary);
+            border-radius: 0 0 var(--radius) var(--radius);
+            box-shadow: var(--shadow);
+            margin-top: 1rem;
         }
+
         .tab-content.active {
             display: block;
         }
-        .search-bar {
-            display: flex;
-            margin-bottom: 20px;
-            gap: 10px;
+
+        /* Search and Filters */
+        .search-input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: var(--transition);
+            border-radius: 10px;
         }
-        .search-bar input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
         }
-        .search-bar select {
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
+
+        select {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: var(--transition);
+            border-radius: 10px;
         }
-        .search-bar button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
+
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
         }
+
+        /* Table Styles */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
-        th, td {
-            padding: 12px 15px;
-            border: 1px solid #dee2e6;
-            text-align: left;
-        }
+
         th {
-            background-color: #f8f9fa;
-            font-weight: bold;
-            color: #495057;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
+
+        td, th {
+            padding: 0.75rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
         }
+
+        tr {
+            transition: var(--transition);
+        }
+
         tr:hover {
-            background-color: #e9ecef;
+            background: rgba(124,58,237,0.05);
         }
+
+        /* Status Badge */
         .status-badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
+
         .status-open {
-            background-color: #fff5f5;
-            color: #e53e3e;
+            background: rgba(239, 68, 68, 0.1);
+            color: rgb(220, 38, 38);
         }
+
         .status-in-progress {
-            background-color: #ebf8ff;
-            color: #3182ce;
+            background: rgba(245, 158, 11, 0.1);
+            color: rgb(217, 119, 6);
         }
+
         .status-resolved {
-            background-color: #f0fff4;
-            color: #38a169;
+            background: rgba(34, 197, 94, 0.1);
+            color: rgb(22, 163, 74);
         }
+
+        /* Action Buttons */
         .action-btn {
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            margin-right: 5px;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .status-btn {
-            background-color: #4299e1;
-            color: white;
-        }
+
         .view-btn {
-            background-color: #48bb78;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
             color: white;
+            box-shadow: var(--shadow);
         }
-        .ticket-details {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
+
+        .view-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
-        .ticket-details h3 {
-            margin-top: 0;
-            color: #007bff;
+
+        .status-btn {
+            background: rgba(59, 130, 246, 0.1);
+            color: rgb(37, 99, 235);
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
-        .detail-row {
-            display: flex;
-            margin-bottom: 15px;
+
+        .status-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
         }
-        .detail-label {
-            width: 150px;
-            font-weight: bold;
-            color: #495057;
-        }
-        .detail-value {
-            flex: 1;
-        }
-        .reply-section {
-            margin-top: 30px;
-            border-top: 1px solid #dee2e6;
-            padding-top: 20px;
-        }
-        .reply {
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .reply-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: #495057;
-        }
+
+        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
             margin-top: 20px;
             gap: 5px;
         }
+
         .pagination button {
             padding: 8px 12px;
-            border: 1px solid #dee2e6;
-            background-color: white;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
             cursor: pointer;
             border-radius: 4px;
+            transition: var(--transition);
         }
+
         .pagination button.active {
-            background-color: #007bff;
+            background-color: var(--accent);
             color: white;
-            border-color: #007bff;
+            border-color: var(--accent);
         }
+
+        .pagination button:hover:not(.active) {
+            background-color: var(--border-color);
+        }
+
+        /* Ticket Details */
+        .ticket-details {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .ticket-details h3 {
+            margin-top: 0;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .detail-label {
+            width: 150px;
+            font-weight: bold;
+            color: var(--text-secondary);
+        }
+
+        .detail-value {
+            flex: 1;
+            color: var(--text-primary);
+        }
+
+        .reply-section {
+            margin-top: 30px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .reply {
+            background-color: var(--bg-primary);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .reply-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--text-secondary);
+        }
+
         .status-select {
             padding: 5px;
             border-radius: 4px;
-            border: 1px solid #ced4da;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
         }
+
         .form-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            color: #495057;
+            color: var(--text-secondary);
         }
+
         .form-group textarea {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ced4da;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             box-sizing: border-box;
             height: 120px;
             resize: vertical;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
         }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+        }
+
         .save-btn {
-            background-color: #007bff;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
             color: white;
             padding: 12px 25px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Footer */
+        footer {
+            background: #141824;
+            color: #fff;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 1.1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column p {
+            color: #dfe3ea;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: .7rem;
+            color: #e1e1e6;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent-soft);
+        }
+
+        .social-links {
+            display: flex;
+            gap: .8rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            color: #fff;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: .9rem;
+            color: #cfd3da;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg), var(--glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: .6rem;
+            }
+
+            nav ul {
+                margin-top: .5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: .25rem .5rem;
+            }
+
+            .table-container {
+                max-height: 60vh;
+            }
+
+            td, th {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .detail-row {
+                flex-direction: column;
+            }
+
+            .detail-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <div>
-            <img src="https://via.placeholder.com/150x50?text=TOTALCARE+Logo" alt="TOTALCARE Logo">
-            <h1>Support Staff Dashboard</h1>
-        </div>
-        <div class="user-info">
-            <span>Welcome, Support Agent</span>
-            <button class="logout-btn">Logout</button>
+<!-- Header -->
+<header>
+    <div class="container header-content">
+        <a class="logo" href="home.html" aria-label="TOTALCARE Home">
+            <i class="fas fa-shield-heart"></i>
+            <span>TOTALCARE</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="getSupport.html">Support</a></li>
+                 <li><a href="staff.html" class="active">Support Staff</a></li>
+             </ul>
+        </nav>
+        <div class="actions">
+            <button class="cta-button" onclick="window.location.href='login.html'">
+                <i class="fas fa-cog"></i> Sign Out
+            </button>
         </div>
     </div>
+</header>
 
-    <div class="tabs">
-        <button class="tab-button active" onclick="openTab('ticket-management')">Ticket Management</button>
-    </div>
-
-    <!-- Ticket Management Tab -->
-    <div id="ticket-management" class="tab-content active">
-        <h2>Customer Ticket Management</h2>
-
-        <div class="search-bar">
-            <input type="text" id="search-text" placeholder="Search by subject, customer name, or ticket ID...">
-            <select id="status-filter">
-                <option value="">All Statuses</option>
-                <option value="open">Open</option>
-                <option value="in-progress">In Progress</option>
-                <option value="resolved">Resolved</option>
-            </select>
-            <select id="department-filter">
-                <option value="">All Departments</option>
-                <option value="customer-service">Customer Services</option>
-                <option value="claims">Claims</option>
-                <option value="payments">Payments</option>
-                <option value="admin">Admin</option>
-            </select>
-            <button onclick="filterTickets()">Search</button>
+<!-- Staff Container -->
+<div class="staff-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="mb-8 flex justify-between items-start">
+            <div>
+                <h1 class="text-3xl font-bold mb-2">Support Staff Dashboard</h1>
+                <p class="text-gray-600 dark:text-gray-400">Manage customer tickets and inquiries</p>
+            </div>
+            <div class="flex space-x-3">
+                <div class="user-info flex items-center gap-3">
+                    <span class="text-gray-700 dark:text-gray-300">Welcome, Support Agent</span>
+                    <button class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700 text-sm">
+                        Logout
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <table id="tickets-table">
-            <thead>
-            <tr>
-                <th>Ticket ID</th>
-                <th>Customer Name</th>
-                <th>Subject</th>
-                <th>Department</th>
-                <th>Status</th>
-                <th>Created Date</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody id="tickets-body">
-            <!-- Tickets will be populated here -->
-            </tbody>
-        </table>
-
-        <div class="pagination">
-            <button class="active">1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>Next →</button>
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab('ticket-management')">
+                <i class="fas fa-ticket-alt mr-2"></i>Ticket Management
+            </button>
         </div>
 
-        <!-- Ticket Details Section -->
-        <div id="ticket-details" class="ticket-details" style="display: none;">
-            <h3>Ticket Details <span id="detail-ticket-id"></span></h3>
+        <!-- Ticket Management Tab -->
+        <div id="ticket-management" class="tab-content active">
+            <h2>Customer Ticket Management</h2>
 
-            <div class="detail-row">
-                <div class="detail-label">Customer Name:</div>
-                <div class="detail-value" id="detail-customer-name"></div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Email:</div>
-                <div class="detail-value" id="detail-email"></div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Policy Number:</div>
-                <div class="detail-value" id="detail-policy-number"></div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Inquiry Type:</div>
-                <div class="detail-value" id="detail-inquiry-type"></div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Department:</div>
-                <div class="detail-value" id="detail-department"></div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Contact Number:</div>
-                <div class="detail-value" id="detail-contact-number"></div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Subject:</div>
-                <div class="detail-value" id="detail-subject"></div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Description:</div>
-                <div class="detail-value" id="detail-description"></div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Status:</div>
-                <div class="detail-value">
-                    <select id="detail-status" class="status-select" onchange="updateTicketStatus()">
-                        <option value="open">Open</option>
-                        <option value="in-progress">In Progress</option>
-                        <option value="resolved">Resolved</option>
-                    </select>
+            <div class="card p-6 mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                        <div class="relative flex-1">
+                            <input
+                                    type="text"
+                                    id="search-text"
+                                    placeholder="Search by subject, customer name, or ticket ID..."
+                                    class="search-input w-full pl-10 pr-4 py-2"
+                            >
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                        </div>
+                        <select id="status-filter" class="px-4 py-2">
+                            <option value="">All Statuses</option>
+                            <option value="open">Open</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                        <select id="department-filter" class="px-4 py-2">
+                            <option value="">All Departments</option>
+                            <option value="customer-service">Customer Services</option>
+                            <option value="claims">Claims</option>
+                            <option value="payments">Payments</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                        <button class="cta-button" onclick="filterTickets()">
+                            <i class="fas fa-search mr-2"></i>Search
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="detail-row">
-                <div class="detail-label">Created Date:</div>
-                <div class="detail-value" id="detail-created-date"></div>
-            </div>
-
-            <div class="detail-row">
-                <div class="detail-label">Last Updated:</div>
-                <div class="detail-value" id="detail-updated-date"></div>
-            </div>
-
-            <div class="reply-section">
-                <h3>Replies</h3>
-                <div id="replies-container">
-                    <!-- Replies will be displayed here -->
+            <div class="card overflow-hidden">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Customer Name</th>
+                            <th>Subject</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            <th>Created Date</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tickets-body">
+                        <!-- Tickets will be populated here -->
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="form-group">
-                    <label for="reply-text">Add Reply</label>
-                    <textarea id="reply-text" placeholder="Type your reply here..."></textarea>
+                <div class="pagination">
+                    <button class="active">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <button>Next →</button>
+                </div>
+            </div>
+
+            <!-- Ticket Details Section -->
+            <div id="ticket-details" class="ticket-details" style="display: none;">
+                <h3>Ticket Details <span id="detail-ticket-id"></span></h3>
+
+                <div class="detail-row">
+                    <div class="detail-label">Customer Name:</div>
+                    <div class="detail-value" id="detail-customer-name"></div>
                 </div>
 
-                <div class="form-actions">
-                    <button class="save-btn" onclick="addReply()">Add Reply</button>
+                <div class="detail-row">
+                    <div class="detail-label">Email:</div>
+                    <div class="detail-value" id="detail-email"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Policy Number:</div>
+                    <div class="detail-value" id="detail-policy-number"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Inquiry Type:</div>
+                    <div class="detail-value" id="detail-inquiry-type"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Department:</div>
+                    <div class="detail-value" id="detail-department"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Contact Number:</div>
+                    <div class="detail-value" id="detail-contact-number"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Subject:</div>
+                    <div class="detail-value" id="detail-subject"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Description:</div>
+                    <div class="detail-value" id="detail-description"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Status:</div>
+                    <div class="detail-value">
+                        <select id="detail-status" class="status-select" onchange="updateTicketStatus()">
+                            <option value="open">Open</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Created Date:</div>
+                    <div class="detail-value" id="detail-created-date"></div>
+                </div>
+
+                <div class="detail-row">
+                    <div class="detail-label">Last Updated:</div>
+                    <div class="detail-value" id="detail-updated-date"></div>
+                </div>
+
+                <div class="reply-section">
+                    <h3>Replies</h3>
+                    <div id="replies-container">
+                        <!-- Replies will be displayed here -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reply-text">Add Reply</label>
+                        <textarea id="reply-text" placeholder="Type your reply here..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="save-btn" onclick="addReply()">
+                            <i class="fas fa-reply mr-2"></i>Add Reply
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>TOTALCARE</h3>
+                <p>Providing financial security and peace of mind through comprehensive life insurance solutions.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="#plans">Services</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#feedback">Feedback</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#plans">Term Life Insurance</a></li>
+                    <li><a href="#plans">Whole Life Insurance</a></li>
+                    <li><a href="#plans">Universal Life Insurance</a></li>
+                    <li><a href="#plans">Family Plans</a></li>
+                    <li><a href="#plans">Retirement Planning</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Insurance Ave, Secure City</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@totalcare.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 TOTALCARE Insurance. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Dark Mode Toggle -->
+<button class="dark-mode-toggle" id="darkModeToggle">
+    <i class="fas fa-moon"></i>
+</button>
+
+<!-- Your original JavaScript code remains unchanged -->
 <script>
     let currentTicketId = null;
     const apiBaseUrl = 'http://localhost:9091';
@@ -449,8 +1012,12 @@
                 <td><span class="status-badge ${statusClass}">${ticket.status}</span></td>
                 <td>${ticket.createdDate}</td>
                 <td>
-                    <button class="action-btn view-btn" onclick="viewTicket('${ticket.id}')">View</button>
-                    <button class="action-btn status-btn" onclick="changeStatus('${ticket.id}')">Change Status</button>
+                    <button class="action-btn view-btn" onclick="viewTicket('${ticket.id}')">
+                        <i class="fas fa-eye"></i>View
+                    </button>
+                    <button class="action-btn status-btn" onclick="changeStatus('${ticket.id}')">
+                        <i class="fas fa-sync-alt"></i>Change Status
+                    </button>
                 </td>
             `;
             ticketsBody.appendChild(row);
@@ -606,6 +1173,34 @@
             alert('Error adding reply');
         }
     }
+
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    // Check for saved theme preference or respect OS preference
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+        body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+        body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        if (body.classList.contains('dark-mode')) {
+            body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+            body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+    });
 </script>
 </body>
 </html>

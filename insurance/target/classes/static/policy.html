@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Insurance Policies - TOTALCARE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* Pro Theme — Purple + Ash */
+            --ash: #B2BEB5;
+            --ash-2: #c7d0ca;
+            --ash-dark: #8C9890;
+            --accent: #7C3AED;
+            --accent-2: #8B5CF6;
+            --accent-dark: #5B21B6;
+            --accent-soft: #A78BFA;
+
+            --light: #f5f6f8;
+            --white: #ffffff;
+            --dark: #0f172a;
+            --text: #1f2937;
+            --text-light: #6b7280;
+
+            --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
+            --shadow-md: 0 14px 30px rgba(17, 24, 39, 0.10);
+            --shadow-lg: 0 22px 45px rgba(17, 24, 39, 0.14);
+            --glow: 0 10px 25px rgba(124, 58, 237, 0.22);
+
+            --transition: all .3s ease;
+            --radius: 18px;
+            --radius-lg: 22px;
+
+            /* Dark mode variables */
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        .dark-mode {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: var(--bg-primary);
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: .2px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(140,152,144,0.92) 0%, rgba(124,58,237,0.92) 100%);
+            color: #fff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: var(--shadow);
+            backdrop-filter: saturate(140%) blur(6px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            letter-spacing: .3px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #fff;
+            filter: drop-shadow(0 4px 10px rgba(255,255,255,.25));
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            position: relative;
+            padding: .5rem 0;
+            transition: var(--transition);
+            opacity: .95;
+            letter-spacing: .25px;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background-color: #fff;
+            transition: var(--transition);
+            opacity: .9;
+            box-shadow: 0 2px 8px rgba(255,255,255,.65);
+        }
+
+        nav ul li a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+
+        .mode-toggle {
+            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.14));
+            color: #fff;
+            border: 2px solid rgba(255,255,255,.85);
+            padding: .6rem .9rem;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
+        }
+
+        .mode-toggle:hover {
+            background: #fff;
+            color: var(--accent);
+            box-shadow: 0 10px 20px rgba(255,255,255,.25);
+            transform: translateY(-1px);
+        }
+
+        .mode-toggle.active {
+            background: #fff;
+            color: var(--accent);
+        }
+
+        .cta-button {
+            --shine: linear-gradient(120deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.65) 20%, rgba(255,255,255,.0) 40%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: #fff;
+            border: none;
+            padding: .9rem 1.25rem;
+            border-radius: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+            letter-spacing: .3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 60%;
+            height: 220%;
+            background: var(--shine);
+            transform: rotate(25deg) translateX(-40%);
+            transition: transform .6s ease;
+            pointer-events: none;
+        }
+
+        .cta-button:hover::after {
+            transform: rotate(25deg) translateX(280%);
+        }
+
+        .cta-button.outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255,255,255,.9);
+            box-shadow: none;
+        }
+
+        .cta-button.outline:hover {
+            background: #fff;
+            color: var(--accent);
+        }
+
+        /* Policy Viewer Styles */
+        .policy-viewer-container {
+            padding: 2rem 0;
+            background: radial-gradient(1200px 500px at -10% -10%, rgba(124,58,237,.08), transparent 60%),
+            radial-gradient(1200px 500px at 110% -10%, rgba(178,190,181,.10), transparent 60%),
+            linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-primary) 100%);
+            min-height: calc(100vh - 80px);
+        }
+
+        .card {
+            background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
+            linear-gradient(135deg, rgba(124,58,237,.25), rgba(178,190,181,.25)) border-box;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .table-container {
+            max-height: 70vh;
+            overflow-y: auto;
+            border-radius: var(--radius);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .search-input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+        }
+
+        select {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        td, th {
+            padding: 0.75rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr {
+            transition: var(--transition);
+        }
+
+        tr:hover {
+            background: rgba(124,58,237,0.05);
+        }
+
+        .enroll-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .enroll-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .enroll-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-active {
+            background: rgba(34, 197, 94, 0.1);
+            color: rgb(22, 163, 74);
+        }
+
+        .status-inactive {
+            background: rgba(239, 68, 68, 0.1);
+            color: rgb(220, 38, 38);
+        }
+
+        /* Footer */
+        footer {
+            background: #141824;
+            color: #fff;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 1.1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column p {
+            color: #dfe3ea;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: .7rem;
+            color: #e1e1e6;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent-soft);
+        }
+
+        .social-links {
+            display: flex;
+            gap: .8rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            color: #fff;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: .9rem;
+            color: #cfd3da;
+        }
+
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg), var(--glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: .6rem;
+            }
+
+            nav ul {
+                margin-top: .5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: .25rem .5rem;
+            }
+
+            .table-container {
+                max-height: 60vh;
+            }
+
+            td, th {
+                padding: 0.5rem 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="container header-content">
+        <a class="logo" href="home.html" aria-label="TOTALCARE Home">
+            <i class="fas fa-shield-heart"></i>
+            <span>TOTALCARE</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="profile.html">My profile</a></li>
+                <li><a href="policy.html">Policy-View</a></li>
+                <li><a href="claim.html">claims</a></li>
+                <li><a href="getSupport.html">support</a></li>
+            </ul>
+        </nav>
+        <div class="actions">
+            <button class="mode-toggle" id="proModeToggle" aria-pressed="false" title="Toggle Professional Mode">
+                <i class="fa-solid fa-briefcase"></i> Pro Mode
+            </button>
+            <button class="cta-button">Get a Quote</button>
+        </div>
+    </div>
+</header>
+
+<!-- Policy Viewer -->
+<div class="policy-viewer-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="mb-8 flex justify-between items-start">
+            <div>
+                <h1 class="text-3xl font-bold mb-2">Life Insurance Policies</h1>
+                <p class="text-gray-600 dark:text-gray-400">Browse and enroll in our life insurance policies</p>
+            </div>
+            <a href="home.html" class="cta-button flex items-center">
+                <i class="fas fa-cog mr-2"></i>
+                   Sign out
+            </a>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="card p-6 mb-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <div class="relative flex-1">
+                        <input
+                                type="text"
+                                id="searchInput"
+                                placeholder="Search by name, code, or description..."
+                                class="search-input w-full pl-10 pr-4 py-2 rounded-lg"
+                        >
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <select id="sortBy" class="px-4 py-2 rounded-lg">
+                        <option value="createdAt">Sort by Newest</option>
+                        <option value="name">Policy Name</option>
+                        <option value="termYears">Term Length</option>
+                        <option value="premiumMonthly">Monthly Premium</option>
+                        <option value="sumAssured">Sum Assured</option>
+                    </select>
+
+                    <select id="sortDir" class="px-4 py-2 rounded-lg">
+                        <option value="desc">Descending</option>
+                        <option value="asc">Ascending</option>
+                    </select>
+                </div>
+
+                <div class="text-sm text-gray-600 dark:text-gray-400" id="policyCount">
+                    Loading policies...
+                </div>
+            </div>
+        </div>
+
+        <!-- Policies Table -->
+        <div class="card overflow-hidden">
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Policy Name</th>
+                        <th>Term</th>
+                        <th>Monthly Premium</th>
+                        <th>Sum Assured</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="policiesTableBody">
+                    <tr>
+                        <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                            <div class="flex flex-col items-center">
+                                <div class="w-12 h-12 border-2 border-gray-300 border-t-indigo-500 rounded-full animate-spin mb-4"></div>
+                                <p>Loading policies...</p>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="bg-gray-50 dark:bg-gray-800 px-6 py-4 flex items-center justify-between" id="paginationContainer">
+                <div class="hidden md:block">
+                    <p class="text-sm text-gray-700 dark:text-gray-300" id="paginationInfo">
+                        <span class="font-medium" id="pageInfo">1</span> of <span class="font-medium" id="totalPagesInfo">1</span>
+                    </p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button
+                            id="prevPage"
+                            class="pagination-btn"
+                            disabled
+                    >
+                        Previous
+                    </button>
+                    <button
+                            id="nextPage"
+                            class="pagination-btn"
+                            disabled
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="hidden card p-12 mt-6 text-center">
+            <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+            <h3 class="text-lg font-medium mb-2">No policies found</h3>
+            <p class="text-gray-600 dark:text-gray-400">Try adjusting your search criteria.</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="hidden bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4 mt-6">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-circle text-red-400"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-800 dark:text-red-200" id="errorTitle">Error</h3>
+                    <div class="mt-2 text-sm text-red-700 dark:text-red-300" id="errorText"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>TOTALCARE</h3>
+                <p>Providing financial security and peace of mind through comprehensive life insurance solutions.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="profile.html">My Profile</a></li>
+                    <li><a href="policy.html">Policy-View</a></li>
+                    <li><a href="claim.html">Claims</a></li>
+                    <li><a href="getSupport.html">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#plans">Term Life Insurance</a></li>
+                    <li><a href="#plans">Whole Life Insurance</a></li>
+                    <li><a href="#plans">Universal Life Insurance</a></li>
+                    <li><a href="#plans">Family Plans</a></li>
+                    <li><a href="#plans">Retirement Planning</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Insurance Ave, Secure City</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@totslcare.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 TOTALCARE Insurance. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Dark Mode Toggle -->
+<button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle Dark Mode">
+    <i class="fas fa-moon" id="darkModeIcon"></i>
+</button>
+
+<script>
+    class PolicyViewer {
+        constructor() {
+            this.currentPage = 1;
+            this.pageSize = 6;
+            this.query = '';
+            this.sortBy = 'createdAt';
+            this.sortDir = 'desc';
+            this.totalPages = 1;
+            this.totalCount = 0;
+
+            this.initializeElements();
+            this.bindEvents();
+            this.loadPolicies();
+            this.initDarkMode();
+        }
+
+        initializeElements() {
+            this.elements = {
+                searchInput: document.getElementById('searchInput'),
+                sortBy: document.getElementById('sortBy'),
+                sortDir: document.getElementById('sortDir'),
+                policiesTableBody: document.getElementById('policiesTableBody'),
+                policyCount: document.getElementById('policyCount'),
+                paginationInfo: document.getElementById('paginationInfo'),
+                pageInfo: document.getElementById('pageInfo'),
+                totalPagesInfo: document.getElementById('totalPagesInfo'),
+                prevPage: document.getElementById('prevPage'),
+                nextPage: document.getElementById('nextPage'),
+                paginationContainer: document.getElementById('paginationContainer'),
+                noResults: document.getElementById('noResults'),
+                errorMessage: document.getElementById('errorMessage'),
+                errorTitle: document.getElementById('errorTitle'),
+                errorText: document.getElementById('errorText'),
+                darkModeToggle: document.getElementById('darkModeToggle'),
+                darkModeIcon: document.getElementById('darkModeIcon')
+            };
+        }
+
+        bindEvents() {
+            this.elements.searchInput.addEventListener('input', (e) => {
+                this.query = e.target.value;
+                this.currentPage = 1;
+                this.loadPolicies();
+            });
+
+            this.elements.searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.currentPage = 1;
+                    this.loadPolicies();
+                }
+            });
+
+            this.elements.sortBy.addEventListener('change', () => {
+                this.sortBy = this.elements.sortBy.value;
+                this.currentPage = 1;
+                this.loadPolicies();
+            });
+
+            this.elements.sortDir.addEventListener('change', () => {
+                this.sortDir = this.elements.sortDir.value;
+                this.currentPage = 1;
+                this.loadPolicies();
+            });
+
+            this.elements.prevPage.addEventListener('click', () => {
+                if (this.currentPage > 1) {
+                    this.currentPage--;
+                    this.loadPolicies();
+                }
+            });
+
+            this.elements.nextPage.addEventListener('click', () => {
+                if (this.currentPage < this.totalPages) {
+                    this.currentPage++;
+                    this.loadPolicies();
+                }
+            });
+
+            // Dark mode toggle
+            this.elements.darkModeToggle.addEventListener('click', () => {
+                this.toggleDarkMode();
+            });
+        }
+
+        async loadPolicies() {
+            try {
+                this.showLoading();
+                const response = await fetch(`http://localhost:9091/api/policies?page=${this.currentPage}&size=${this.pageSize}&sortBy=${this.sortBy}&sortDir=${this.sortDir}&query=${encodeURIComponent(this.query)}`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                this.renderPolicies(data);
+                this.updatePagination(data);
+                this.hideError();
+            } catch (error) {
+                console.error('Error loading policies:', error);
+                this.showError('Failed to load policies', 'Please check if the backend server is running on http://localhost:9091.');
+                this.showNoResults();
+            }
+        }
+
+        renderPolicies(data) {
+            const policies = data.policies || [];
+
+            if (policies.length === 0) {
+                this.showNoResults();
+                return;
+            }
+
+            this.elements.policiesTableBody.innerHTML = policies.map(policy => `
+                    <tr class="fade-in">
+                        <td class="font-semibold text-indigo-600 dark:text-indigo-400">
+                            ${policy.code}
+                        </td>
+                        <td>
+                            <div class="font-medium">${policy.name}</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">${policy.description || 'No description'}</div>
+                        </td>
+                        <td>
+                            ${policy.termYears} years
+                        </td>
+                        <td>
+                            $${policy.premiumMonthly.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}/mo
+                        </td>
+                        <td>
+                            $${policy.sumAssured.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})}
+                        </td>
+                        <td>
+                            <span class="status-badge ${policy.active ? 'status-active' : 'status-inactive'}">
+                                ${policy.active ? 'Active' : 'Inactive'}
+                            </span>
+                        </td>
+                        <td>
+                            <button type="button"
+                               class="enroll-btn ${!policy.active ? 'opacity-50 cursor-not-allowed' : ''}"
+                               data-active="${policy.active}"
+                               data-id="${policy.id}"
+                               data-code="${policy.code}"
+                               data-name="${policy.name}"
+                               data-term="${policy.termYears}"
+                               data-premium="${policy.premiumMonthly}"
+                               data-sum="${policy.sumAssured}"
+                               data-description="${(policy.description||'').replace(/"/g,'&quot;') }"
+                               ${!policy.active ? 'disabled' : ''}>
+                                ${policy.active ? 'Enroll Now' : 'Not Available'}
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+
+            // attach enroll handlers
+            this.elements.policiesTableBody.querySelectorAll('.enroll-btn').forEach(btn => {
+                if (btn.dataset.active !== 'true') return;
+                btn.addEventListener('click', () => {
+                    const selected = {
+                        id: parseInt(btn.dataset.id),
+                        code: btn.dataset.code,
+                        name: btn.dataset.name,
+                        termYears: parseInt(btn.dataset.term),
+                        premiumMonthly: parseFloat(btn.dataset.premium),
+                        sumAssured: parseFloat(btn.dataset.sum),
+                        description: btn.dataset.description || ''
+                    };
+                    try { localStorage.setItem('selectedPolicy', JSON.stringify(selected)); } catch(e) {}
+                    // Include user context via query params to help payment page auto-fetch
+                    let qs = '';
+                    try {
+                        const session = JSON.parse(localStorage.getItem('userSession')||'null');
+                        if (session && (session.userId || session.nic || session.email)) {
+                            const parts = [];
+                            if (session.userId) parts.push('userId=' + encodeURIComponent(session.userId));
+                            if (session.nic) parts.push('nic=' + encodeURIComponent(session.nic));
+                            if (session.email) parts.push('email=' + encodeURIComponent(session.email));
+                            if (parts.length) qs = '?' + parts.join('&');
+                        }
+                    } catch(e) {}
+                    window.location.href = '/payment.html' + qs;
+                });
+            });
+
+            this.elements.noResults.classList.add('hidden');
+            this.elements.paginationContainer.classList.remove('hidden');
+        }
+
+        updatePagination(data) {
+            this.currentPage = data.currentPage;
+            this.totalPages = data.totalPages;
+            this.totalCount = data.totalCount;
+
+            this.elements.pageInfo.textContent = this.currentPage;
+            this.elements.totalPagesInfo.textContent = this.totalPages;
+            this.elements.policyCount.textContent = `Showing ${this.totalCount} total policy(ies)`;
+
+            this.elements.prevPage.disabled = this.currentPage <= 1;
+            this.elements.nextPage.disabled = this.currentPage >= this.totalPages;
+
+            this.elements.prevPage.classList.toggle('opacity-50', this.currentPage <= 1);
+            this.elements.nextPage.classList.toggle('opacity-50', this.currentPage >= this.totalPages);
+        }
+
+        showLoading() {
+            this.elements.policiesTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                            <div class="flex flex-col items-center">
+                                <div class="w-12 h-12 border-2 border-gray-300 border-t-indigo-500 rounded-full animate-spin mb-4"></div>
+                                <p>Loading policies...</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            this.elements.noResults.classList.add('hidden');
+            this.elements.errorMessage.classList.add('hidden');
+            this.elements.paginationContainer.classList.add('hidden');
+        }
+
+        showNoResults() {
+            this.elements.policiesTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                            <div class="flex flex-col items-center">
+                                <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                                <p class="mt-2">No policies found matching your criteria.</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            this.elements.noResults.classList.add('hidden');
+            this.elements.paginationContainer.classList.add('hidden');
+            this.elements.errorMessage.classList.add('hidden');
+        }
+
+        showError(title, message) {
+            this.elements.errorTitle.textContent = title || 'Error';
+            this.elements.errorText.textContent = message || 'An unexpected error occurred.';
+            this.elements.errorMessage.classList.remove('hidden');
+            this.elements.noResults.classList.add('hidden');
+            this.elements.paginationContainer.classList.add('hidden');
+        }
+
+        hideError() {
+            this.elements.errorMessage.classList.add('hidden');
+        }
+
+        initDarkMode() {
+            // Check for saved theme preference or respect OS setting
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const savedTheme = localStorage.getItem('theme');
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+                document.body.classList.add('dark-mode');
+                this.elements.darkModeIcon.classList.remove('fa-moon');
+                this.elements.darkModeIcon.classList.add('fa-sun');
+            }
+        }
+
+        toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                this.elements.darkModeIcon.classList.remove('fa-moon');
+                this.elements.darkModeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('theme', 'light');
+                this.elements.darkModeIcon.classList.remove('fa-sun');
+                this.elements.darkModeIcon.classList.add('fa-moon');
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        new PolicyViewer();
+    });
+</script>
+</body>
+</html>

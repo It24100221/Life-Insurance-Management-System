@@ -1,4 +1,3 @@
-// UserEntity.java (src/main/java/com/example/insurancebackend/entity/UserEntity.java)
 package com.example.insurancebackend.entity;
 
 import jakarta.persistence.*;
@@ -41,4 +40,19 @@ public class User {
     @CreationTimestamp
     @Column(name = "user_created_at", nullable = false, updatable = false)
     private LocalDateTime userCreatedAt;
+
+    @Column(name = "user_updated_at", nullable = false)
+    private LocalDateTime userUpdatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        if (userUpdatedAt == null) {
+            userUpdatedAt = LocalDateTime.now();
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        userUpdatedAt = LocalDateTime.now();
+    }
 }

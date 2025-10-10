@@ -8,9 +8,10 @@ import lombok.Setter;
 public class RegisterRequest {
     private String fullName;
     private String email;
-    private String nicNumber;
-    private String phoneNumber;
+    private String nic; // renamed to match frontend
+    private String phone; // renamed to match frontend
     private String password;
     private String confirmPassword;
     private boolean terms;
+    private String role; // added role to allow setting user role at registration time
 }

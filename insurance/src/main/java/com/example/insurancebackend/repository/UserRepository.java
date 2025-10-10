@@ -18,4 +18,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "LOWER(u.userNic) LIKE LOWER(CONCAT('%', :query, '%'))) AND " +
             "(:role IS NULL OR u.userRole = :role)")
     Page<User> searchUsers(@Param("query") String query, @Param("role") String role, Pageable pageable);
+
+    User findByUserNic(String userNic);
+    User findByUserEmail(String userEmail);
+    // Case-insensitive email lookup for authentication
+    User findByUserEmailIgnoreCase(String userEmail);
 }

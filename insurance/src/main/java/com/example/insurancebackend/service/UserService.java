@@ -1,8 +1,8 @@
-// UserService.java (src/main/java/com/example/insurancebackend/service/UserService.java)
 package com.example.insurancebackend.service;
 
 import com.example.insurancebackend.entity.User;
 import com.example.insurancebackend.repository.UserRepository;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +29,10 @@ public class UserService {
     }
 
     public User createUser(User user) {
+        // Hash password before saving
+        if (user.getUserPassword() != null && !user.getUserPassword().isEmpty()) {
+            user.setUserPassword(BCrypt.hashpw(user.getUserPassword(), BCrypt.gensalt()));
+        }
         return userRepository.save(user);
     }
 
@@ -41,7 +45,7 @@ public class UserService {
         existingUser.setUserRole(user.getUserRole());
         existingUser.setUserIsActive(user.getUserIsActive());
         if (user.getUserPassword() != null && !user.getUserPassword().isEmpty()) {
-            existingUser.setUserPassword(user.getUserPassword());
+            existingUser.setUserPassword(BCrypt.hashpw(user.getUserPassword(), BCrypt.gensalt()));
         }
         return userRepository.save(existingUser);
     }
@@ -54,7 +58,10 @@ public class UserService {
         userRepository.deleteAll();
         List<User> sampleUsers = List.of(
                 createSampleUser("John Doe", "john@example.com", "123-456-7890", "NIC12345", "password123", "USER"),
-                createSampleUser("Jane Smith", "jane@example.com", "987-654-3210", "NIC67890", "password123", "AGENT")
+                createSampleUser("Jane Smith", "jane@example.com", "987-654-3210", "NIC67890", "password123", "AGENT"),
+                createSampleUser("Bob Johnson", "bob@example.com", "555-123-4567", "NIC11111", "password123", "AUDITOR"),
+                createSampleUser("Alice Brown", "alice@example.com", "555-987-6543", "NIC22222", "password123", "CLAIM_OFFICER"),
+                createSampleUser("Charlie Davis", "charlie@example.com", "555-444-3333", "NIC33333", "password123", "SUPPORT_STAFF")
         );
         userRepository.saveAll(sampleUsers);
     }
@@ -65,7 +72,7 @@ public class UserService {
         user.setUserEmail(email);
         user.setUserPhone(phone);
         user.setUserNic(nic);
-        user.setUserPassword(password);
+        user.setUserPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
         user.setUserRole(role);
         user.setUserIsActive(true);
         return user;
