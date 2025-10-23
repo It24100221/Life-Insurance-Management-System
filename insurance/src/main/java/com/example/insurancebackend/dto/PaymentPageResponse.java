@@ -16,4 +16,3 @@ public class PaymentPageResponse {
     private boolean first;
     private boolean last;
 }
-

@@ -7,38 +7,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add SheetJS library for Excel export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         :root {
-            /* Pro Theme — Purple + Ash */
-            --ash: #B2BEB5;
-            --ash-2: #c7d0ca;
-            --ash-dark: #8C9890;
-            --accent: #7C3AED;
-            --accent-2: #8B5CF6;
-            --accent-dark: #5B21B6;
-            --accent-soft: #A78BFA;
+            /* Professional Blue Theme */
+            --primary-blue: #1e3a8a;
+            --primary-blue-light: #3b82f6;
+            --primary-blue-dark: #1e40af;
+            --accent-gold: #d97706;
+            --accent-gold-light: #f59e0b;
 
-            --light: #f5f6f8;
-            --white: #ffffff;
-            --dark: #0f172a;
-            --text: #1f2937;
-            --text-light: #6b7280;
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-card-light: #334155;
+            --dark-text: #f8fafc;
+            --dark-text-light: #cbd5e1;
+            --dark-accent: var(--primary-blue-light);
+            --dark-accent-2: #60a5fa;
+            --dark-accent-dark: var(--primary-blue-dark);
+            --dark-accent-soft: #93c5fd;
 
-            --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
-            --shadow-md: 0 14px 30px rgba(17, 24, 39, 0.10);
-            --shadow-lg: 0 22px 45px rgba(17, 24, 39, 0.14);
-            --glow: 0 10px 25px rgba(124, 58, 237, 0.22);
+            --light: #334155;
+            --white: #334155;
+            --dark: #f8fafc;
+            --text: #f1f5f9;
+            --text-light: #cbd5e1;
+
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.20);
+            --shadow-md: 0 14px 30px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 22px 45px rgba(0, 0, 0, 0.30);
+            --glow: 0 10px 25px rgba(59, 130, 246, 0.25);
 
             --transition: all .3s ease;
             --radius: 18px;
             --radius-lg: 22px;
 
             /* Light mode variables */
-            --bg-primary: #fafafa;
-            --bg-secondary: #ffffff;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --border-color: #e5e7eb;
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
+            --border-color: #334155;
 
             /* Status colors */
             --success-color: #10b981;
@@ -49,10 +59,10 @@
 
         .dark-mode {
             /* Dark mode variables */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
             --border-color: #334155;
         }
 
@@ -88,7 +98,7 @@
 
         /* Header */
         header {
-            background: linear-gradient(135deg, rgba(140,152,144,0.92) 0%, rgba(124,58,237,0.92) 100%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
             color: #fff;
             padding: 1rem 0;
             position: sticky;
@@ -96,6 +106,7 @@
             z-index: 200;
             box-shadow: var(--shadow);
             backdrop-filter: saturate(140%) blur(6px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .header-content {
@@ -117,8 +128,8 @@
 
         .logo i {
             margin-right: 10px;
-            color: #fff;
-            filter: drop-shadow(0 4px 10px rgba(255,255,255,.25));
+            color: var(--accent-gold-light);
+            filter: drop-shadow(0 4px 10px rgba(245, 158, 11, 0.25));
         }
 
         nav ul {
@@ -148,10 +159,10 @@
             height: 2px;
             bottom: -3px;
             left: 0;
-            background-color: #fff;
+            background-color: var(--accent-gold-light);
             transition: var(--transition);
             opacity: .9;
-            box-shadow: 0 2px 8px rgba(255,255,255,.65);
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.65);
         }
 
         nav ul li a:hover {
@@ -160,7 +171,7 @@
         }
 
         nav ul li a:hover:after {
-            width: 100%;
+            width = 100%;
         }
 
         .actions {
@@ -171,7 +182,7 @@
 
         .cta-button {
             --shine: linear-gradient(120deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.65) 20%, rgba(255,255,255,.0) 40%);
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             color: #fff;
             border: none;
             padding: .9rem 1.25rem;
@@ -210,21 +221,22 @@
         /* Dashboard Container */
         .dashboard-container {
             padding: 2rem 0;
-            background: radial-gradient(1200px 500px at -10% -10%, rgba(124,58,237,.08), transparent 60%),
-            radial-gradient(1200px 500px at 110% -10%, rgba(178,190,181,.10), transparent 60%),
+            background: radial-gradient(1200px 500px at -10% -10%, rgba(59, 130, 246, 0.08), transparent 60%),
+            radial-gradient(1200px 500px at 110% -10%, rgba(51, 65, 85, 0.10), transparent 60%),
             linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-primary) 100%);
             min-height: calc(100vh - 80px);
         }
 
         /* Cards */
         .card {
-            background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
-            linear-gradient(135deg, rgba(124,58,237,.25), rgba(178,190,181,.25)) border-box;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)) padding-box,
+            linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(51, 65, 85, 0.25)) border-box;
             border: 1px solid transparent;
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
 
         .card:hover {
@@ -241,8 +253,8 @@
         }
 
         .stat-card {
-            background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
-            linear-gradient(135deg, rgba(124,58,237,.25), rgba(178,190,181,.25)) border-box;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)) padding-box,
+            linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(51, 65, 85, 0.25)) border-box;
             border: 1px solid transparent;
             border-radius: var(--radius);
             padding: 1.5rem;
@@ -250,6 +262,7 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
         .stat-card:hover {
@@ -268,10 +281,10 @@
             font-size: 1.5rem;
         }
 
-        .stat-icon.blue { background: rgba(59, 130, 246, 0.1); color: rgb(37, 99, 235); }
-        .stat-icon.green { background: rgba(34, 197, 94, 0.1); color: rgb(22, 163, 74); }
-        .stat-icon.yellow { background: rgba(245, 158, 11, 0.1); color: rgb(217, 119, 6); }
-        .stat-icon.purple { background: rgba(124, 58, 237, 0.1); color: rgb(91, 33, 182); }
+        .stat-icon.blue { background: rgba(59, 130, 246, 0.1); color: rgb(96, 165, 250); }
+        .stat-icon.green { background: rgba(34, 197, 94, 0.1); color: rgb(74, 222, 128); }
+        .stat-icon.yellow { background: rgba(245, 158, 11, 0.1); color: rgb(251, 191, 36); }
+        .stat-icon.purple { background: rgba(139, 92, 246, 0.1); color: rgb(167, 139, 250); }
 
         .stat-value {
             font-size: 2rem;
@@ -321,7 +334,7 @@
         }
 
         tr:hover {
-            background: rgba(124,58,237,0.05);
+            background: rgba(59, 130, 246, 0.05);
         }
 
         /* Status Badge */
@@ -336,17 +349,17 @@
 
         .status-approved {
             background: rgba(34, 197, 94, 0.1);
-            color: rgb(22, 163, 74);
+            color: rgb(74, 222, 128);
         }
 
         .status-pending {
             background: rgba(245, 158, 11, 0.1);
-            color: rgb(217, 119, 6);
+            color: rgb(251, 191, 36);
         }
 
         .status-rejected {
             background: rgba(239, 68, 68, 0.1);
-            color: rgb(220, 38, 38);
+            color: rgb(248, 113, 113);
         }
 
         /* Action Buttons */
@@ -400,12 +413,34 @@
 
         .delete-btn {
             background: rgba(107, 114, 128, 0.1);
-            color: rgb(107, 114, 128);
+            color: var(--text-secondary);
             border: 1px solid rgba(107, 114, 128, 0.2);
         }
 
         .delete-btn:hover {
             background: rgba(107, 114, 128, 0.2);
+        }
+
+        /* Excel Export Button */
+        .excel-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.25rem;
+            border-radius: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            letter-spacing: .3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .excel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         /* Modal */
@@ -430,7 +465,7 @@
         .modal {
             width: 100%;
             max-width: 560px;
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
             color: var(--text-primary);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
@@ -438,7 +473,8 @@
             transform: translateY(20px) scale(.98);
             opacity: 0;
             transition: var(--transition);
-            border: 1px solid rgba(124,58,237,.12);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .modal-overlay.active .modal {
@@ -448,7 +484,7 @@
 
         .modal-header {
             padding: 1.1rem 1.4rem;
-            background: linear-gradient(135deg, var(--ash) 0%, #f6f6f6 100%);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 64, 175, 0.1));
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -457,7 +493,7 @@
         .modal-header h3 {
             margin: 0;
             font-size: 1.3rem;
-            color: var(--dark);
+            color: var(--text-primary);
         }
 
         .modal-close {
@@ -465,7 +501,7 @@
             border: none;
             font-size: 1.3rem;
             cursor: pointer;
-            color: var(--text);
+            color: var(--text-secondary);
             opacity: .7;
         }
 
@@ -495,16 +531,16 @@
         }
 
         .btn.secondary {
-            background: #eef0f2;
-            color: var(--text);
+            background: rgba(51, 65, 85, 0.5);
+            color: var(--text-secondary);
         }
 
         .btn.secondary:hover {
-            background: #e5e7eb;
+            background: rgba(51, 65, 85, 0.7);
         }
 
         .btn.primary {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             color: #fff;
             box-shadow: var(--glow);
         }
@@ -516,7 +552,7 @@
 
         /* Footer */
         footer {
-            background: #141824;
+            background: #0f172a;
             color: #fff;
             padding: 3rem 0 1rem;
         }
@@ -540,7 +576,7 @@
         }
 
         .footer-column p {
-            color: #dfe3ea;
+            color: #cbd5e1;
         }
 
         .footer-column ul {
@@ -549,7 +585,7 @@
 
         .footer-column ul li {
             margin-bottom: .7rem;
-            color: #e1e1e6;
+            color: #e2e8f0;
         }
 
         .footer-column ul li a {
@@ -559,7 +595,7 @@
         }
 
         .footer-column ul li a:hover {
-            color: var(--accent-soft);
+            color: var(--dark-accent-soft);
         }
 
         .social-links {
@@ -581,7 +617,7 @@
         }
 
         .social-links a:hover {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             transform: translateY(-3px);
             box-shadow: var(--glow);
         }
@@ -591,7 +627,7 @@
             padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.08);
             font-size: .9rem;
-            color: #cfd3da;
+            color: #94a3b8;
         }
 
         /* Dark Mode Toggle */
@@ -601,7 +637,7 @@
             right: 20px;
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            background: linear-gradient(135deg, var(--dark-accent), var(--dark-accent-dark));
             color: #fff;
             border: none;
             border-radius: 50%;
@@ -657,12 +693,12 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 <!-- Header -->
 <header>
     <div class="container header-content">
         <a class="logo" href="home.html" aria-label="TOTALCARE Home">
-            <i class="fas fa-shield-heart"></i>
+            <i class="fas fa-shield-alt"></i>
             <span>TOTALCARE</span>
         </a>
         <nav>
@@ -670,7 +706,7 @@
                 <li><a href="home.html">Home</a></li>
                 <li><a href="claim.html">claims </a></li>
                 <li><a href="claim_officer.html">Claim Management</a></li>
-             </ul>
+            </ul>
         </nav>
         <div class="actions">
             <button class="cta-button" onclick="window.location.href='login.html'">
@@ -687,9 +723,11 @@
         <div class="mb-8 flex justify-between items-start">
             <div>
                 <h1 class="text-3xl font-bold mb-2">Claim Officer Dashboard</h1>
-                <p class="text-gray-600 dark:text-gray-400">Manage and process insurance claims</p>
+                <p class="text-gray-400">Manage and process insurance claims</p>
             </div>
-
+            <button class="excel-btn" id="exportExcel">
+                <i class="fas fa-file-excel"></i> Export to Excel
+            </button>
         </div>
 
         <!-- Stats Cards -->
@@ -842,7 +880,8 @@
             totalClaims: document.getElementById('totalClaims'),
             approvedClaims: document.getElementById('approvedClaims'),
             pendingClaims: document.getElementById('pendingClaims'),
-            rejectedClaims: document.getElementById('rejectedClaims')
+            rejectedClaims: document.getElementById('rejectedClaims'),
+            exportExcel: document.getElementById('exportExcel')
         };
 
         // Show message modal
@@ -872,6 +911,57 @@
             elements.pendingClaims.textContent = pending;
             elements.rejectedClaims.textContent = rejected;
         }
+
+        // Export to Excel function
+        function exportToExcel() {
+            if (claims.length === 0) {
+                showMessage('No claims data available to export.');
+                return;
+            }
+
+            try {
+                // Prepare data for Excel
+                const excelData = claims.map(claim => ({
+                    'Claim ID': claim.claimCode,
+                    'First Name': claim.firstName,
+                    'Last Name': claim.lastName,
+                    'NIC': claim.nic,
+                    'Contact Number': claim.contactNumber,
+                    'Email': claim.email,
+                    'Accident Type': claim.accidentType,
+                    'Accident Date': new Date(claim.accidentDate).toLocaleDateString(),
+                    'Accident Time': claim.accidentTime,
+                    'Accident Location': claim.accidentLocation,
+                    'Accident Description': claim.accidentDescription,
+                    'Estimated Cost (LKR)': claim.estimatedCost,
+                    'Account Holder': claim.accountHolder,
+                    'Bank Name': claim.bankName,
+                    'Branch Name': claim.branchName,
+                    'Account Number': claim.accountNumber,
+                    'Account Type': claim.accountType,
+                    'Status': claim.status,
+                    'Submission Date': new Date(claim.submissionDate || claim.createdAt).toLocaleDateString()
+                }));
+
+                // Create worksheet
+                const ws = XLSX.utils.json_to_sheet(excelData);
+
+                // Create workbook
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Claims Data');
+
+                // Generate Excel file and trigger download
+                const currentDate = new Date().toISOString().slice(0, 10);
+                XLSX.writeFile(wb, `Claims_Dashboard_${currentDate}.xlsx`);
+
+                showMessage('Excel file exported successfully!');
+            } catch (error) {
+                showMessage('Error exporting to Excel: ' + error.message);
+            }
+        }
+
+        // Bind Excel export event
+        elements.exportExcel.addEventListener('click', exportToExcel);
 
         // Fetch and display claims
         async function loadClaims() {

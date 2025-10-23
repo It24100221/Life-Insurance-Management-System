@@ -3,48 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Support - TOTALCARE</title>
+    <title>Customer Support - SecureLife</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Pro Theme — Purple + Ash */
-            --ash: #B2BEB5;
-            --ash-2: #c7d0ca;
-            --ash-dark: #8C9890;
-            --accent: #7C3AED;
-            --accent-2: #8B5CF6;
-            --accent-dark: #5B21B6;
-            --accent-soft: #A78BFA;
+            /* Professional Blue Theme */
+            --primary-blue: #1e3a8a;
+            --primary-blue-light: #3b82f6;
+            --primary-blue-dark: #1e40af;
+            --accent-gold: #d97706;
+            --accent-gold-light: #f59e0b;
 
-            --light: #f5f6f8;
-            --white: #ffffff;
-            --dark: #0f172a;
-            --text: #1f2937;
-            --text-light: #6b7280;
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-card-light: #334155;
+            --dark-text: #f8fafc;
+            --dark-text-light: #cbd5e1;
+            --dark-accent: var(--primary-blue-light);
+            --dark-accent-2: #60a5fa;
+            --dark-accent-dark: var(--primary-blue-dark);
+            --dark-accent-soft: #93c5fd;
 
-            --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
-            --shadow-md: 0 14px 30px rgba(17, 24, 39, 0.10);
-            --shadow-lg: 0 22px 45px rgba(17, 24, 39, 0.14);
-            --glow: 0 10px 25px rgba(124, 58, 237, 0.22);
+            --light: #334155;
+            --white: #334155;
+            --dark: #f8fafc;
+            --text: #f1f5f9;
+            --text-light: #cbd5e1;
+
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.20);
+            --shadow-md: 0 14px 30px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 22px 45px rgba(0, 0, 0, 0.30);
+            --glow: 0 10px 25px rgba(59, 130, 246, 0.25);
 
             --transition: all .3s ease;
             --radius: 18px;
             --radius-lg: 22px;
 
-            /* Dark mode variables */
-            --bg-primary: #fafafa;
-            --bg-secondary: #ffffff;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --border-color: #e5e7eb;
+            /* Light mode variables */
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
+            --border-color: #334155;
         }
 
         .dark-mode {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
+            /* Dark mode variables */
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
             --border-color: #334155;
         }
 
@@ -80,7 +89,7 @@
 
         /* Header */
         header {
-            background: linear-gradient(135deg, rgba(140,152,144,0.92) 0%, rgba(124,58,237,0.92) 100%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
             color: #fff;
             padding: 1rem 0;
             position: sticky;
@@ -88,6 +97,7 @@
             z-index: 200;
             box-shadow: var(--shadow);
             backdrop-filter: saturate(140%) blur(6px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .header-content {
@@ -109,8 +119,8 @@
 
         .logo i {
             margin-right: 10px;
-            color: #fff;
-            filter: drop-shadow(0 4px 10px rgba(255,255,255,.25));
+            color: var(--accent-gold-light);
+            filter: drop-shadow(0 4px 10px rgba(245, 158, 11, 0.25));
         }
 
         nav ul {
@@ -140,10 +150,10 @@
             height: 2px;
             bottom: -3px;
             left: 0;
-            background-color: #fff;
+            background-color: var(--accent-gold-light);
             transition: var(--transition);
             opacity: .9;
-            box-shadow: 0 2px 8px rgba(255,255,255,.65);
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.65);
         }
 
         nav ul li a:hover {
@@ -178,19 +188,19 @@
 
         .mode-toggle:hover {
             background: #fff;
-            color: var(--accent);
+            color: var(--dark-accent);
             box-shadow: 0 10px 20px rgba(255,255,255,.25);
             transform: translateY(-1px);
         }
 
         .mode-toggle.active {
             background: #fff;
-            color: var(--accent);
+            color: var(--dark-accent);
         }
 
         .cta-button {
             --shine: linear-gradient(120deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.65) 20%, rgba(255,255,255,.0) 40%);
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             color: #fff;
             border: none;
             padding: .9rem 1.25rem;
@@ -235,26 +245,27 @@
 
         .cta-button.outline:hover {
             background: #fff;
-            color: var(--accent);
+            color: var(--dark-accent);
         }
 
         /* Support System Styles */
         .support-container {
             padding: 2rem 0;
-            background: radial-gradient(1200px 500px at -10% -10%, rgba(124,58,237,.08), transparent 60%),
-            radial-gradient(1200px 500px at 110% -10%, rgba(178,190,181,.10), transparent 60%),
+            background: radial-gradient(1200px 500px at -10% -10%, rgba(59, 130, 246, 0.08), transparent 60%),
+            radial-gradient(1200px 500px at 110% -10%, rgba(51, 65, 85, 0.10), transparent 60%),
             linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-primary) 100%);
             min-height: calc(100vh - 80px);
         }
 
         .card {
-            background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
-            linear-gradient(135deg, rgba(124,58,237,.25), rgba(178,190,181,.25)) border-box;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)) padding-box,
+            linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(51, 65, 85, 0.25)) border-box;
             border: 1px solid transparent;
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
 
         .card:hover {
@@ -262,89 +273,60 @@
             box-shadow: var(--shadow-lg);
         }
 
-        /* Tabs */
-        .tabs {
-            display: flex;
-            background-color: var(--bg-secondary);
-            border-radius: var(--radius) var(--radius) 0 0;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .tab-button {
-            padding: 1rem 1.5rem;
-            border: none;
-            background: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-weight: 600;
-            flex: 1;
-            text-align: center;
-            transition: var(--transition);
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab-button.active {
-            background-color: var(--bg-secondary);
-            color: var(--accent);
-            border-bottom: 3px solid var(--accent);
-        }
-
-        .tab-button:hover:not(.active) {
-            background-color: rgba(124,58,237,0.05);
-            color: var(--accent);
-        }
-
-        .tab-content {
-            display: none;
-            padding: 2rem;
-            background-color: var(--bg-secondary);
-            border-radius: 0 0 var(--radius) var(--radius);
-            box-shadow: var(--shadow);
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* Form Styles */
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
+            position: relative;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 10px;
             font-weight: 600;
             color: var(--text-primary);
-        }
-
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
             transition: var(--transition);
         }
 
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: var(--transition);
+            background: rgba(30, 41, 59, 0.7);
+            color: var(--text-primary);
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
         }
 
-        .form-group textarea {
-            height: 120px;
+        .form-control:focus {
+            outline: none;
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            transform: translateY(-1px);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .form-control:hover {
+            border-color: var(--dark-accent-soft);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
             resize: vertical;
+            line-height: 1.5;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23cbd5e1' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-color: rgba(30, 41, 59, 0.7);
+            padding-right: 40px;
         }
 
         .form-actions {
@@ -355,33 +337,36 @@
         }
 
         .form-actions button {
-            padding: 0.75rem 1.5rem;
+            padding: 14px 24px;
             border: none;
-            border-radius: var(--radius);
+            border-radius: 12px;
             cursor: pointer;
             font-weight: 600;
             transition: var(--transition);
+            font-size: 16px;
+            width: 100%;
         }
 
         .submit-btn {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-            color: white;
-            box-shadow: var(--glow);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            color: var(--dark-text);
+            box-shadow: var(--shadow);
+            letter-spacing: 0.3px;
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-md);
         }
 
         .reset-btn {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--dark-card-light) 0%, var(--dark-card) 100%);
+            color: var(--dark-text);
             border: 1px solid var(--border-color);
         }
 
         .reset-btn:hover {
-            background: var(--border-color);
+            background: linear-gradient(135deg, var(--dark-card) 0%, var(--dark-card-light) 100%);
         }
 
         /* Success Message */
@@ -396,139 +381,9 @@
             border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
-        /* Table Styles */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1.5rem;
-        }
-
-        th, td {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--border-color);
-            text-align: left;
-        }
-
-        th {
-            background-color: var(--bg-secondary);
-            color: var(--text-secondary);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-        }
-
-        tr {
-            transition: var(--transition);
-        }
-
-        tr:hover {
-            background: rgba(124,58,237,0.05);
-        }
-
-        .action-btn {
-            padding: 0.4rem 0.8rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-right: 0.5rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-
-        .edit-btn {
-            background: rgba(255, 193, 7, 0.1);
-            color: rgb(217, 119, 6);
-            border: 1px solid rgba(255, 193, 7, 0.2);
-        }
-
-        .edit-btn:hover {
-            background: rgba(255, 193, 7, 0.2);
-        }
-
-        .delete-btn {
-            background: rgba(220, 53, 69, 0.1);
-            color: rgb(220, 38, 38);
-            border: 1px solid rgba(220, 53, 69, 0.2);
-        }
-
-        .delete-btn:hover {
-            background: rgba(220, 53, 69, 0.2);
-        }
-
-        /* Status Badges */
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .status-open {
-            background: rgba(59, 130, 246, 0.1);
-            color: rgb(37, 99, 235);
-        }
-
-        .status-in-progress {
-            background: rgba(245, 158, 11, 0.1);
-            color: rgb(245, 158, 11);
-        }
-
-        .status-resolved {
-            background: rgba(34, 197, 94, 0.1);
-            color: rgb(22, 163, 74);
-        }
-
-        .status-closed {
-            background: rgba(107, 114, 128, 0.1);
-            color: rgb(107, 114, 128);
-        }
-
-        /* Search Bar */
-        .search-bar {
-            display: flex;
-            margin-bottom: 1.5rem;
-            gap: 0.75rem;
-        }
-
-        .search-bar input {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            transition: var(--transition);
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
-        }
-
-        .search-bar button {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-        }
-
-        .search-bar button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
         /* Footer */
         footer {
-            background: #141824;
+            background: #0f172a;
             color: #fff;
             padding: 3rem 0 1rem;
         }
@@ -552,7 +407,7 @@
         }
 
         .footer-column p {
-            color: #dfe3ea;
+            color: #cbd5e1;
         }
 
         .footer-column ul {
@@ -561,7 +416,7 @@
 
         .footer-column ul li {
             margin-bottom: .7rem;
-            color: #e1e1e6;
+            color: #e2e8f0;
         }
 
         .footer-column ul li a {
@@ -571,7 +426,7 @@
         }
 
         .footer-column ul li a:hover {
-            color: var(--accent-soft);
+            color: var(--dark-accent-soft);
         }
 
         .social-links {
@@ -593,7 +448,7 @@
         }
 
         .social-links a:hover {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             transform: translateY(-3px);
             box-shadow: var(--glow);
         }
@@ -603,7 +458,7 @@
             padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.08);
             font-size: .9rem;
-            color: #cfd3da;
+            color: #94a3b8;
         }
 
         /* Dark mode toggle */
@@ -613,7 +468,7 @@
             right: 20px;
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            background: linear-gradient(135deg, var(--dark-accent), var(--dark-accent-dark));
             color: #fff;
             border: none;
             border-radius: 50%;
@@ -649,31 +504,19 @@
                 margin: .25rem .5rem;
             }
 
-            .tabs {
-                flex-direction: column;
-            }
-
-            .tab-button {
-                padding: 0.75rem;
-            }
-
             .form-actions {
-                flex-direction: column;
-            }
-
-            .search-bar {
                 flex-direction: column;
             }
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 <!-- Header -->
 <header>
     <div class="container header-content">
-        <a class="logo" href="home.html" aria-label="TOTALCARE Home">
-            <i class="fas fa-shield-heart"></i>
-            <span>TOTALCARE</span>
+        <a class="logo" href="home.html" aria-label="SecureLife Home">
+            <i class="fas fa-shield-alt"></i>
+            <span>SecureLife</span>
         </a>
         <nav>
             <ul>
@@ -699,37 +542,31 @@
         <!-- Header -->
         <div class="mb-8 text-center">
             <h1 class="text-3xl font-bold mb-2">Customer Support</h1>
-            <p class="text-gray-600 dark:text-gray-400">We're here to help with any questions or issues</p>
+            <p class="text-gray-400">We're here to help with any questions or issues</p>
         </div>
 
-        <!-- Tabs -->
+        <!-- Create Ticket Card -->
         <div class="card">
-            <div class="tabs">
-                <button class="tab-button active" onclick="openTab('create-ticket')">Create Ticket</button>
-                <button class="tab-button" onclick="openTab('view-tickets')">View Tickets</button>
-            </div>
-
-            <!-- Create Ticket Tab -->
-            <div id="create-ticket" class="tab-content active">
+            <div style="padding: 30px;">
                 <form id="ticket-form">
                     <div class="form-group">
                         <label for="customer-name">Full Name *</label>
-                        <input type="text" id="customer-name" name="customer-name" required>
+                        <input type="text" id="customer-name" name="customer-name" class="form-control" required>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" class="form-control" required>
                     </div>
 
                     <div class="form-group">
                         <label for="policy-number">Policy Number</label>
-                        <input type="text" id="policy-number" name="policy-number">
+                        <input type="text" id="policy-number" name="policy-number" class="form-control">
                     </div>
 
                     <div class="form-group">
                         <label for="inquiry-type">Inquiry Type *</label>
-                        <select id="inquiry-type" name="inquiry-type" required>
+                        <select id="inquiry-type" name="inquiry-type" class="form-control" required>
                             <option value="">Select Inquiry Type</option>
                             <option value="policy">Policy Inquiry</option>
                             <option value="claim">Claim Assistance</option>
@@ -741,7 +578,7 @@
 
                     <div class="form-group">
                         <label for="department">Department *</label>
-                        <select id="department" name="department" required>
+                        <select id="department" name="department" class="form-control" required>
                             <option value="">Select Department</option>
                             <option value="customer-service">Customer Services</option>
                             <option value="claims">Claims</option>
@@ -752,17 +589,17 @@
 
                     <div class="form-group">
                         <label for="contact-number">Contact Number *</label>
-                        <input type="tel" id="contact-number" name="contact-number" required>
+                        <input type="tel" id="contact-number" name="contact-number" class="form-control" required>
                     </div>
 
                     <div class="form-group">
                         <label for="subject">Subject *</label>
-                        <input type="text" id="subject" name="subject" required>
+                        <input type="text" id="subject" name="subject" class="form-control" required>
                     </div>
 
                     <div class="form-group">
                         <label for="description">Description *</label>
-                        <textarea id="description" name="description" required></textarea>
+                        <textarea id="description" name="description" class="form-control" required></textarea>
                     </div>
 
                     <div class="form-actions">
@@ -776,40 +613,6 @@
                     Your ticket has been submitted successfully! Your ticket ID is: <span id="ticket-id"></span>
                 </div>
             </div>
-
-            <!-- View Tickets Tab -->
-            <div id="view-tickets" class="tab-content">
-                <div class="search-bar">
-                    <input type="text" id="search-tickets" placeholder="Search tickets by name, email, or subject...">
-                    <button id="search-btn">
-                        <i class="fas fa-search mr-2"></i> Search
-                    </button>
-                </div>
-
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Ticket ID</th>
-                        <th>Customer Name</th>
-                        <th>Email</th>
-                        <th>Subject</th>
-                        <th>Department</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tickets-table-body">
-                    <tr>
-                        <td colspan="7" class="text-center py-8">
-                            <div class="flex flex-col items-center">
-                                <div class="w-12 h-12 border-2 border-gray-300 border-t-indigo-500 rounded-full animate-spin mb-4"></div>
-                                <p>Loading tickets...</p>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 </div>
@@ -819,7 +622,7 @@
     <div class="container">
         <div class="footer-content">
             <div class="footer-column">
-                <h3>TOTALCARE</h3>
+                <h3>SecureLife</h3>
                 <p>Providing financial security and peace of mind through comprehensive life insurance solutions.</p>
                 <div class="social-links">
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -853,12 +656,12 @@
                 <ul>
                     <li><i class="fas fa-map-marker-alt"></i> 123 Insurance Ave, Secure City</li>
                     <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                    <li><i class="fas fa-envelope"></i> info@totalcare.com</li>
+                    <li><i class="fas fa-envelope"></i> info@securelife.com</li>
                 </ul>
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2025 TOTALCARE Insurance. All rights reserved.</p>
+            <p>&copy; 2025 SecureLife Insurance. All rights reserved.</p>
         </div>
     </div>
 </footer>
@@ -871,22 +674,6 @@
 <script>
     let currentEditId = null;
     const apiBaseUrl = 'http://localhost:9091';
-
-    function openTab(tabName) {
-        document.querySelectorAll('.tab-content').forEach(tab => {
-            tab.classList.remove('active');
-        });
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.classList.remove('active');
-        });
-        document.getElementById(tabName).classList.add('active');
-        event.currentTarget.classList.add('active');
-
-        // Load tickets if opening the view tickets tab
-        if (tabName === 'view-tickets') {
-            loadTickets();
-        }
-    }
 
     document.getElementById('ticket-form').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -934,116 +721,6 @@
             alert('Error saving ticket');
         }
     });
-
-    async function loadTickets() {
-        try {
-            const response = await fetch(`${apiBaseUrl}/tickets`);
-            if (response.ok) {
-                const tickets = await response.json();
-                renderTickets(tickets);
-            } else {
-                document.getElementById('tickets-table-body').innerHTML = `
-                    <tr>
-                        <td colspan="7" class="text-center py-8">
-                            <div class="flex flex-col items-center text-red-500">
-                                <i class="fas fa-exclamation-circle text-2xl mb-2"></i>
-                                <p>Error loading tickets</p>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }
-        } catch (error) {
-            console.error('Error loading tickets:', error);
-            document.getElementById('tickets-table-body').innerHTML = `
-                <tr>
-                    <td colspan="7" class="text-center py-8">
-                        <div class="flex flex-col items-center text-red-500">
-                            <i class="fas fa-exclamation-circle text-2xl mb-2"></i>
-                            <p>Error loading tickets</p>
-                        </div>
-                    </td>
-                </tr>
-            `;
-        }
-    }
-
-    function renderTickets(tickets) {
-        const ticketsTableBody = document.getElementById('tickets-table-body');
-
-        if (tickets.length === 0) {
-            ticketsTableBody.innerHTML = `
-                <tr>
-                    <td colspan="7" class="text-center py-8">
-                        <div class="flex flex-col items-center">
-                            <i class="fas fa-inbox text-4xl text-gray-400 mb-4"></i>
-                            <p>No tickets found</p>
-                        </div>
-                    </td>
-                </tr>
-            `;
-            return;
-        }
-
-        ticketsTableBody.innerHTML = tickets.map(ticket => `
-            <tr>
-                <td class="font-semibold">${ticket.id}</td>
-                <td>${ticket.customerName}</td>
-                <td>${ticket.email}</td>
-                <td>${ticket.subject}</td>
-                <td>${ticket.department}</td>
-                <td>
-                    <span class="status-badge status-${ticket.status.toLowerCase().replace(' ', '-')}">
-                        ${ticket.status}
-                    </span>
-                </td>
-                <td>
-                    <button class="action-btn edit-btn" onclick="editTicket(${ticket.id})">
-                        <i class="fas fa-edit mr-1"></i> Edit
-                    </button>
-                    <button class="action-btn delete-btn" onclick="deleteTicket(${ticket.id})">
-                        <i class="fas fa-trash mr-1"></i> Delete
-                    </button>
-                </td>
-            </tr>
-        `).join('');
-    }
-
-    async function editTicket(ticketId) {
-        const response = await fetch(`${apiBaseUrl}/tickets/${ticketId}`);
-        if (response.ok) {
-            const ticket = await response.json();
-            document.getElementById('customer-name').value = ticket.customerName;
-            document.getElementById('email').value = ticket.email;
-            document.getElementById('policy-number').value = ticket.policyNumber;
-            document.getElementById('inquiry-type').value = ticket.inquiryType;
-            document.getElementById('department').value = ticket.department;
-            document.getElementById('contact-number').value = ticket.contactNumber;
-            document.getElementById('subject').value = ticket.subject;
-            document.getElementById('description').value = ticket.description;
-            document.getElementById('submit-btn').textContent = 'Update Ticket';
-            currentEditId = ticketId;
-
-            // Switch to create tab for editing
-            openTab('create-ticket');
-        } else {
-            alert('Error loading ticket');
-        }
-    }
-
-    async function deleteTicket(ticketId) {
-        if (confirm('Are you sure you want to delete this ticket?')) {
-            const response = await fetch(`${apiBaseUrl}/tickets/${ticketId}`, {
-                method: 'DELETE'
-            });
-
-            if (response.ok) {
-                loadTickets(); // Refresh the tickets list
-            } else {
-                alert('Error deleting ticket');
-            }
-        }
-    }
 
     // Dark Mode Functionality
     function initDarkMode() {

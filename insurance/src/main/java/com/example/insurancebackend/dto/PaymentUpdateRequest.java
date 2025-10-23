@@ -14,4 +14,3 @@ public class PaymentUpdateRequest {
     private String paymentMethod;     // Optional: cash, card, googlepay
     private String status;            // Optional: PENDING, SUCCESS, FAILED, REFUNDED, CANCELED
 }
-

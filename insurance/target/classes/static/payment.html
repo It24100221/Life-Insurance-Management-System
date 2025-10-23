@@ -9,44 +9,52 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            /* Pro Theme — Purple + Ash */
-            --ash: #B2BEB5;
-            --ash-2: #c7d0ca;
-            --ash-dark: #8C9890;
-            --accent: #7C3AED;
-            --accent-2: #8B5CF6;
-            --accent-dark: #5B21B6;
-            --accent-soft: #A78BFA;
+            /* Professional Blue Theme */
+            --primary-blue: #1e3a8a;
+            --primary-blue-light: #3b82f6;
+            --primary-blue-dark: #1e40af;
+            --accent-gold: #d97706;
+            --accent-gold-light: #f59e0b;
 
-            --light: #f5f6f8;
-            --white: #ffffff;
-            --dark: #0f172a;
-            --text: #1f2937;
-            --text-light: #6b7280;
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-card-light: #334155;
+            --dark-text: #f8fafc;
+            --dark-text-light: #cbd5e1;
+            --dark-accent: var(--primary-blue-light);
+            --dark-accent-2: #60a5fa;
+            --dark-accent-dark: var(--primary-blue-dark);
+            --dark-accent-soft: #93c5fd;
 
-            --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
-            --shadow-md: 0 14px 30px rgba(17, 24, 39, 0.10);
-            --shadow-lg: 0 22px 45px rgba(17, 24, 39, 0.14);
-            --glow: 0 10px 25px rgba(124, 58, 237, 0.22);
+            --light: #334155;
+            --white: #334155;
+            --dark: #f8fafc;
+            --text: #f1f5f9;
+            --text-light: #cbd5e1;
+
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.20);
+            --shadow-md: 0 14px 30px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 22px 45px rgba(0, 0, 0, 0.30);
+            --glow: 0 10px 25px rgba(59, 130, 246, 0.25);
 
             --transition: all .3s ease;
             --radius: 18px;
             --radius-lg: 22px;
 
             /* Light mode variables */
-            --bg-primary: #fafafa;
-            --bg-secondary: #ffffff;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --border-color: #e5e7eb;
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
+            --border-color: #334155;
         }
 
         .dark-mode {
             /* Dark mode variables */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
             --border-color: #334155;
         }
 
@@ -83,7 +91,7 @@
 
         /* Header */
         header {
-            background: linear-gradient(135deg, rgba(140,152,144,0.92) 0%, rgba(124,58,237,0.92) 100%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
             color: #fff;
             padding: 1rem 0;
             position: sticky;
@@ -91,6 +99,7 @@
             z-index: 200;
             box-shadow: var(--shadow);
             backdrop-filter: saturate(140%) blur(6px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .header-content {
@@ -112,8 +121,8 @@
 
         .logo i {
             margin-right: 10px;
-            color: #fff;
-            filter: drop-shadow(0 4px 10px rgba(255,255,255,.25));
+            color: var(--accent-gold-light);
+            filter: drop-shadow(0 4px 10px rgba(245, 158, 11, 0.25));
         }
 
         nav ul {
@@ -859,7 +868,7 @@
         .copyright {
             text-align: center;
             padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255,255,255,0.08);
             font-size: .9rem;
             color: #cfd3da;
         }
@@ -1379,7 +1388,9 @@
                 const holder = document.getElementById('cardholderName')?.value || '';
                 if (!cardNumber || !expiryDate || !cvv || !holder) {
                     showNotification('Complete all card fields', 'error'); isValid = false;
-                } else if (!validateCardNumber(cardNumber)) { showError('cardNumber', 'Invalid card number'); isValid = false; }
+                }
+                    // Card number validation removed: accept any input
+                // else if (!validateCardNumber(cardNumber)) { showError('cardNumber', 'Invalid card number'); isValid = false; }
                 else if (!validateExpiryDate()) { showError('expiryDate', 'Invalid expiry'); isValid = false; }
                 else if (!validateCVV(cvv)) { showError('cvv', 'Invalid CVV'); isValid = false; }
                 else if (!validateName(holder)) { showError('cardholderName', 'Invalid name'); isValid = false; }
@@ -1421,20 +1432,30 @@
 
         showNotification('Submitting payment...');
 
-        // Simulate API call
-        setTimeout(() => {
-            const mockResponse = {
-                transactionCode: 'TXN-' + Math.floor(Math.random() * 1000000),
-                customerName: usernameVal,
-                policyNumber: payload.policyNumber,
-                amount: amountNumber,
-                paymentMethod: payload.paymentMethod,
-                createdAt: new Date().toLocaleString()
-            };
-            showSuccessMessage(mockResponse);
-            verifyBtn.disabled = false;
-            verifyBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify Payment';
-        }, 2000);
+        // Real API call
+        fetch('http://localhost:9091/payments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Payment failed: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                showSuccessMessage(data);
+            })
+            .catch(error => {
+                showNotification('Payment failed: ' + error.message, 'error');
+            })
+            .finally(() => {
+                verifyBtn.disabled = false;
+                verifyBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify Payment';
+            });
     });
 
     // DONE BUTTON
@@ -1457,3 +1478,4 @@
 </script>
 </body>
 </html>
+

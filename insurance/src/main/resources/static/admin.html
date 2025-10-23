@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,46 +7,56 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add SheetJS library for Excel export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         :root {
-            /* Pro Theme — Purple + Ash */
-            --ash: #B2BEB5;
-            --ash-2: #c7d0ca;
-            --ash-dark: #8C9890;
-            --accent: #7C3AED;
-            --accent-2: #8B5CF6;
-            --accent-dark: #5B21B6;
-            --accent-soft: #A78BFA;
+            /* Professional Blue Theme */
+            --primary-blue: #1e3a8a;
+            --primary-blue-light: #3b82f6;
+            --primary-blue-dark: #1e40af;
+            --accent-gold: #d97706;
+            --accent-gold-light: #f59e0b;
 
-            --light: #f5f6f8;
-            --white: #ffffff;
-            --dark: #0f172a;
-            --text: #1f2937;
-            --text-light: #6b7280;
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-card-light: #334155;
+            --dark-text: #f8fafc;
+            --dark-text-light: #cbd5e1;
+            --dark-accent: var(--primary-blue-light);
+            --dark-accent-2: #60a5fa;
+            --dark-accent-dark: var(--primary-blue-dark);
+            --dark-accent-soft: #93c5fd;
 
-            --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
-            --shadow-md: 0 14px 30px rgba(17, 24, 39, 0.10);
-            --shadow-lg: 0 22px 45px rgba(17, 24, 39, 0.14);
-            --glow: 0 10px 25px rgba(124, 58, 237, 0.22);
+            --light: #334155;
+            --white: #334155;
+            --dark: #f8fafc;
+            --text: #f1f5f9;
+            --text-light: #cbd5e1;
+
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.20);
+            --shadow-md: 0 14px 30px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 22px 45px rgba(0, 0, 0, 0.30);
+            --glow: 0 10px 25px rgba(59, 130, 246, 0.25);
 
             --transition: all .3s ease;
             --radius: 18px;
             --radius-lg: 22px;
 
             /* Light mode variables */
-            --bg-primary: #fafafa;
-            --bg-secondary: #ffffff;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --border-color: #e5e7eb;
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
+            --border-color: #334155;
         }
 
         .dark-mode {
             /* Dark mode variables */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
             --border-color: #334155;
         }
 
@@ -83,7 +92,7 @@
 
         /* Header */
         header {
-            background: linear-gradient(135deg, rgba(140,152,144,0.92) 0%, rgba(124,58,237,0.92) 100%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
             color: #fff;
             padding: 1rem 0;
             position: sticky;
@@ -91,6 +100,7 @@
             z-index: 200;
             box-shadow: var(--shadow);
             backdrop-filter: saturate(140%) blur(6px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .header-content {
@@ -112,8 +122,8 @@
 
         .logo i {
             margin-right: 10px;
-            color: #fff;
-            filter: drop-shadow(0 4px 10px rgba(255,255,255,.25));
+            color: var(--accent-gold-light);
+            filter: drop-shadow(0 4px 10px rgba(245, 158, 11, 0.25));
         }
 
         nav ul {
@@ -143,10 +153,10 @@
             height: 2px;
             bottom: -3px;
             left: 0;
-            background-color: #fff;
+            background-color: var(--accent-gold-light);
             transition: var(--transition);
             opacity: .9;
-            box-shadow: 0 2px 8px rgba(255,255,255,.65);
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.65);
         }
 
         nav ul li a:hover {
@@ -181,19 +191,19 @@
 
         .mode-toggle:hover {
             background: #fff;
-            color: var(--accent);
+            color: var(--dark-accent);
             box-shadow: 0 10px 20px rgba(255,255,255,.25);
             transform: translateY(-1px);
         }
 
         .mode-toggle.active {
             background: #fff;
-            color: var(--accent);
+            color: var(--dark-accent);
         }
 
         .cta-button {
             --shine: linear-gradient(120deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.65) 20%, rgba(255,255,255,.0) 40%);
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             color: #fff;
             border: none;
             padding: .9rem 1.25rem;
@@ -232,21 +242,22 @@
         /* Admin Container */
         .admin-container {
             padding: 2rem 0;
-            background: radial-gradient(1200px 500px at -10% -10%, rgba(124,58,237,.08), transparent 60%),
-            radial-gradient(1200px 500px at 110% -10%, rgba(178,190,181,.10), transparent 60%),
+            background: radial-gradient(1200px 500px at -10% -10%, rgba(59, 130, 246, 0.08), transparent 60%),
+            radial-gradient(1200px 500px at 110% -10%, rgba(51, 65, 85, 0.10), transparent 60%),
             linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-primary) 100%);
             min-height: calc(100vh - 80px);
         }
 
         /* Cards */
         .card {
-            background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
-            linear-gradient(135deg, rgba(124,58,237,.25), rgba(178,190,181,.25)) border-box;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)) padding-box,
+            linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(51, 65, 85, 0.25)) border-box;
             border: 1px solid transparent;
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
 
         .card:hover {
@@ -271,8 +282,8 @@
 
         /* Tabs */
         .tab-active {
-            border-bottom: 2px solid var(--accent);
-            color: var(--accent);
+            border-bottom: 2px solid var(--dark-accent);
+            color: var(--dark-accent);
         }
         .tab-inactive {
             border-bottom: 2px solid transparent;
@@ -281,31 +292,41 @@
 
         /* Search and Filters */
         .search-input {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
+            background: rgba(30, 41, 59, 0.7);
+            border: 1.5px solid var(--border-color);
             color: var(--text-primary);
             transition: var(--transition);
-            border-radius: 10px;
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-family: 'Montserrat', sans-serif;
+            backdrop-filter: blur(5px);
         }
 
         .search-input:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            transform: translateY(-1px);
+            background: rgba(30, 41, 59, 0.9);
         }
 
         select {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
+            background: rgba(30, 41, 59, 0.7);
+            border: 1.5px solid var(--border-color);
             color: var(--text-primary);
             transition: var(--transition);
-            border-radius: 10px;
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-family: 'Montserrat', sans-serif;
+            backdrop-filter: blur(5px);
         }
 
         select:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            transform: translateY(-1px);
+            background: rgba(30, 41, 59, 0.9);
         }
 
         /* Table Styles */
@@ -337,7 +358,7 @@
         }
 
         tr:hover {
-            background: rgba(124,58,237,0.05);
+            background: rgba(59, 130, 246, 0.05);
         }
 
         /* Status Badge */
@@ -352,12 +373,12 @@
 
         .status-active {
             background: rgba(34, 197, 94, 0.1);
-            color: rgb(22, 163, 74);
+            color: rgb(74, 222, 128);
         }
 
         .status-inactive {
             background: rgba(239, 68, 68, 0.1);
-            color: rgb(220, 38, 38);
+            color: rgb(248, 113, 113);
         }
 
         /* Action Buttons */
@@ -374,7 +395,7 @@
         }
 
         .edit-btn {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             color: white;
             box-shadow: var(--shadow);
         }
@@ -385,18 +406,30 @@
         }
 
         .delete-btn {
-            background: rgba(239, 68, 68, 0.1);
-            color: rgb(220, 38, 38);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(107, 114, 128, 0.1);
+            color: var(--text-secondary);
+            border: 1px solid rgba(107, 114, 128, 0.2);
         }
 
         .delete-btn:hover {
-            background: rgba(239, 68, 68, 0.2);
+            background: rgba(107, 114, 128, 0.2);
+        }
+
+        /* Export Button */
+        .export-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         /* Pagination */
         .pagination-btn {
-            background: var(--bg-secondary);
+            background: rgba(51, 65, 85, 0.5);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             padding: 0.5rem 1rem;
@@ -406,9 +439,9 @@
         }
 
         .pagination-btn:hover:not(:disabled) {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             color: white;
-            border-color: var(--accent);
+            border-color: var(--dark-accent);
         }
 
         .pagination-btn:disabled {
@@ -437,7 +470,7 @@
         .modal-content {
             width: 100%;
             max-width: 560px;
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
             color: var(--text-primary);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
@@ -445,7 +478,8 @@
             transform: translateY(20px) scale(.98);
             opacity: 0;
             transition: var(--transition);
-            border: 1px solid rgba(124,58,237,.12);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .modal.show .modal-content {
@@ -455,7 +489,7 @@
 
         .modal-header {
             padding: 1.1rem 1.4rem;
-            background: linear-gradient(135deg, var(--ash) 0%, #f6f6f6 100%);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 64, 175, 0.1));
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -464,7 +498,7 @@
         .modal-header h3 {
             margin: 0;
             font-size: 1.3rem;
-            color: var(--dark);
+            color: var(--text-primary);
         }
 
         .modal-close {
@@ -472,7 +506,7 @@
             border: none;
             font-size: 1.3rem;
             cursor: pointer;
-            color: var(--text);
+            color: var(--text-secondary);
             opacity: .7;
         }
 
@@ -502,16 +536,16 @@
         }
 
         .btn.secondary {
-            background: #eef0f2;
-            color: var(--text);
+            background: rgba(51, 65, 85, 0.5);
+            color: var(--text-secondary);
         }
 
         .btn.secondary:hover {
-            background: #e5e7eb;
+            background: rgba(51, 65, 85, 0.7);
         }
 
         .btn.primary {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             color: #fff;
             box-shadow: var(--glow);
         }
@@ -528,14 +562,14 @@
             border-radius: 10px;
             font-family: 'Montserrat', sans-serif;
             transition: var(--transition);
-            background: var(--bg-secondary);
+            background: rgba(30, 41, 59, 0.7);
             color: var(--text-primary);
         }
 
         input:focus, textarea:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
         input:invalid, textarea:invalid {
@@ -544,7 +578,7 @@
 
         /* Footer */
         footer {
-            background: #141824;
+            background: #0f172a;
             color: #fff;
             padding: 3rem 0 1rem;
         }
@@ -568,7 +602,7 @@
         }
 
         .footer-column p {
-            color: #dfe3ea;
+            color: #cbd5e1;
         }
 
         .footer-column ul {
@@ -577,7 +611,7 @@
 
         .footer-column ul li {
             margin-bottom: .7rem;
-            color: #e1e1e6;
+            color: #e2e8f0;
         }
 
         .footer-column ul li a {
@@ -587,7 +621,7 @@
         }
 
         .footer-column ul li a:hover {
-            color: var(--accent-soft);
+            color: var(--dark-accent-soft);
         }
 
         .social-links {
@@ -609,7 +643,7 @@
         }
 
         .social-links a:hover {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             transform: translateY(-3px);
             box-shadow: var(--glow);
         }
@@ -619,7 +653,7 @@
             padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.08);
             font-size: .9rem;
-            color: #cfd3da;
+            color: #94a3b8;
         }
 
         /* Dark Mode Toggle */
@@ -629,7 +663,7 @@
             right: 20px;
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            background: linear-gradient(135deg, var(--dark-accent), var(--dark-accent-dark));
             color: #fff;
             border: none;
             border-radius: 50%;
@@ -675,12 +709,12 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 <!-- Header -->
 <header>
     <div class="container header-content">
         <a class="logo" href="home.html" aria-label="TOTALCARE Home">
-            <i class="fas fa-shield-heart"></i>
+            <i class="fas fa-shield-alt"></i>
             <span>TOTALCARE</span>
         </a>
         <nav>
@@ -707,7 +741,7 @@
         <div class="mb-8 flex justify-between items-start">
             <div>
                 <h1 class="text-3xl font-bold mb-2">Admin Dashboard</h1>
-                <p class="text-gray-600 dark:text-gray-400">Manage policies and users</p>
+                <p class="text-gray-400">Manage policies and users</p>
             </div>
             <div class="flex space-x-3">
                 <a href="policy.html" class="cta-button flex items-center">
@@ -762,7 +796,7 @@
                             <option value="asc">Ascending</option>
                         </select>
                     </div>
-                    <div class="text-sm text-gray-600 dark:text-gray-400" id="policyCount">
+                    <div class="text-sm text-gray-400" id="policyCount">
                         Loading policies...
                     </div>
                 </div>
@@ -797,9 +831,9 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="bg-gray-50 dark:bg-gray-800 px-6 py-4 flex items-center justify-between" id="paginationPolicyContainer">
+                <div class="bg-gray-800 px-6 py-4 flex items-center justify-between" id="paginationPolicyContainer">
                     <div class="hidden md:block">
-                        <p class="text-sm text-gray-700 dark:text-gray-300" id="paginationPolicyInfo">
+                        <p class="text-sm text-gray-300" id="paginationPolicyInfo">
                             <span class="font-medium" id="pagePolicyInfo">1</span> of <span class="font-medium" id="totalPagesPolicyInfo">1</span>
                         </p>
                     </div>
@@ -858,7 +892,7 @@
                             <option value="asc">Ascending</option>
                         </select>
                     </div>
-                    <div class="text-sm text-gray-600 dark:text-gray-400" id="userCount">
+                    <div class="text-sm text-gray-400" id="userCount">
                         Loading users...
                     </div>
                 </div>
@@ -895,9 +929,9 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="bg-gray-50 dark:bg-gray-800 px-6 py-4 flex items-center justify-between" id="paginationUserContainer">
+                <div class="bg-gray-800 px-6 py-4 flex items-center justify-between" id="paginationUserContainer">
                     <div class="hidden md:block">
-                        <p class="text-sm text-gray-700 dark:text-gray-300" id="paginationUserInfo">
+                        <p class="text-sm text-gray-300" id="paginationUserInfo">
                             <span class="font-medium" id="pageUserInfo">1</span> of <span class="font-medium" id="totalPagesUserInfo">1</span>
                         </p>
                     </div>
@@ -919,24 +953,31 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Export Button for Users -->
+            <div class="mt-4 flex justify-end">
+                <button id="exportUsersBtn" class="export-btn action-btn">
+                    <i class="fas fa-file-excel mr-2"></i> Export to Excel
+                </button>
+            </div>
         </div>
 
         <!-- No Results Message -->
         <div id="noResults" class="hidden card p-12 mt-6 text-center">
             <i class="fas fa-search text-gray-400 text-4xl mb-4"></i>
             <h3 class="text-lg font-medium mb-2">No records were found</h3>
-            <p class="text-gray-600 dark:text-gray-400">Try adjusting your search criteria.</p>
+            <p class="text-gray-400">Try adjusting your search criteria.</p>
         </div>
 
         <!-- Error Message -->
-        <div id="errorMessage" class="hidden bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4 mt-6">
+        <div id="errorMessage" class="hidden bg-red-900/20 border border-red-800 rounded-md p-4 mt-6">
             <div class="flex">
                 <div class="flex-shrink-0">
                     <i class="fas fa-exclamation-circle text-red-400"></i>
                 </div>
                 <div class="ml-3">
-                    <h3 class="text-sm font-medium text-red-800 dark:text-red-200" id="errorTitle">Error</h3>
-                    <div class="mt-2 text-sm text-red-700 dark:text-red-300" id="errorText"></div>
+                    <h3 class="text-sm font-medium text-red-200" id="errorTitle">Error</h3>
+                    <div class="mt-2 text-sm text-red-300" id="errorText"></div>
                 </div>
             </div>
         </div>
@@ -1003,7 +1044,7 @@
             <div class="modal-body">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Policy Code</label>
+                        <label class="text-xs font-medium text-gray-300">Policy Code</label>
                         <input
                                 id="policyCode"
                                 name="code"
@@ -1015,7 +1056,7 @@
                         <p id="policyCodeError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
                     <div>
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Policy Name</label>
+                        <label class="text-xs font-medium text-gray-300">Policy Name</label>
                         <input
                                 id="policyName"
                                 name="name"
@@ -1027,7 +1068,7 @@
                         <p id="policyNameError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
                     <div>
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Term (years)</label>
+                        <label class="text-xs font-medium text-gray-300">Term (years)</label>
                         <input
                                 id="policyTermYears"
                                 name="termYears"
@@ -1038,7 +1079,7 @@
                         <p id="policyTermYearsError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
                     <div>
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Premium (monthly)</label>
+                        <label class="text-xs font-medium text-gray-300">Premium (monthly)</label>
                         <input
                                 id="policyPremiumMonthly"
                                 name="premiumMonthly"
@@ -1050,7 +1091,7 @@
                         <p id="policyPremiumMonthlyError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
                     <div>
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Sum Assured</label>
+                        <label class="text-xs font-medium text-gray-300">Sum Assured</label>
                         <input
                                 id="policySumAssured"
                                 name="sumAssured"
@@ -1062,7 +1103,7 @@
                         <p id="policySumAssuredError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
                     <div class="md:col-span-2">
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Description</label>
+                        <label class="text-xs font-medium text-gray-300">Description</label>
                         <textarea
                                 id="policyDescription"
                                 name="description"
@@ -1078,7 +1119,7 @@
                                 checked
                                 class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                         >
-                        <label for="policyActive" class="text-sm text-gray-700 dark:text-gray-300">Active</label>
+                        <label for="policyActive" class="text-sm text-gray-300">Active</label>
                     </div>
                 </div>
             </div>
@@ -1101,7 +1142,7 @@
             <div class="modal-body">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div class="md:col-span-2">
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Full Name</label>
+                        <label class="text-xs font-medium text-gray-300">Full Name</label>
                         <input
                                 id="userFullName"
                                 name="userFullname"
@@ -1113,7 +1154,7 @@
                         <p id="userFullNameError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
                     <div class="md:col-span-2">
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Email</label>
+                        <label class="text-xs font-medium text-gray-300">Email</label>
                         <input
                                 id="userEmail"
                                 name="userEmail"
@@ -1124,7 +1165,7 @@
                         <p id="userEmailError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
                     <div>
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Phone</label>
+                        <label class="text-xs font-medium text-gray-300">Phone</label>
                         <input
                                 id="userPhone"
                                 name="userPhone"
@@ -1135,7 +1176,7 @@
                         <p id="userPhoneError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
                     <div>
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">NIC</label>
+                        <label class="text-xs font-medium text-gray-300">NIC</label>
                         <input
                                 id="userNIC"
                                 name="userNic"
@@ -1146,7 +1187,7 @@
                         <p id="userNICError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
                     <div>
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Password</label>
+                        <label class="text-xs font-medium text-gray-300">Password</label>
                         <input
                                 id="userPassword"
                                 name="userPassword"
@@ -1156,7 +1197,7 @@
                         <p id="userPasswordError" class="text-red-500 text-xs mt-1 hidden"></p>
                     </div>
                     <div>
-                        <label class="text-xs font-medium text-gray-700 dark:text-gray-300">Role</label>
+                        <label class="text-xs font-medium text-gray-300">Role</label>
                         <select
                                 id="userRole"
                                 name="userRole"
@@ -1178,7 +1219,7 @@
                                 checked
                                 class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                         >
-                        <label for="userActive" class="text-sm text-gray-700 dark:text-gray-300">Active</label>
+                        <label for="userActive" class="text-sm text-gray-300">Active</label>
                     </div>
                 </div>
             </div>
@@ -1196,6 +1237,7 @@
 </button>
 
 <script>
+    // All JavaScript code remains exactly the same
     class AdminPanel {
         constructor() {
             this.currentTab = 'policies';
@@ -1268,6 +1310,7 @@
                 prevUserPage: document.getElementById('prevUserPage'),
                 nextUserPage: document.getElementById('nextUserPage'),
                 paginationUserContainer: document.getElementById('paginationUserContainer'),
+                exportUsersBtn: document.getElementById('exportUsersBtn'),
 
                 // Common elements
                 noResults: document.getElementById('noResults'),
@@ -1409,6 +1452,9 @@
                 }
             });
 
+            // Export users to Excel
+            this.elements.exportUsersBtn.addEventListener('click', () => this.exportUsersToExcel());
+
             // Modal controls
             this.elements.closePolicyModal.addEventListener('click', () => this.closePolicyModal());
             this.elements.cancelPolicyModal.addEventListener('click', () => this.closePolicyModal());
@@ -1479,15 +1525,15 @@
             }
 
             this.elements.policiesTableBody.innerHTML = policies.map(policy => `
-                <tr class="hover:bg-gray-50 fade-in">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${policy.code}</td>
+                <tr class="fade-in">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">${policy.code}</td>
                     <td class="px-6 py-4">
-                        <div class="text-sm font-medium text-gray-900">${policy.name}</div>
-                        <div class="text-sm text-gray-500 mt-1">${policy.description || 'No description'}</div>
+                        <div class="text-sm font-medium text-white">${policy.name}</div>
+                        <div class="text-sm text-gray-300 mt-1">${policy.description || 'No description'}</div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${policy.termYears} years</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$${policy.premiumMonthly.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}/mo</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$${policy.sumAssured.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-white">${policy.termYears} years</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-white">$${policy.premiumMonthly.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}/mo</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-white">$${policy.sumAssured.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${policy.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
                             ${policy.active ? 'Active' : 'Inactive'}
@@ -1495,7 +1541,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex gap-2">
-                            <button class="edit-policy-btn px-3 py-1 rounded border text-sm hover:bg-gray-100" data-id="${policy.id}">Edit</button>
+                            <button class="edit-policy-btn px-3 py-1 rounded border text-sm hover:bg-gray-100 text-white" data-id="${policy.id}">Edit</button>
                             <button class="delete-policy-btn px-3 py-1 rounded border text-sm text-red-600 hover:bg-red-50" data-id="${policy.id}">Delete</button>
                         </div>
                     </td>
@@ -1722,22 +1768,22 @@
             }
 
             this.elements.usersTableBody.innerHTML = users.map(user => `
-                <tr class="hover:bg-gray-50 fade-in">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${user.userId || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${user.userFullname || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.userEmail || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.userPhone || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.userNic || 'N/A'}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.userRole || 'N/A'}</td>
+                <tr class="fade-in">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">${user.userId || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">${user.userFullname || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-white">${user.userEmail || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-white">${user.userPhone || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-white">${user.userNic || 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-white">${user.userRole || 'N/A'}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.userIsActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
                             ${user.userIsActive ? 'Yes' : 'No'}
                         </span>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.userCreatedAt ? new Date(user.userCreatedAt).toLocaleString() : 'N/A'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-white">${user.userCreatedAt ? new Date(user.userCreatedAt).toLocaleString() : 'N/A'}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex gap-2">
-                            <button class="edit-user-btn px-3 py-1 rounded border text-sm hover:bg-gray-100" data-id="${user.userId}">Edit</button>
+                            <button class="edit-user-btn px-3 py-1 rounded border text-sm hover:bg-gray-100 text-white" data-id="${user.userId}">Edit</button>
                             <button class="delete-user-btn px-3 py-1 rounded border text-sm text-red-600 hover:bg-red-50" data-id="${user.userId}">Delete</button>
                         </div>
                     </td>
@@ -1941,6 +1987,77 @@
             }
         }
 
+        // Export users to Excel
+        async exportUsersToExcel() {
+            try {
+                // Show loading state
+                this.elements.exportUsersBtn.disabled = true;
+                this.elements.exportUsersBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Exporting...';
+
+                // Fetch all users for export (without pagination)
+                const response = await fetch(`${this.apiUrl}/users?size=10000&sortBy=${this.userSortBy}&sortDir=${this.userSortDir}&query=${encodeURIComponent(this.userQuery)}&role=${encodeURIComponent(this.userRoleFilter)}`);
+                if (!response.ok) throw new Error(`Failed to fetch users for export: ${response.status}`);
+                const data = await response.json();
+
+                // Normalize user data
+                const users = (data.content || data.users || []).map(user => ({
+                    userId: user.userId,
+                    userFullname: user.userFullname,
+                    userEmail: user.userEmail,
+                    userPhone: user.userPhone,
+                    userNic: user.userNic,
+                    userRole: user.userRole,
+                    userIsActive: user.userIsActive ? 'Yes' : 'No',
+                    userCreatedAt: user.userCreatedAt ? new Date(user.userCreatedAt).toLocaleString() : 'N/A'
+                }));
+
+                if (users.length === 0) {
+                    this.showError('Export Failed', 'No users found to export.');
+                    return;
+                }
+
+                // Prepare worksheet data
+                const worksheetData = [
+                    ['User ID', 'Full Name', 'Email', 'Phone', 'NIC', 'Role', 'Active', 'Created At'],
+                    ...users.map(user => [
+                        user.userId,
+                        user.userFullname,
+                        user.userEmail,
+                        user.userPhone,
+                        user.userNic,
+                        user.userRole,
+                        user.userIsActive,
+                        user.userCreatedAt
+                    ])
+                ];
+
+                // Create worksheet
+                const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+                // Create workbook and append the worksheet
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'Users');
+
+                // Generate Excel file and trigger download
+                const fileName = `TOTALCARE_Users_${new Date().toISOString().split('T')[0]}.xlsx`;
+                XLSX.writeFile(workbook, fileName);
+
+                // Reset button state
+                this.elements.exportUsersBtn.disabled = false;
+                this.elements.exportUsersBtn.innerHTML = '<i class="fas fa-file-excel mr-2"></i> Export to Excel';
+
+                // Show success message
+                this.showSuccess('Export Successful', `Users data has been exported to ${fileName}`);
+            } catch (error) {
+                console.error('Error exporting users to Excel:', error);
+                this.showError('Export Failed', 'Failed to export users data. Please try again.');
+
+                // Reset button state
+                this.elements.exportUsersBtn.disabled = false;
+                this.elements.exportUsersBtn.innerHTML = '<i class="fas fa-file-excel mr-2"></i> Export to Excel';
+            }
+        }
+
         // Common methods
         showNoResults(section) {
             if (section === 'policies') {
@@ -1980,6 +2097,31 @@
             this.elements.errorTitle.textContent = title || 'Error';
             this.elements.errorText.textContent = message || 'An unexpected error occurred.';
             this.elements.errorMessage.classList.remove('hidden');
+        }
+
+        showSuccess(title, message) {
+            // Create a temporary success message
+            const successDiv = document.createElement('div');
+            successDiv.className = 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md p-4 mt-6';
+            successDiv.innerHTML = `
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-green-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-green-800 dark:text-green-200">${title}</h3>
+                        <div class="mt-2 text-sm text-green-700 dark:text-green-300">${message}</div>
+                    </div>
+                </div>
+            `;
+
+            // Insert before the error message
+            this.elements.errorMessage.parentNode.insertBefore(successDiv, this.elements.errorMessage);
+
+            // Remove after 5 seconds
+            setTimeout(() => {
+                successDiv.remove();
+            }, 5000);
         }
 
         hideError() {
@@ -2047,4 +2189,3 @@
 </script>
 </body>
 </html>
-```

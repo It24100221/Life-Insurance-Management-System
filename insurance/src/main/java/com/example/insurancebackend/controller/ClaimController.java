@@ -1,4 +1,3 @@
-// src/main/java/com/example/insurancebackend/controller/ClaimController.java
 package com.example.insurancebackend.controller;
 
 import com.example.insurancebackend.entity.Claim;

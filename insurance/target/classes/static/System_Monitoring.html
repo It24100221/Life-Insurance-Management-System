@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Monitoring Dashboard - TOTALCARE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            /* Pro Theme — Purple + Ash */
+            --ash: #B2BEB5;
+            --ash-2: #c7d0ca;
+            --ash-dark: #8C9890;
+            --accent: #7C3AED;
+            --accent-2: #8B5CF6;
+            --accent-dark: #5B21B6;
+            --accent-soft: #A78BFA;
+
+            --light: #f5f6f8;
+            --white: #ffffff;
+            --dark: #0f172a;
+            --text: #1f2937;
+            --text-light: #6b7280;
+
+            --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
+            --shadow-md: 0 14px 30px rgba(17, 24, 39, 0.10);
+            --shadow-lg: 0 22px 45px rgba(17, 24, 39, 0.14);
+            --glow: 0 10px 25px rgba(124, 58, 237, 0.22);
+
+            --transition: all .3s ease;
+            --radius: 18px;
+            --radius-lg: 22px;
+
+            /* Light mode variables */
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        .dark-mode {
+            /* Dark mode variables */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: var(--bg-primary);
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: .2px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(140,152,144,0.92) 0%, rgba(124,58,237,0.92) 100%);
+            color: #fff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: var(--shadow);
+            backdrop-filter: saturate(140%) blur(6px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            letter-spacing: .3px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #fff;
+            filter: drop-shadow(0 4px 10px rgba(255,255,255,.25));
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            position: relative;
+            padding: .5rem 0;
+            transition: var(--transition);
+            opacity: .95;
+            letter-spacing: .25px;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background-color: #fff;
+            transition: var(--transition);
+            opacity: .9;
+            box-shadow: 0 2px 8px rgba(255,255,255,.65);
+        }
+
+        nav ul li a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+
+        .mode-toggle {
+            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.14));
+            color: #fff;
+            border: 2px solid rgba(255,255,255,.85);
+            padding: .6rem .9rem;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
+        }
+
+        .mode-toggle:hover {
+            background: #fff;
+            color: var(--accent);
+            box-shadow: 0 10px 20px rgba(255,255,255,.25);
+            transform: translateY(-1px);
+        }
+
+        .mode-toggle.active {
+            background: #fff;
+            color: var(--accent);
+        }
+
+        .cta-button {
+            --shine: linear-gradient(120deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.65) 20%, rgba(255,255,255,.0) 40%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            color: #fff;
+            border: none;
+            padding: .9rem 1.25rem;
+            border-radius: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+            letter-spacing: .3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 60%;
+            height: 220%;
+            background: var(--shine);
+            transform: rotate(25deg) translateX(-40%);
+            transition: transform .6s ease;
+            pointer-events: none;
+        }
+
+        .cta-button:hover::after {
+            transform: rotate(25deg) translateX(280%);
+        }
+
+        /* Monitoring Container */
+        .monitoring-container {
+            padding: 2rem 0;
+            background: radial-gradient(1200px 500px at -10% -10%, rgba(124,58,237,.08), transparent 60%),
+            radial-gradient(1200px 500px at 110% -10%, rgba(178,190,181,.10), transparent 60%),
+            linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-primary) 100%);
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Cards */
+        .card {
+            background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
+            linear-gradient(135deg, rgba(124,58,237,.25), rgba(178,190,181,.25)) border-box;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 300px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Tabs */
+        .tab-active {
+            border-bottom: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .tab-inactive {
+            border-bottom: 2px solid transparent;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: #141824;
+            color: #fff;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 1.1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column p {
+            color: #dfe3ea;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: .7rem;
+            color: #e1e1e6;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent-soft);
+        }
+
+        .social-links {
+            display: flex;
+            gap: .8rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            color: #fff;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: .9rem;
+            color: #cfd3da;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg), var(--glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: .6rem;
+            }
+
+            nav ul {
+                margin-top: .5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: .25rem .5rem;
+            }
+
+            .chart-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="container header-content">
+        <a class="logo" href="home.html" aria-label="TOTALCARE Home">
+            <i class="fas fa-shield-heart"></i>
+            <span>TOTALCARE</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="agent.html">Agent Dashboard</a></li>
+                <li><a href="claim_officer.html">Claim Management</a></li>
+                <li><a href="staff.html">Support Staff</a></li>
+                <li><a href="feedback.html">Auditor Dashboard</a></li>
+                <li><a href="admin.html">Admin Panel</a></li>
+                <li><a href="monitoring.html">Monitoring</a></li>
+            </ul>
+        </nav>
+        <div class="actions">
+            <button class="cta-button" onclick="window.location.href='login.html'">
+                <i class="fas fa-cog"></i> Sign Out
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Monitoring Container -->
+<div class="monitoring-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="mb-8 flex justify-between items-start">
+            <div>
+                <h1 class="text-3xl font-bold mb-2">System Monitoring Dashboard</h1>
+                <p class="text-gray-600 dark:text-gray-400">Visualize system performance and ratings for admins and auditors</p>
+            </div>
+            <button class="cta-button" onclick="refreshAllCharts()">
+                <i class="fas fa-sync-alt mr-2"></i> Refresh Data
+            </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="mb-6">
+            <div class="border-b border-gray-200 dark:border-gray-700">
+                <nav class="-mb-px flex space-x-8">
+                    <button class="tab-active py-2 px-1 font-medium text-sm" onclick="switchTab('claims')">Claims</button>
+                    <button class="tab-inactive py-2 px-1 font-medium text-sm" onclick="switchTab('feedback')">Feedback</button>
+                    <button class="tab-inactive py-2 px-1 font-medium text-sm" onclick="switchTab('policies')">Policies</button>
+                    <button class="tab-inactive py-2 px-1 font-medium text-sm" onclick="switchTab('users')">Users</button>
+                    <button class="tab-inactive py-2 px-1 font-medium text-sm" onclick="switchTab('payments')">Payments</button>
+                    <button class="tab-inactive py-2 px-1 font-medium text-sm" onclick="switchTab('support')">Support Tickets</button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Claims Section -->
+        <div id="claims-section" class="tab-content">
+            <h2>Claims Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="claimsStatusChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="claimsOverTimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Section -->
+        <div id="feedback-section" class="tab-content hidden">
+            <h2>Feedback and Ratings</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ratingsDistributionChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="feedbackOverTimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Policies Section -->
+        <div id="policies-section" class="tab-content hidden">
+            <h2>Policies Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="policiesStatusChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="policiesTermDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Section -->
+        <div id="users-section" class="tab-content hidden">
+            <h2>Users Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="usersRoleChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="usersActivityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments Section -->
+        <div id="payments-section" class="tab-content hidden">
+            <h2>Payments Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="paymentsMethodChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="paymentsOverTimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Tickets Section -->
+        <div id="support-section" class="tab-content hidden">
+            <h2>Support Tickets Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ticketsStatusChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ticketsDepartmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>TOTALCARE</h3>
+                <p>Providing financial security and peace of mind through comprehensive life insurance solutions.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="#plans">Services</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#feedback">Feedback</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#plans">Term Life Insurance</a></li>
+                    <li><a href="#plans">Whole Life Insurance</a></li>
+                    <li><a href="#plans">Universal Life Insurance</a></li>
+                    <li><a href="#plans">Family Plans</a></li>
+                    <li><a href="#plans">Retirement Planning</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Insurance Ave, Secure City</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@totalcare.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 TOTALCARE Insurance. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Dark Mode Toggle -->
+<button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle Dark Mode">
+    <i class="fas fa-moon" id="darkModeIcon"></i>
+</button>
+
+<script>
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    // Check for saved theme preference or respect OS setting
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+        body.classList.add('dark-mode');
+        darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+        body.classList.remove('dark-mode');
+        darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        if (body.classList.contains('dark-mode')) {
+            body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        } else {
+            body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+    });
+
+    // API Base URL
+    const apiUrl = 'http://localhost:9091/api';
+
+    // Charts
+    let claimsStatusChart, claimsOverTimeChart;
+    let ratingsDistributionChart, feedbackOverTimeChart;
+    let policiesStatusChart, policiesTermDistributionChart;
+    let usersRoleChart, usersActivityChart;
+    let paymentsMethodChart, paymentsOverTimeChart;
+    let ticketsStatusChart, ticketsDepartmentChart;
+
+    // Tab Switching
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-content').forEach(section => {
+            section.classList.add('hidden');
+        });
+        document.querySelectorAll('nav button').forEach(button => {
+            button.classList.remove('tab-active');
+            button.classList.add('tab-inactive');
+        });
+        document.getElementById(tab + '-section').classList.remove('hidden');
+        const activeButton = Array.from(document.querySelectorAll('nav button')).find(btn => btn.onclick.toString().includes(tab));
+        activeButton.classList.add('tab-active');
+        activeButton.classList.remove('tab-inactive');
+
+        // Load data for the tab
+        loadTabData(tab);
+    }
+
+    // Load Data for Each Tab
+    async function loadTabData(tab) {
+        try {
+            if (tab === 'claims') {
+                const claims = await fetch(`${apiUrl}/claims`).then(res => res.json());
+                renderClaimsCharts(claims);
+            } else if (tab === 'feedback') {
+                const feedback = await fetch(`${apiUrl}/feedbacks`).then(res => res.json());
+                renderFeedbackCharts(feedback);
+            } else if (tab === 'policies') {
+                const policies = await fetch(`${apiUrl}/policies`).then(res => res.json());
+                renderPoliciesCharts(policies);
+            } else if (tab === 'users') {
+                const users = await fetch(`${apiUrl}/users`).then(res => res.json());
+                renderUsersCharts(users);
+            } else if (tab === 'payments') {
+                const payments = await fetch(`${apiUrl}/payments`).then(res => res.json());
+                renderPaymentsCharts(payments);
+            } else if (tab === 'support') {
+                const tickets = await fetch(`${apiUrl}/tickets`).then(res => res.json());
+                renderSupportCharts(tickets);
+            }
+        } catch (error) {
+            console.error(`Error loading ${tab} data:`, error);
+        }
+    }
+
+    // Render Charts Functions
+    function renderClaimsCharts(claims) {
+        // Destroy existing charts if they exist
+        if (claimsStatusChart) claimsStatusChart.destroy();
+        if (claimsOverTimeChart) claimsOverTimeChart.destroy();
+
+        // Claims Status Pie Chart
+        const statuses = claims.reduce((acc, claim) => {
+            acc[claim.status] = (acc[claim.status] || 0) + 1;
+            return acc;
+        }, {});
+        claimsStatusChart = new Chart(document.getElementById('claimsStatusChart'), {
+            type: 'pie',
+            data: {
+                labels: Object.keys(statuses),
+                datasets: [{
+                    data: Object.values(statuses),
+                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Claims Status Distribution' } } }
+        });
+
+        // Claims Over Time Bar Chart (assuming accidentDate as time)
+        const dates = claims.reduce((acc, claim) => {
+            const date = new Date(claim.accidentDate).toLocaleDateString();
+            acc[date] = (acc[date] || 0) + 1;
+            return acc;
+        }, {});
+        claimsOverTimeChart = new Chart(document.getElementById('claimsOverTimeChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(dates),
+                datasets: [{
+                    label: 'Claims Count',
+                    data: Object.values(dates),
+                    backgroundColor: '#3b82f6'
+                }]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'Claims Over Time' } } }
+        });
+    }
+
+    function renderFeedbackCharts(feedback) {
+        // Destroy existing charts
+        if (ratingsDistributionChart) ratingsDistributionChart.destroy();
+        if (feedbackOverTimeChart) feedbackOverTimeChart.destroy();
+
+        // Ratings Distribution Doughnut Chart
+        const ratings = feedback.reduce((acc, fb) => {
+            acc[fb.rating] = (acc[fb.rating] || 0) + 1;
+            return acc;
+        }, {});
+        ratingsDistributionChart = new Chart(document.getElementById('ratingsDistributionChart'), {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(ratings).map(r => `${r} Stars`),
+                datasets: [{
+                    data: Object.values(ratings),
+                    backgroundColor: ['#ef4444', '#f59e0b', '#eab308', '#84cc16', '#22c55e']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Ratings Distribution' } } }
+        });
+
+        // Feedback Over Time Line Chart (assuming created_at as time)
+        const dates = feedback.reduce((acc, fb) => {
+            const date = new Date(fb.created_at).toLocaleDateString();
+            acc[date] = (acc[date] || 0) + 1;
+            return acc;
+        }, {});
+        feedbackOverTimeChart = new Chart(document.getElementById('feedbackOverTimeChart'), {
+            type: 'line',
+            data: {
+                labels: Object.keys(dates),
+                datasets: [{
+                    label: 'Feedback Count',
+                    data: Object.values(dates),
+                    borderColor: '#3b82f6',
+                    tension: 0.1
+                }]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'Feedback Over Time' } } }
+        });
+    }
+
+    function renderPoliciesCharts(policies) {
+        // Destroy existing charts
+        if (policiesStatusChart) policiesStatusChart.destroy();
+        if (policiesTermDistributionChart) policiesTermDistributionChart.destroy();
+
+        // Policies Status Pie Chart (active/inactive)
+        const statuses = policies.reduce((acc, policy) => {
+            const status = policy.active ? 'Active' : 'Inactive';
+            acc[status] = (acc[status] || 0) + 1;
+            return acc;
+        }, {});
+        policiesStatusChart = new Chart(document.getElementById('policiesStatusChart'), {
+            type: 'pie',
+            data: {
+                labels: Object.keys(statuses),
+                datasets: [{
+                    data: Object.values(statuses),
+                    backgroundColor: ['#10b981', '#ef4444']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Policies Status' } } }
+        });
+
+        // Policies Term Distribution Bar Chart
+        const terms = policies.reduce((acc, policy) => {
+            acc[policy.termYears] = (acc[policy.termYears] || 0) + 1;
+            return acc;
+        }, {});
+        policiesTermDistributionChart = new Chart(document.getElementById('policiesTermDistributionChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(terms),
+                datasets: [{
+                    label: 'Policy Count',
+                    data: Object.values(terms),
+                    backgroundColor: '#3b82f6'
+                }]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'Policies by Term Years' } } }
+        });
+    }
+
+    function renderUsersCharts(users) {
+        // Destroy existing charts
+        if (usersRoleChart) usersRoleChart.destroy();
+        if (usersActivityChart) usersActivityChart.destroy();
+
+        // Users Role Pie Chart
+        const roles = users.reduce((acc, user) => {
+            acc[user.userRole] = (acc[user.userRole] || 0) + 1;
+            return acc;
+        }, {});
+        usersRoleChart = new Chart(document.getElementById('usersRoleChart'), {
+            type: 'pie',
+            data: {
+                labels: Object.keys(roles),
+                datasets: [{
+                    data: Object.values(roles),
+                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#3b82f6', '#8b5cf6']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Users by Role' } } }
+        });
+
+        // Users Activity Bar Chart (active/inactive)
+        const activity = users.reduce((acc, user) => {
+            const status = user.userIsActive ? 'Active' : 'Inactive';
+            acc[status] = (acc[status] || 0) + 1;
+            return acc;
+        }, {});
+        usersActivityChart = new Chart(document.getElementById('usersActivityChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(activity),
+                datasets: [{
+                    label: 'User Count',
+                    data: Object.values(activity),
+                    backgroundColor: '#3b82f6'
+                }]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'User Activity Status' } } }
+        });
+    }
+
+    function renderPaymentsCharts(payments) {
+        // Destroy existing charts
+        if (paymentsMethodChart) paymentsMethodChart.destroy();
+        if (paymentsOverTimeChart) paymentsOverTimeChart.destroy();
+
+        // Payments Method Pie Chart
+        const methods = payments.reduce((acc, payment) => {
+            acc[payment.paymentMethod] = (acc[payment.paymentMethod] || 0) + 1;
+            return acc;
+        }, {});
+        paymentsMethodChart = new Chart(document.getElementById('paymentsMethodChart'), {
+            type: 'pie',
+            data: {
+                labels: Object.keys(methods),
+                datasets: [{
+                    data: Object.values(methods),
+                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Payments by Method' } } }
+        });
+
+        // Payments Over Time Line Chart
+        const dates = payments.reduce((acc, payment) => {
+            const date = new Date(payment.createdAt).toLocaleDateString();
+            acc[date] = (acc[date] || 0) + 1;
+            return acc;
+        }, {});
+        paymentsOverTimeChart = new Chart(document.getElementById('paymentsOverTimeChart'), {
+            type: 'line',
+            data: {
+                labels: Object.keys(dates),
+                datasets: [{
+                    label: 'Payments Count',
+                    data: Object.values(dates),
+                    borderColor: '#3b82f6',
+                    tension: 0.1
+                }]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'Payments Over Time' } } }
+        });
+    }
+
+    function renderSupportCharts(tickets) {
+        // Destroy existing charts
+        if (ticketsStatusChart) ticketsStatusChart.destroy();
+        if (ticketsDepartmentChart) ticketsDepartmentChart.destroy();
+
+        // Tickets Status Pie Chart
+        const statuses = tickets.reduce((acc, ticket) => {
+            acc[ticket.status] = (acc[ticket.status] || 0) + 1;
+            return acc;
+        }, {});
+        ticketsStatusChart = new Chart(document.getElementById('ticketsStatusChart'), {
+            type: 'pie',
+            data: {
+                labels: Object.keys(statuses),
+                datasets: [{
+                    data: Object.values(statuses),
+                    backgroundColor: ['#ef4444', '#f59e0b', '#10b981']
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Tickets Status Distribution' } } }
+        });
+
+        // Tickets Department Bar Chart
+        const departments = tickets.reduce((acc, ticket) => {
+            acc[ticket.department] = (acc[ticket.department] || 0) + 1;
+            return acc;
+        }, {});
+        ticketsDepartmentChart = new Chart(document.getElementById('ticketsDepartmentChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(departments),
+                datasets: [{
+                    label: 'Ticket Count',
+                    data: Object.values(departments),
+                    backgroundColor: '#3b82f6'
+                }]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'Tickets by Department' } } }
+        });
+    }
+
+    // Refresh All Charts
+    function refreshAllCharts() {
+        loadTabData(document.querySelector('.tab-active').onclick.toString().match(/'(\w+)'/)[1]);
+    }
+
+    // Initial Load
+    document.addEventListener('DOMContentLoaded', () => {
+        switchTab('claims'); // Load first tab by default
+    });
+</script>
+</body>
+</html>

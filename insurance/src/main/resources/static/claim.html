@@ -3,50 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claim Management - TOTALCARE</title>
+    <title>Claim Management - SecureLife</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add SheetJS library for Excel export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         :root {
-            /* Pro Theme — Purple + Ash */
-            --ash: #B2BEB5;
-            --ash-2: #c7d0ca;
-            --ash-dark: #8C9890;
-            --accent: #7C3AED;
-            --accent-2: #8B5CF6;
-            --accent-dark: #5B21B6;
-            --accent-soft: #A78BFA;
+            /* Professional Blue Theme */
+            --primary-blue: #1e3a8a;
+            --primary-blue-light: #3b82f6;
+            --primary-blue-dark: #1e40af;
+            --accent-gold: #d97706;
+            --accent-gold-light: #f59e0b;
 
-            --light: #f5f6f8;
-            --white: #ffffff;
-            --dark: #0f172a;
-            --text: #1f2937;
-            --text-light: #6b7280;
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-card-light: #334155;
+            --dark-text: #f8fafc;
+            --dark-text-light: #cbd5e1;
+            --dark-accent: var(--primary-blue-light);
+            --dark-accent-2: #60a5fa;
+            --dark-accent-dark: var(--primary-blue-dark);
+            --dark-accent-soft: #93c5fd;
 
-            --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
-            --shadow-md: 0 14px 30px rgba(17, 24, 39, 0.10);
-            --shadow-lg: 0 22px 45px rgba(17, 24, 39, 0.14);
-            --glow: 0 10px 25px rgba(124, 58, 237, 0.22);
+            --light: #334155;
+            --white: #334155;
+            --dark: #f8fafc;
+            --text: #f1f5f9;
+            --text-light: #cbd5e1;
+
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.20);
+            --shadow-md: 0 14px 30px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 22px 45px rgba(0, 0, 0, 0.30);
+            --glow: 0 10px 25px rgba(59, 130, 246, 0.25);
 
             --transition: all .3s ease;
             --radius: 18px;
             --radius-lg: 22px;
 
             /* Light mode variables */
-            --bg-primary: #fafafa;
-            --bg-secondary: #ffffff;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --border-color: #e5e7eb;
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
+            --border-color: #334155;
         }
 
         .dark-mode {
             /* Dark mode variables */
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
             --border-color: #334155;
         }
 
@@ -82,7 +92,7 @@
 
         /* Header */
         header {
-            background: linear-gradient(135deg, rgba(140,152,144,0.92) 0%, rgba(124,58,237,0.92) 100%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
             color: #fff;
             padding: 1rem 0;
             position: sticky;
@@ -90,6 +100,7 @@
             z-index: 200;
             box-shadow: var(--shadow);
             backdrop-filter: saturate(140%) blur(6px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .header-content {
@@ -111,8 +122,8 @@
 
         .logo i {
             margin-right: 10px;
-            color: #fff;
-            filter: drop-shadow(0 4px 10px rgba(255,255,255,.25));
+            color: var(--accent-gold-light);
+            filter: drop-shadow(0 4px 10px rgba(245, 158, 11, 0.25));
         }
 
         nav ul {
@@ -142,10 +153,10 @@
             height: 2px;
             bottom: -3px;
             left: 0;
-            background-color: #fff;
+            background-color: var(--accent-gold-light);
             transition: var(--transition);
             opacity: .9;
-            box-shadow: 0 2px 8px rgba(255,255,255,.65);
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.65);
         }
 
         nav ul li a:hover {
@@ -165,7 +176,7 @@
 
         .cta-button {
             --shine: linear-gradient(120deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.65) 20%, rgba(255,255,255,.0) 40%);
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             color: #fff;
             border: none;
             padding: .9rem 1.25rem;
@@ -204,21 +215,22 @@
         /* Claim Container */
         .claim-container {
             padding: 2rem 0;
-            background: radial-gradient(1200px 500px at -10% -10%, rgba(124,58,237,.08), transparent 60%),
-            radial-gradient(1200px 500px at 110% -10%, rgba(178,190,181,.10), transparent 60%),
+            background: radial-gradient(1200px 500px at -10% -10%, rgba(59, 130, 246, 0.08), transparent 60%),
+            radial-gradient(1200px 500px at 110% -10%, rgba(51, 65, 85, 0.10), transparent 60%),
             linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-primary) 100%);
             min-height: calc(100vh - 80px);
         }
 
         /* Cards */
         .card {
-            background: linear-gradient(var(--bg-secondary), var(--bg-secondary)) padding-box,
-            linear-gradient(135deg, rgba(124,58,237,.25), rgba(178,190,181,.25)) border-box;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)) padding-box,
+            linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(51, 65, 85, 0.25)) border-box;
             border: 1px solid transparent;
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
 
         .card:hover {
@@ -237,74 +249,60 @@
             display: block;
         }
 
+        /* Enhanced Form Styling */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            position: relative;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
+            margin-bottom: 10px;
+            font-weight: 600;
             color: var(--text-primary);
+            font-size: 15px;
+            transition: var(--transition);
         }
 
-        input, select, textarea {
+        .form-control {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
+            padding: 14px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
             font-size: 16px;
             transition: var(--transition);
-            background: var(--bg-secondary);
+            background: rgba(30, 41, 59, 0.7);
             color: var(--text-primary);
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
         }
 
-        input:focus, select:focus, textarea:focus {
+        .form-control:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            transform: translateY(-1px);
+            background: rgba(30, 41, 59, 0.9);
         }
 
-        textarea {
+        .form-control:hover {
+            border-color: var(--dark-accent-soft);
+        }
+
+        textarea.form-control {
             min-height: 120px;
             resize: vertical;
+            line-height: 1.5;
         }
 
-        .btn {
-            background-color: var(--accent);
-            color: var(--white);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: var(--transition);
-            display: block;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .btn:hover {
-            background-color: var(--accent-2);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-prev {
-            background-color: var(--ash-dark);
-        }
-
-        .btn-prev:hover {
-            background-color: var(--ash);
-        }
-
-        .btn-success {
-            background-color: var(--success-color);
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23cbd5e1' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-color: rgba(30, 41, 59, 0.7);
+            padding-right: 40px;
         }
 
         .form-row {
@@ -316,10 +314,56 @@
             flex: 1;
         }
 
+        .btn {
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            color: var(--dark-text);
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: var(--shadow);
+            letter-spacing: 0.3px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-prev {
+            background: linear-gradient(135deg, var(--dark-card-light) 0%, var(--dark-card) 100%);
+        }
+
+        .btn-prev:hover {
+            background: linear-gradient(135deg, var(--dark-card) 0%, var(--dark-card-light) 100%);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+        }
+
+        .btn-excel {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        .btn-excel:hover {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
         .success-icon {
             text-align: center;
             font-size: 80px;
-            color: var(--success-color);
+            color: #10b981;
             margin-bottom: 20px;
         }
 
@@ -329,16 +373,17 @@
         }
 
         .success-message h2 {
-            color: var(--success-color);
+            color: #10b981;
             border-bottom: none;
         }
 
         .application-summary {
-            background-color: var(--bg-secondary);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
             border-radius: var(--radius);
             padding: 20px;
             margin-top: 30px;
-            border-left: 4px solid var(--accent);
+            border-left: 4px solid var(--dark-accent);
+            backdrop-filter: blur(10px);
         }
 
         .summary-section {
@@ -369,7 +414,7 @@
         }
 
         .claim-id {
-            background-color: var(--accent);
+            background-color: var(--dark-accent);
             color: white;
             padding: 10px 15px;
             border-radius: 4px;
@@ -379,15 +424,15 @@
         }
 
         .next-steps {
-            background-color: rgba(124,58,237,0.05);
-            border-left: 4px solid var(--accent);
+            background-color: rgba(59, 130, 246, 0.05);
+            border-left: 4px solid var(--dark-accent);
             padding: 15px;
             margin-top: 30px;
             border-radius: 4px;
         }
 
         .next-steps h3 {
-            color: var(--accent);
+            color: var(--dark-accent);
             margin-bottom: 10px;
         }
 
@@ -413,21 +458,61 @@
         .cost-input::before {
             content: "LKR";
             position: absolute;
-            left: 12px;
+            left: 16px;
             top: 42px;
-            font-weight: bold;
+            font-weight: 600;
             color: var(--text-secondary);
+            z-index: 1;
         }
 
-        .cost-input input {
-            padding-left: 50px;
+        .cost-input .form-control {
+            padding-left: 60px;
         }
 
         .error-message {
-            color: var(--danger-color);
+            color: #ef4444;
             font-size: 14px;
-            margin-top: 5px;
+            margin-top: 6px;
             display: none;
+            font-weight: 500;
+        }
+
+        .form-icon {
+            position: absolute;
+            right: 16px;
+            top: 42px;
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .form-group:focus-within label {
+            color: var(--dark-accent);
+        }
+
+        .form-group:focus-within .form-icon {
+            color: var(--dark-accent);
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .page-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            color: white;
+            border-radius: 50%;
+            margin-right: 12px;
+            font-weight: 600;
+            font-size: 14px;
         }
 
         .modal {
@@ -444,13 +529,15 @@
         }
 
         .modal-content {
-            background-color: var(--bg-secondary);
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
             padding: 20px;
             border-radius: var(--radius);
             max-width: 500px;
             width: 90%;
             text-align: center;
             box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .modal-content h3 {
@@ -464,8 +551,8 @@
         }
 
         .modal-content button {
-            background-color: var(--accent);
-            color: var(--white);
+            background-color: var(--dark-accent);
+            color: var(--dark-text);
             border: none;
             padding: 10px 20px;
             border-radius: 8px;
@@ -474,12 +561,12 @@
         }
 
         .modal-content button:hover {
-            background-color: var(--accent-2);
+            background-color: var(--dark-accent-2);
         }
 
         /* Footer */
         footer {
-            background: #141824;
+            background: #0f172a;
             color: #fff;
             padding: 3rem 0 1rem;
         }
@@ -503,7 +590,7 @@
         }
 
         .footer-column p {
-            color: #dfe3ea;
+            color: #cbd5e1;
         }
 
         .footer-column ul {
@@ -512,7 +599,7 @@
 
         .footer-column ul li {
             margin-bottom: .7rem;
-            color: #e1e1e6;
+            color: #e2e8f0;
         }
 
         .footer-column ul li a {
@@ -522,7 +609,7 @@
         }
 
         .footer-column ul li a:hover {
-            color: var(--accent-soft);
+            color: var(--dark-accent-soft);
         }
 
         .social-links {
@@ -544,7 +631,7 @@
         }
 
         .social-links a:hover {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
             transform: translateY(-3px);
             box-shadow: var(--glow);
         }
@@ -554,7 +641,7 @@
             padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.08);
             font-size: .9rem;
-            color: #cfd3da;
+            color: #94a3b8;
         }
 
         /* Dark Mode Toggle */
@@ -564,7 +651,7 @@
             right: 20px;
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            background: linear-gradient(135deg, var(--dark-accent), var(--dark-accent-dark));
             color: #fff;
             border: none;
             border-radius: 50%;
@@ -620,13 +707,13 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 <!-- Header -->
 <header>
     <div class="container header-content">
-        <a class="logo" href="home.html" aria-label="TOTALCARE Home">
-            <i class="fas fa-shield-heart"></i>
-            <span>TOTALCARE</span>
+        <a class="logo" href="home.html" aria-label="SecureLife Home">
+            <i class="fas fa-shield-alt"></i>
+            <span>SecureLife</span>
         </a>
         <nav>
             <ul>
@@ -652,9 +739,8 @@
         <div class="mb-8 flex justify-between items-start">
             <div>
                 <h1 class="text-3xl font-bold mb-2">Claim Management</h1>
-                <p class="text-gray-600 dark:text-gray-400">Submit and manage insurance claims</p>
+                <p class="text-gray-400">Submit and manage insurance claims</p>
             </div>
-
         </div>
 
         <!-- Error Modal -->
@@ -669,36 +755,44 @@
         <!-- Claim Application Page -->
         <div class="card">
             <div id="application" class="page active">
-                <h2>Claim Application</h2>
+                <div class="page-title">
+                    <div class="page-number">1</div>
+                    <h2>Claim Application</h2>
+                </div>
                 <form id="application-form">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="first-name">First Name</label>
-                            <input type="text" id="first-name" name="first-name" required>
+                            <input type="text" id="first-name" name="first-name" class="form-control" required>
+                            <i class="fas fa-user form-icon"></i>
                             <div class="error-message" id="first-name-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="last-name">Last Name</label>
-                            <input type="text" id="last-name" name="last-name" required>
+                            <input type="text" id="last-name" name="last-name" class="form-control" required>
+                            <i class="fas fa-user form-icon"></i>
                             <div class="error-message" id="last-name-error"></div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="nic">NIC Number</label>
-                        <input type="text" id="nic" name="nic" required>
+                        <input type="text" id="nic" name="nic" class="form-control" required>
+                        <i class="fas fa-id-card form-icon"></i>
                         <div class="error-message" id="nic-error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="contact-number">Contact Number</label>
-                        <input type="tel" id="contact-number" name="contact-number" required>
+                        <input type="tel" id="contact-number" name="contact-number" class="form-control" required>
+                        <i class="fas fa-phone form-icon"></i>
                         <div class="error-message" id="contact-number-error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                        <i class="fas fa-envelope form-icon"></i>
                         <div class="error-message" id="email-error"></div>
                     </div>
 
@@ -708,11 +802,14 @@
 
             <!-- Accident Details Page -->
             <div id="accident" class="page">
-                <h2>Accident Details</h2>
+                <div class="page-title">
+                    <div class="page-number">2</div>
+                    <h2>Accident Details</h2>
+                </div>
                 <form id="accident-form">
                     <div class="form-group">
                         <label for="accident-type">Type of Accident</label>
-                        <select id="accident-type" name="accident-type" required>
+                        <select id="accident-type" name="accident-type" class="form-control" required>
                             <option value="">Select accident type</option>
                             <option value="vehicle">Vehicle Accident</option>
                             <option value="work">Workplace Accident</option>
@@ -720,37 +817,41 @@
                             <option value="sports">Sports Injury</option>
                             <option value="other">Other</option>
                         </select>
+                        <i class="fas fa-chevron-down form-icon"></i>
                         <div class="error-message" id="accident-type-error"></div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="accident-date">Date of Accident</label>
-                            <input type="date" id="accident-date" name="accident-date" required>
+                            <input type="date" id="accident-date" name="accident-date" class="form-control" required>
+                            <i class="fas fa-calendar form-icon"></i>
                             <div class="error-message" id="accident-date-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="accident-time">Time of Accident</label>
-                            <input type="time" id="accident-time" name="accident-time" required>
+                            <input type="time" id="accident-time" name="accident-time" class="form-control" required>
+                            <i class="fas fa-clock form-icon"></i>
                             <div class="error-message" id="accident-time-error"></div>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="accident-location">Accident Location</label>
-                        <input type="text" id="accident-location" name="accident-location" placeholder="Enter accident location" required>
+                        <input type="text" id="accident-location" name="accident-location" class="form-control" placeholder="Enter accident location" required>
+                        <i class="fas fa-map-marker-alt form-icon"></i>
                         <div class="error-message" id="accident-location-error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="accident-description">Accident Description</label>
-                        <textarea id="accident-description" name="accident-description" placeholder="Please provide a detailed description of the accident" required></textarea>
+                        <textarea id="accident-description" name="accident-description" class="form-control" placeholder="Please provide a detailed description of the accident" required></textarea>
                         <div class="error-message" id="accident-description-error"></div>
                     </div>
 
                     <div class="form-group cost-input">
                         <label for="estimated-cost">Estimated Cost (LKR)</label>
-                        <input type="number" id="estimated-cost" name="estimated-cost" placeholder="Enter amount in LKR" required min="0">
+                        <input type="number" id="estimated-cost" name="estimated-cost" class="form-control" placeholder="Enter amount in LKR" required min="0">
                         <div class="error-message" id="estimated-cost-error"></div>
                     </div>
 
@@ -763,40 +864,48 @@
 
             <!-- Bank Details Page -->
             <div id="bank" class="page">
-                <h2>Bank Account Details</h2>
+                <div class="page-title">
+                    <div class="page-number">3</div>
+                    <h2>Bank Account Details</h2>
+                </div>
                 <form id="bank-form">
                     <div class="form-group">
                         <label for="account-holder">Account Holder Name</label>
-                        <input type="text" id="account-holder" name="account-holder" required>
+                        <input type="text" id="account-holder" name="account-holder" class="form-control" required>
+                        <i class="fas fa-user-tie form-icon"></i>
                         <div class="error-message" id="account-holder-error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="bank-name">Bank Name</label>
-                        <input type="text" id="bank-name" name="bank-name" required>
+                        <input type="text" id="bank-name" name="bank-name" class="form-control" required>
+                        <i class="fas fa-university form-icon"></i>
                         <div class="error-message" id="bank-name-error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="branch-name">Branch Name</label>
-                        <input type="text" id="branch-name" name="branch-name" required>
+                        <input type="text" id="branch-name" name="branch-name" class="form-control" required>
+                        <i class="fas fa-code-branch form-icon"></i>
                         <div class="error-message" id="branch-name-error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="account-number">Account Number</label>
-                        <input type="text" id="account-number" name="account-number" required>
+                        <input type="text" id="account-number" name="account-number" class="form-control" required>
+                        <i class="fas fa-credit-card form-icon"></i>
                         <div class="error-message" id="account-number-error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="account-type">Account Type</label>
-                        <select id="account-type" name="account-type" required>
+                        <select id="account-type" name="account-type" class="form-control" required>
                             <option value="">Select account type</option>
                             <option value="savings">Savings Account</option>
                             <option value="checking">Checking Account</option>
                             <option value="current">Current Account</option>
                         </select>
+                        <i class="fas fa-chevron-down form-icon"></i>
                         <div class="error-message" id="account-type-error"></div>
                     </div>
 
@@ -895,7 +1004,10 @@
                     </ul>
                 </div>
 
-                <div style="text-align: center; margin-top: 30px;">
+                <div class="button-container" style="margin-top: 30px;">
+                    <button type="button" class="btn btn-excel" id="export-excel">
+                        <i class="fas fa-file-excel"></i> Export to Excel
+                    </button>
                     <button type="button" class="btn" id="new-claim">Submit Another Claim</button>
                 </div>
             </div>
@@ -908,7 +1020,7 @@
     <div class="container">
         <div class="footer-content">
             <div class="footer-column">
-                <h3>TOTALCARE</h3>
+                <h3>SecureLife</h3>
                 <p>Providing financial security and peace of mind through comprehensive life insurance solutions.</p>
                 <div class="social-links">
                     <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -942,12 +1054,12 @@
                 <ul>
                     <li><i class="fas fa-map-marker-alt"></i> 123 Insurance Ave, Secure City</li>
                     <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                    <li><i class="fas fa-envelope"></i> info@totalcare.com</li>
+                    <li><i class="fas fa-envelope"></i> info@securelife.com</li>
                 </ul>
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2025 TOTALCARE Insurance. All rights reserved.</p>
+            <p>&copy; 2025 SecureLife Insurance. All rights reserved.</p>
         </div>
     </div>
 </footer>
@@ -961,6 +1073,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const pages = document.querySelectorAll('.page');
         let submitted = false;
+        let currentClaimData = null;
 
         // Validation regex patterns
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -1096,6 +1209,7 @@
                     }
 
                     const savedClaim = await response.json();
+                    currentClaimData = savedClaim;
 
                     // Populate summary with backend data
                     populateSummary(savedClaim);
@@ -1141,6 +1255,47 @@
                 button.style.cursor = 'pointer';
             });
         });
+
+        // Export to Excel button
+        const exportExcelButton = document.getElementById('export-excel');
+        exportExcelButton.addEventListener('click', function() {
+            if (currentClaimData) {
+                exportToExcel(currentClaimData);
+            }
+        });
+
+        // Export claim data to Excel
+        function exportToExcel(claimData) {
+            // Create a worksheet from the claim data
+            const ws = XLSX.utils.json_to_sheet([{
+                'Claim ID': claimData.claimCode,
+                'First Name': claimData.firstName,
+                'Last Name': claimData.lastName,
+                'NIC Number': claimData.nic,
+                'Contact Number': claimData.contactNumber,
+                'Email': claimData.email,
+                'Accident Type': claimData.accidentType,
+                'Accident Date': claimData.accidentDate,
+                'Accident Time': claimData.accidentTime,
+                'Accident Location': claimData.accidentLocation,
+                'Accident Description': claimData.accidentDescription,
+                'Estimated Cost (LKR)': claimData.estimatedCost,
+                'Account Holder': claimData.accountHolder,
+                'Bank Name': claimData.bankName,
+                'Branch Name': claimData.branchName,
+                'Account Number': claimData.accountNumber,
+                'Account Type': claimData.accountType,
+                'Submission Date': new Date().toLocaleDateString(),
+                'Submission Time': new Date().toLocaleTimeString()
+            }]);
+
+            // Create a workbook and add the worksheet
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Claim Details');
+
+            // Generate Excel file and trigger download
+            XLSX.writeFile(wb, `Claim_${claimData.claimCode}_${new Date().toISOString().slice(0, 10)}.xlsx`);
+        }
 
         // Validate all forms
         function validateForms() {

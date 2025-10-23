@@ -1,14 +1,16 @@
-// src/main/java/com/example/insurancebackend/service/ClaimService.java
 package com.example.insurancebackend.service;
 
 import com.example.insurancebackend.entity.Claim;
 import com.example.insurancebackend.repository.ClaimRepository;
+import com.example.insurancebackend.strategy.ApprovedStrategy;
+import com.example.insurancebackend.strategy.PendingStrategy;
+import com.example.insurancebackend.strategy.RejectedStrategy;
+import com.example.insurancebackend.strategy.StatusUpdateStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class ClaimService {
@@ -16,8 +18,8 @@ public class ClaimService {
     private ClaimRepository claimRepository;
 
     public Claim saveClaim(Claim claim) {
-        // Generate claim code before saving
-        claim.setClaimCode("TC-" + String.format("%06d", new Random().nextInt(1000000)));
+        // Use Singleton pattern for claim code generation
+        claim.setClaimCode(ClaimCodeGenerator.getInstance().generateCode());
         return claimRepository.save(claim);
     }
 
@@ -33,7 +35,23 @@ public class ClaimService {
         Optional<Claim> optionalClaim = claimRepository.findById(id);
         if (optionalClaim.isPresent()) {
             Claim claim = optionalClaim.get();
-            claim.setStatus(status);
+
+            // Use Strategy pattern to handle status update
+            StatusUpdateStrategy strategy;
+            switch (status.toUpperCase()) {
+                case "APPROVED":
+                    strategy = new ApprovedStrategy();
+                    break;
+                case "REJECTED":
+                    strategy = new RejectedStrategy();
+                    break;
+                case "PENDING":
+                default:
+                    strategy = new PendingStrategy();
+                    break;
+            }
+            strategy.updateStatus(claim);
+
             return claimRepository.save(claim);
         }
         return null;
