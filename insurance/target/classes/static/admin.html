@@ -1525,7 +1525,7 @@
             }
 
             this.elements.policiesTableBody.innerHTML = policies.map(policy => `
-                <tr class="fade-in">
+                <tr class="hover:bg-gray-50 fade-in">
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">${policy.code}</td>
                     <td class="px-6 py-4">
                         <div class="text-sm font-medium text-white">${policy.name}</div>
@@ -1768,7 +1768,7 @@
             }
 
             this.elements.usersTableBody.innerHTML = users.map(user => `
-                <tr class="fade-in">
+                <tr class="hover:bg-gray-50 fade-in">
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">${user.userId || 'N/A'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">${user.userFullname || 'N/A'}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-white">${user.userEmail || 'N/A'}</td>
