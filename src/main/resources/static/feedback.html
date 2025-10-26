@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Feedback Management - TOTALCARE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* Professional Blue Theme */
+            --primary-blue: #1e3a8a;
+            --primary-blue-light: #3b82f6;
+            --primary-blue-dark: #1e40af;
+            --accent-gold: #d97706;
+            --accent-gold-light: #f59e0b;
+
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-card-light: #334155;
+            --dark-text: #f8fafc;
+            --dark-text-light: #cbd5e1;
+            --dark-accent: var(--primary-blue-light);
+            --dark-accent-2: #60a5fa;
+            --dark-accent-dark: var(--primary-blue-dark);
+            --dark-accent-soft: #93c5fd;
+
+            --light: #334155;
+            --white: #334155;
+            --dark: #f8fafc;
+            --text: #f1f5f9;
+            --text-light: #cbd5e1;
+
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.20);
+            --shadow-md: 0 14px 30px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 22px 45px rgba(0, 0, 0, 0.30);
+            --glow: 0 10px 25px rgba(59, 130, 246, 0.25);
+
+            --transition: all .3s ease;
+            --radius: 18px;
+            --radius-lg: 22px;
+
+            /* Light mode variables */
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
+            --border-color: #334155;
+        }
+
+        .dark-mode {
+            /* Dark mode variables */
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
+            --border-color: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: var(--bg-primary);
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: .2px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
+            color: #fff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: var(--shadow);
+            backdrop-filter: saturate(140%) blur(6px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            letter-spacing: .3px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-gold-light);
+            filter: drop-shadow(0 4px 10px rgba(245, 158, 11, 0.25));
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            position: relative;
+            padding: .5rem 0;
+            transition: var(--transition);
+            opacity: .95;
+            letter-spacing: .25px;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background-color: var(--accent-gold-light);
+            transition: var(--transition);
+            opacity: .9;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.65);
+        }
+
+        nav ul li a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+
+        .mode-toggle {
+            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.14));
+            color: #fff;
+            border: 2px solid rgba(255,255,255,.85);
+            padding: .6rem .9rem;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
+        }
+
+        .mode-toggle:hover {
+            background: #fff;
+            color: var(--dark-accent);
+            box-shadow: 0 10px 20px rgba(255,255,255,.25);
+            transform: translateY(-1px);
+        }
+
+        .mode-toggle.active {
+            background: #fff;
+            color: var(--dark-accent);
+        }
+
+        .cta-button {
+            --shine: linear-gradient(120deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.65) 20%, rgba(255,255,255,.0) 40%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            color: #fff;
+            border: none;
+            padding: .9rem 1.25rem;
+            border-radius: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+            letter-spacing: .3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 60%;
+            height: 220%;
+            background: var(--shine);
+            transform: rotate(25deg) translateX(-40%);
+            transition: transform .6s ease;
+            pointer-events: none;
+        }
+
+        .cta-button:hover::after {
+            transform: rotate(25deg) translateX(280%);
+        }
+
+        /* Feedback Container */
+        .feedback-container {
+            padding: 2rem 0;
+            background: radial-gradient(1200px 500px at -10% -10%, rgba(59, 130, 246, 0.08), transparent 60%),
+            radial-gradient(1200px 500px at 110% -10%, rgba(51, 65, 85, 0.10), transparent 60%),
+            linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-primary) 100%);
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Cards */
+        .card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)) padding-box,
+            linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(51, 65, 85, 0.25)) border-box;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .table-container {
+            max-height: 70vh;
+            overflow-y: auto;
+            border-radius: var(--radius);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)) padding-box,
+            linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(51, 65, 85, 0.25)) border-box;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.blue { background: rgba(59, 130, 246, 0.1); color: rgb(96, 165, 250); }
+        .stat-icon.green { background: rgba(34, 197, 94, 0.1); color: rgb(74, 222, 128); }
+        .stat-icon.yellow { background: rgba(245, 158, 11, 0.1); color: rgb(251, 191, 36); }
+        .stat-icon.purple { background: rgba(124, 58, 237, 0.1); color: rgb(167, 139, 250); }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* Search and Filters */
+        .search-input {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-primary);
+            transition: var(--transition);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-family: 'Montserrat', sans-serif;
+            backdrop-filter: blur(5px);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            transform: translateY(-1px);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        select {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-primary);
+            transition: var(--transition);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-family: 'Montserrat', sans-serif;
+            backdrop-filter: blur(5px);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            transform: translateY(-1px);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        td, th {
+            padding: 0.75rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr {
+            transition: var(--transition);
+        }
+
+        tr:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        /* Star Rating */
+        .star-rating { color: #fbbf24; }
+        .star-empty { color: #4b5563; }
+
+        /* Status Badge */
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-replied {
+            background: rgba(34, 197, 94, 0.1);
+            color: rgb(74, 222, 128);
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: rgb(251, 191, 36);
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .respond-btn {
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .respond-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .delete-btn {
+            background: rgba(107, 114, 128, 0.1);
+            color: var(--text-secondary);
+            border: 1px solid rgba(107, 114, 128, 0.2);
+        }
+
+        .delete-btn:hover {
+            background: rgba(107, 114, 128, 0.2);
+        }
+
+        .home-btn {
+            background: rgba(34, 197, 94, 0.1);
+            color: rgb(74, 222, 128);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .home-btn:hover {
+            background: rgba(34, 197, 94, 0.2);
+        }
+
+        /* Pagination */
+        .pagination-btn {
+            background: rgba(51, 65, 85, 0.5);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            color: white;
+            border-color: var(--dark-accent);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 400;
+            opacity: 0;
+            transition: opacity .25s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 560px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+            color: var(--text-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            transform: translateY(20px) scale(.98);
+            opacity: 0;
+            transition: var(--transition);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-header {
+            padding: 1.1rem 1.4rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 64, 175, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            opacity: .7;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-body {
+            padding: 1.4rem;
+        }
+
+        .review-preview {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--dark-accent);
+        }
+
+        .response-preview {
+            background: rgba(34, 197, 94, 0.1);
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            margin-top: 0.5rem;
+            border-left: 4px solid rgb(74, 222, 128);
+        }
+
+        .modal-footer {
+            padding: 1.1rem 1.4rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: .8rem;
+            background: var(--bg-primary);
+        }
+
+        .btn {
+            padding: .7rem 1.1rem;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 800;
+            transition: var(--transition);
+        }
+
+        .btn.secondary {
+            background: rgba(51, 65, 85, 0.5);
+            color: var(--text-secondary);
+        }
+
+        .btn.secondary:hover {
+            background: rgba(51, 65, 85, 0.7);
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            color: #fff;
+            box-shadow: var(--glow);
+        }
+
+        .btn.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg), var(--glow);
+        }
+
+        .btn.success {
+            background: linear-gradient(135deg, rgb(22, 163, 74) 0%, rgb(21, 128, 61) 100%);
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(22, 163, 74, 0.22);
+        }
+
+        .btn.success:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg), 0 10px 25px rgba(22, 163, 74, 0.22);
+        }
+
+        textarea {
+            width: 100%;
+            padding: .85rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+            background: rgba(30, 41, 59, 0.7);
+            color: var(--text-primary);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: #fff;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 1.1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column p {
+            color: #cbd5e1;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: .7rem;
+            color: #e2e8f0;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--dark-accent-soft);
+        }
+
+        .social-links {
+            display: flex;
+            gap: .8rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            color: #fff;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: .9rem;
+            color: #94a3b8;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--dark-accent), var(--dark-accent-dark));
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg), var(--glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: .6rem;
+            }
+
+            nav ul {
+                margin-top: .5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: .25rem .5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                max-height: 60vh;
+            }
+
+            td, th {
+                padding: 0.5rem 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+<!-- Header -->
+<header>
+    <div class="container header-content">
+        <a class="logo" href="home.html" aria-label="TOTALCARE Home">
+            <i class="fas fa-shield-heart"></i>
+            <span>TOTALCARE</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="agent.html">Agent Dashboard</a></li>
+                <li><a href="claim_officer.html">Claim Management</a></li>
+                <li><a href="staff.html">Support Staff</a></li>
+                <li><a href="home.html#feedback">Feedback</a></li>
+            </ul>
+        </nav>
+        <div class="actions">
+            <button class="cta-button" onclick="window.location.href='login.html'">
+                <i class="fas fa-cog"></i> Sign Out
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Feedback Container -->
+<div class="feedback-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="mb-8 flex justify-between items-start">
+            <div>
+                <h1 class="text-3xl font-bold mb-2">Customer Feedback Management</h1>
+                <p class="text-gray-400">Manage and respond to customer reviews</p>
+            </div>
+
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="stat-value" id="totalReviews">0</div>
+                <div class="stat-label">Total Reviews</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-value" id="avgRating">0.0</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon yellow">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-value" id="lowRatings">0</div>
+                <div class="stat-label">Low Ratings (1-2)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple">
+                    <i class="fas fa-reply"></i>
+                </div>
+                <div class="stat-value" id="repliedCount">0</div>
+                <div class="stat-label">Replied To</div>
+            </div>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="card p-6 mb-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                    <div class="relative flex-1">
+                        <input
+                                type="text"
+                                id="searchInput"
+                                placeholder="Search by customer name or review text..."
+                                class="search-input w-full pl-10 pr-4 py-2"
+                        >
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <select id="ratingFilter" class="px-4 py-2">
+                        <option value="all">All Ratings</option>
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+
+                    <select id="statusFilter" class="px-4 py-2">
+                        <option value="all">All Statuses</option>
+                        <option value="replied">Replied</option>
+                        <option value="pending">Pending</option>
+                    </select>
+
+                    <select id="sortBy" class="px-4 py-2">
+                        <option value="createdAt">Newest First</option>
+                        <option value="rating">Highest Rating</option>
+                        <option value="ratingLow">Lowest Rating</option>
+                        <option value="name">Customer Name</option>
+                    </select>
+                </div>
+
+                <div class="text-sm text-gray-400" id="reviewCount">
+                    No reviews yet
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Table -->
+        <div class="card overflow-hidden">
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Rating</th>
+                        <th>Review</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="reviewsTableBody">
+                    <tr>
+                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                            <div class="flex flex-col items-center">
+                                <i class="fas fa-comments text-gray-300 text-4xl mb-4"></i>
+                                <h3 class="text-lg font-medium text-gray-700 mb-2">No feedback yet</h3>
+                                <p class="text-gray-500">Customer reviews will appear here once submitted.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="bg-gray-800 px-6 py-4 flex items-center justify-between hidden" id="paginationContainer">
+                <div class="hidden md:block">
+                    <p class="text-sm text-gray-300" id="paginationInfo">
+                        <span class="font-medium" id="pageInfo">1</span> of <span class="font-medium" id="totalPagesInfo">1</span>
+                    </p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button
+                            id="prevPage"
+                            class="pagination-btn"
+                            disabled
+                    >
+                        Previous
+                    </button>
+                    <button
+                            id="nextPage"
+                            class="pagination-btn"
+                            disabled
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="hidden card p-12 mt-6 text-center">
+            <i class="fas fa-search text-gray-400 text-4xl mb-4"></i>
+            <h3 class="text-lg font-medium mb-2">No reviews found</h3>
+            <p class="text-gray-400">Try adjusting your search criteria.</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="hidden bg-red-900/20 border border-red-800 rounded-md p-4 mt-6">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-circle text-red-400"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-200" id="errorTitle">Error</h3>
+                    <div class="mt-2 text-sm text-red-300" id="errorText"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>TOTALCARE</h3>
+                <p>Providing financial security and peace of mind through comprehensive life insurance solutions.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="#plans">Services</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#feedback">Feedback</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#plans">Term Life Insurance</a></li>
+                    <li><a href="#plans">Whole Life Insurance</a></li>
+                    <li><a href="#plans">Universal Life Insurance</a></li>
+                    <li><a href="#plans">Family Plans</a></li>
+                    <li><a href="#plans">Retirement Planning</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Insurance Ave, Secure City</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@totalcare.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 TOTALCARE Insurance. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Response Modal -->
+<div class="modal-overlay" id="responseModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fas fa-reply mr-2"></i>Respond to Review</h3>
+            <button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="review-preview">
+                <div class="flex justify-between mb-2">
+                    <span class="font-medium" id="modalCustomerName">Customer Name</span>
+                    <div id="modalRating" class="text-yellow-500">
+                        <!-- Stars will be inserted here -->
+                    </div>
+                </div>
+                <p class="text-gray-300" id="modalReviewText">Review text will appear here...</p>
+                <p class="text-sm text-gray-400 mt-2" id="modalReviewDate">Date</p>
+
+                <!-- Previous Response Section (will be shown if there's an existing response) -->
+                <div id="previousResponseContainer" class="response-preview mt-3 hidden">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-medium text-green-300">Previous Response</span>
+                        <span class="text-sm text-gray-400" id="responseDate"></span>
+                    </div>
+                    <p class="text-gray-300" id="previousResponseText"></p>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="responseText" class="block text-sm font-medium text-gray-300 mb-1">Your Response</label>
+                <textarea
+                        id="responseText"
+                        rows="4"
+                        placeholder="Type your response here..."
+                ></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="cancelResponse" class="btn secondary">Cancel</button>
+            <button id="submitResponse" class="btn primary">Submit Response</button>
+            <button id="submitAndGoHome" class="btn success">
+                <i class="fas fa-home mr-1"></i> Submit & Go to Home
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Dark Mode Toggle -->
+<button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle Dark Mode">
+    <i class="fas fa-moon" id="darkModeIcon"></i>
+</button>
+
+<script>
+    // ALL BACKEND FUNCTIONS REMAIN UNCHANGED
+    class FeedbackManager {
+        constructor() {
+            this.currentPage = 1;
+            this.pageSize = 8;
+            this.query = '';
+            this.sortBy = 'createdAt';
+            this.ratingFilter = 'all';
+            this.statusFilter = 'all';
+            this.totalPages = 1;
+            this.totalCount = 0;
+            this.currentReviewId = null;
+            this.reviews = [];
+
+            // Parse URL parameters to see if we were directed to respond to a specific feedback
+            const urlParams = new URLSearchParams(window.location.search);
+            const feedbackId = urlParams.get('id');
+
+            this.initializeElements();
+            this.bindEvents();
+            this.loadReviews(feedbackId); // Pass the feedbackId to handle auto-opening
+            this.initDarkMode();
+        }
+
+        initializeElements() {
+            this.elements = {
+                searchInput: document.getElementById('searchInput'),
+                ratingFilter: document.getElementById('ratingFilter'),
+                statusFilter: document.getElementById('statusFilter'),
+                sortBy: document.getElementById('sortBy'),
+                reviewsTableBody: document.getElementById('reviewsTableBody'),
+                reviewCount: document.getElementById('reviewCount'),
+                paginationInfo: document.getElementById('paginationInfo'),
+                pageInfo: document.getElementById('pageInfo'),
+                totalPagesInfo: document.getElementById('totalPagesInfo'),
+                prevPage: document.getElementById('prevPage'),
+                nextPage: document.getElementById('nextPage'),
+                paginationContainer: document.getElementById('paginationContainer'),
+                noResults: document.getElementById('noResults'),
+                errorMessage: document.getElementById('errorMessage'),
+                errorTitle: document.getElementById('errorTitle'),
+                errorText: document.getElementById('errorText'),
+                totalReviews: document.getElementById('totalReviews'),
+                avgRating: document.getElementById('avgRating'),
+                lowRatings: document.getElementById('lowRatings'),
+                repliedCount: document.getElementById('repliedCount'),
+                responseModal: document.getElementById('responseModal'),
+                closeModal: document.getElementById('closeModal'),
+                cancelResponse: document.getElementById('cancelResponse'),
+                submitResponse: document.getElementById('submitResponse'),
+                submitAndGoHome: document.getElementById('submitAndGoHome'),
+                modalCustomerName: document.getElementById('modalCustomerName'),
+                modalRating: document.getElementById('modalRating'),
+                modalReviewText: document.getElementById('modalReviewText'),
+                modalReviewDate: document.getElementById('modalReviewDate'),
+                responseText: document.getElementById('responseText'),
+                previousResponseContainer: document.getElementById('previousResponseContainer'),
+                previousResponseText: document.getElementById('previousResponseText'),
+                responseDate: document.getElementById('responseDate'),
+                darkModeToggle: document.getElementById('darkModeToggle'),
+                darkModeIcon: document.getElementById('darkModeIcon')
+            };
+        }
+
+        bindEvents() {
+            this.elements.searchInput.addEventListener('input', (e) => {
+                this.query = e.target.value;
+                this.currentPage = 1;
+                this.loadReviews();
+            });
+
+            this.elements.ratingFilter.addEventListener('change', () => {
+                this.ratingFilter = this.elements.ratingFilter.value;
+                this.currentPage = 1;
+                this.loadReviews();
+            });
+
+            this.elements.statusFilter.addEventListener('change', () => {
+                this.statusFilter = this.elements.statusFilter.value;
+                this.currentPage = 1;
+                this.loadReviews();
+            });
+
+            this.elements.sortBy.addEventListener('change', () => {
+                this.sortBy = this.elements.sortBy.value;
+                this.currentPage = 1;
+                this.loadReviews();
+            });
+
+            this.elements.prevPage.addEventListener('click', () => {
+                if (this.currentPage > 1) {
+                    this.currentPage--;
+                    this.loadReviews();
+                }
+            });
+
+            this.elements.nextPage.addEventListener('click', () => {
+                if (this.currentPage < this.totalPages) {
+                    this.currentPage++;
+                    this.loadReviews();
+                }
+            });
+
+            // Modal events
+            this.elements.closeModal.addEventListener('click', () => {
+                this.hideModal();
+            });
+
+            this.elements.cancelResponse.addEventListener('click', () => {
+                this.hideModal();
+            });
+
+            this.elements.submitResponse.addEventListener('click', () => {
+                this.submitResponse(false);
+            });
+
+            this.elements.submitAndGoHome.addEventListener('click', () => {
+                this.submitResponse(true);
+            });
+
+            // Dark mode toggle
+            this.elements.darkModeToggle.addEventListener('click', () => {
+                this.toggleDarkMode();
+            });
+        }
+
+        async loadReviews(feedbackId = null) {
+            try {
+                const response = await fetch('http://localhost:9091/api/feedbacks');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch reviews');
+                }
+                let allReviews = await response.json();
+
+                // Map to expected format
+                allReviews = allReviews.map(r => ({
+                    id: r.feedback_id || r.id,
+                    customerName: r.f_name || r.name,
+                    rating: r.rating,
+                    reviewText: r.review_text || r.reviewText,
+                    createdAt: r.created_at || r.createdAt,
+                    response: r.response || null,
+                    responseDate: r.responseDate || r.response_date || null
+                }));
+
+                // Filter
+                let filtered = allReviews;
+                if (this.query) {
+                    filtered = filtered.filter(r =>
+                        r.customerName.toLowerCase().includes(this.query.toLowerCase()) ||
+                        r.reviewText.toLowerCase().includes(this.query.toLowerCase())
+                    );
+                }
+                if (this.ratingFilter !== 'all') {
+                    filtered = filtered.filter(r => r.rating == this.ratingFilter);
+                }
+                if (this.statusFilter !== 'all') {
+                    if (this.statusFilter === 'replied') {
+                        filtered = filtered.filter(r => r.response);
+                    } else if (this.statusFilter === 'pending') {
+                        filtered = filtered.filter(r => !r.response);
+                    }
+                }
+
+                // Sort
+                filtered.sort((a, b) => {
+                    switch (this.sortBy) {
+                        case 'createdAt':
+                            return new Date(b.createdAt) - new Date(a.createdAt);
+                        case 'rating':
+                            return b.rating - a.rating;
+                        case 'ratingLow':
+                            return a.rating - b.rating;
+                        case 'name':
+                            return a.customerName.localeCompare(b.customerName);
+                        default:
+                            return 0;
+                    }
+                });
+
+                // Paginate
+                const totalCount = filtered.length;
+                const totalPages = Math.ceil(totalCount / this.pageSize);
+                const start = (this.currentPage - 1) * this.pageSize;
+                const paginated = filtered.slice(start, start + this.pageSize);
+
+                const data = {
+                    reviews: paginated,
+                    currentPage: this.currentPage,
+                    totalPages,
+                    totalCount,
+                    stats: this.computeStats(allReviews)
+                };
+
+                this.renderReviews(data);
+                this.updatePagination(data);
+                this.updateStats(data);
+                this.hideError();
+
+                // Auto-open response modal if feedbackId is present
+                if (feedbackId) {
+                    const review = allReviews.find(r => r.id == feedbackId);
+                    if (review) {
+                        this.showResponseModal(feedbackId, review);
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error loading reviews:', error);
+                this.showError('Failed to load reviews', 'Please check if the backend server is running on port 9091.');
+                this.showNoResults();
+            }
+        }
+
+        computeStats(reviews) {
+            const total = reviews.length;
+            const avg = total > 0 ? reviews.reduce((sum, r) => sum + r.rating, 0) / total : 0;
+            const low = reviews.filter(r => r.rating <= 2).length;
+            const replied = reviews.filter(r => r.response).length;
+            return { totalReviews: total, avgRating: avg, lowRatings: low, repliedCount: replied };
+        }
+
+        renderReviews(data) {
+            const reviews = data.reviews || [];
+
+            if (reviews.length === 0) {
+                this.showNoResults();
+                return;
+            }
+
+            this.elements.reviewsTableBody.innerHTML = reviews.map(review => `
+                    <tr class="fade-in">
+                        <td class="font-medium text-white">${review.customerName}</td>
+                        <td>
+                            <div class="flex">
+                                ${this.renderStars(review.rating)}
+                            </div>
+                        </td>
+                        <td class="max-w-xs">
+                            <div class="truncate text-white">${review.reviewText}</div>
+                            ${review.response ?
+                `<div class="mt-2 text-sm text-green-300 bg-green-900/20 p-2 rounded border-l-4 border-green-600">
+                                    <div class="font-semibold">Your Response:</div>
+                                    <div class="truncate">${review.response}</div>
+                                </div>` : ''}
+                        </td>
+                        <td class="text-sm text-gray-400">
+                            ${new Date(review.createdAt).toLocaleDateString()}
+                        </td>
+                        <td>
+                            <span class="status-badge ${review.response ? 'status-replied' : 'status-pending'}">
+                                ${review.response ? 'Replied' : 'Pending'}
+                            </span>
+                        </td>
+                        <td class="text-sm font-medium">
+                            <button class="action-btn respond-btn" data-id="${review.id}">
+                                <i class="fas fa-reply"></i>${review.response ? 'Edit' : 'Respond'}
+                            </button>
+                            <button class="action-btn delete-btn" data-id="${review.id}">
+                                <i class="fas fa-trash-alt"></i>Delete
+                            </button>
+                            ${review.response ?
+                `<button class="action-btn home-btn mt-2" onclick="window.location.href='home.html'">
+                                    <i class="fas fa-home"></i>Home
+                                </button>` : ''}
+                        </td>
+                    </tr>
+                `).join('');
+
+            // Add event listeners to buttons
+            document.querySelectorAll('.respond-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const reviewId = e.target.closest('.respond-btn').getAttribute('data-id');
+                    const review = data.reviews.find(r => r.id == reviewId);
+                    this.showResponseModal(reviewId, review);
+                });
+            });
+
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const reviewId = e.target.closest('.delete-btn').getAttribute('data-id');
+                    if (confirm('Are you sure you want to delete this review?')) {
+                        this.deleteReview(reviewId);
+                    }
+                });
+            });
+
+            this.elements.noResults.classList.add('hidden');
+            this.elements.paginationContainer.classList.remove('hidden');
+        }
+
+        renderStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += `<i class="fas fa-star star-rating"></i>`;
+                } else {
+                    stars += `<i class="far fa-star star-empty"></i>`;
+                }
+            }
+            return stars;
+        }
+
+        updatePagination(data) {
+            this.currentPage = data.currentPage;
+            this.totalPages = data.totalPages;
+            this.totalCount = data.totalCount;
+
+            this.elements.pageInfo.textContent = this.currentPage;
+            this.elements.totalPagesInfo.textContent = this.totalPages;
+            this.elements.reviewCount.textContent = data.totalCount === 0
+                ? 'No reviews yet'
+                : `Showing ${data.reviews.length} of ${this.totalCount} review(s)`;
+
+            this.elements.prevPage.disabled = this.currentPage <= 1;
+            this.elements.nextPage.disabled = this.currentPage >= this.totalPages;
+
+            this.elements.prevPage.classList.toggle('opacity-50', this.currentPage <= 1);
+            this.elements.nextPage.classList.toggle('opacity-50', this.currentPage >= this.totalPages);
+
+            // Hide pagination if no reviews
+            if (data.totalCount === 0) {
+                this.elements.paginationContainer.classList.add('hidden');
+            } else {
+                this.elements.paginationContainer.classList.remove('hidden');
+            }
+        }
+
+        updateStats(data) {
+            this.elements.totalReviews.textContent = data.stats.totalReviews;
+            this.elements.avgRating.textContent = data.stats.avgRating.toFixed(1);
+            this.elements.lowRatings.textContent = data.stats.lowRatings;
+            this.elements.repliedCount.textContent = data.stats.repliedCount;
+        }
+
+        showResponseModal(reviewId, review) {
+            this.currentReviewId = reviewId;
+            this.elements.modalCustomerName.textContent = review.customerName;
+            this.elements.modalRating.innerHTML = this.renderStars(review.rating);
+            this.elements.modalReviewText.textContent = review.reviewText;
+            this.elements.modalReviewDate.textContent = `Submitted on ${new Date(review.createdAt).toLocaleDateString()}`;
+
+            // Show previous response if exists
+            if (review.response) {
+                this.elements.previousResponseContainer.classList.remove('hidden');
+                this.elements.previousResponseText.textContent = review.response;
+                const responseDate = review.responseDate ? new Date(review.responseDate).toLocaleDateString() : 'Previously';
+                this.elements.responseDate.textContent = responseDate;
+            } else {
+                this.elements.previousResponseContainer.classList.add('hidden');
+            }
+
+            this.elements.responseText.value = review.response || '';
+            this.elements.responseModal.classList.add('active');
+        }
+
+        hideModal() {
+            this.elements.responseModal.classList.remove('active');
+            this.currentReviewId = null;
+            this.elements.responseText.value = '';
+        }
+
+        async submitResponse(goToHome = false) {
+            const responseText = this.elements.responseText.value.trim();
+
+            if (!responseText) {
+                alert('Please enter a response before submitting.');
+                return;
+            }
+
+            try {
+                const updateResponse = await fetch(`http://localhost:9091/api/feedbacks/${this.currentReviewId}/respond`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ response: responseText })
+                });
+
+                if (!updateResponse.ok) {
+                    throw new Error('Failed to update response');
+                }
+
+                // Show success message
+                alert('Response submitted successfully!');
+
+                if (goToHome) {
+                    window.location.href = 'home.html';
+                } else {
+                    // Reload reviews to reflect the change
+                    this.loadReviews();
+                    this.hideModal();
+                }
+            } catch (error) {
+                console.error('Error submitting response:', error);
+                alert('Failed to submit response. Please try again.');
+            }
+        }
+
+        async deleteReview(reviewId) {
+            try {
+                const deleteResponse = await fetch(`http://localhost:9091/api/feedbacks/${reviewId}`, {
+                    method: 'DELETE'
+                });
+
+                if (!deleteResponse.ok) {
+                    throw new Error('Failed to delete review');
+                }
+
+                alert('Review deleted successfully!');
+
+                // Reload reviews to reflect the change
+                this.loadReviews();
+            } catch (error) {
+                console.error('Error deleting review:', error);
+                alert('Failed to delete review. Please try again.');
+            }
+        }
+
+        showNoResults() {
+            this.elements.reviewsTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                            <div class="flex flex-col items-center">
+                                <i class="fas fa-search text-gray-400 text-3xl mb-4"></i>
+                                <p class="mt-2">No reviews found matching your criteria.</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            this.elements.noResults.classList.add('hidden');
+            this.elements.paginationContainer.classList.add('hidden');
+            this.elements.errorMessage.classList.add('hidden');
+        }
+
+        showError(title, message) {
+            this.elements.errorTitle.textContent = title || 'Error';
+            this.elements.errorText.textContent = message || 'An unexpected error occurred.';
+            this.elements.errorMessage.classList.remove('hidden');
+            this.elements.noResults.classList.add('hidden');
+            this.elements.paginationContainer.classList.add('hidden');
+        }
+
+        hideError() {
+            this.elements.errorMessage.classList.add('hidden');
+        }
+
+        initDarkMode() {
+            // Check for saved theme preference or respect OS setting
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            const savedTheme = localStorage.getItem('theme');
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+                document.body.classList.add('dark-mode');
+                this.elements.darkModeIcon.classList.remove('fa-moon');
+                this.elements.darkModeIcon.classList.add('fa-sun');
+            }
+        }
+
+        toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                this.elements.darkModeIcon.classList.remove('fa-moon');
+                this.elements.darkModeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('theme', 'light');
+                this.elements.darkModeIcon.classList.remove('fa-sun');
+                this.elements.darkModeIcon.classList.add('fa-moon');
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        new FeedbackManager();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Support - SecureLife</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Professional Blue Theme */
+            --primary-blue: #1e3a8a;
+            --primary-blue-light: #3b82f6;
+            --primary-blue-dark: #1e40af;
+            --accent-gold: #d97706;
+            --accent-gold-light: #f59e0b;
+
+            --dark-bg: #0f172a;
+            --dark-card: #1e293b;
+            --dark-card-light: #334155;
+            --dark-text: #f8fafc;
+            --dark-text-light: #cbd5e1;
+            --dark-accent: var(--primary-blue-light);
+            --dark-accent-2: #60a5fa;
+            --dark-accent-dark: var(--primary-blue-dark);
+            --dark-accent-soft: #93c5fd;
+
+            --light: #334155;
+            --white: #334155;
+            --dark: #f8fafc;
+            --text: #f1f5f9;
+            --text-light: #cbd5e1;
+
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.20);
+            --shadow-md: 0 14px 30px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 22px 45px rgba(0, 0, 0, 0.30);
+            --glow: 0 10px 25px rgba(59, 130, 246, 0.25);
+
+            --transition: all .3s ease;
+            --radius: 18px;
+            --radius-lg: 22px;
+
+            /* Light mode variables */
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
+            --border-color: #334155;
+        }
+
+        .dark-mode {
+            /* Dark mode variables */
+            --bg-primary: var(--dark-bg);
+            --bg-secondary: var(--dark-card);
+            --text-primary: var(--dark-text);
+            --text-secondary: var(--dark-text-light);
+            --border-color: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: var(--bg-primary);
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            letter-spacing: .2px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
+            color: #fff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: var(--shadow);
+            backdrop-filter: saturate(140%) blur(6px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            letter-spacing: .3px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-gold-light);
+            filter: drop-shadow(0 4px 10px rgba(245, 158, 11, 0.25));
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            position: relative;
+            padding: .5rem 0;
+            transition: var(--transition);
+            opacity: .95;
+            letter-spacing: .25px;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -3px;
+            left: 0;
+            background-color: var(--accent-gold-light);
+            transition: var(--transition);
+            opacity: .9;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.65);
+        }
+
+        nav ul li a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+
+        .mode-toggle {
+            background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.14));
+            color: #fff;
+            border: 2px solid rgba(255,255,255,.85);
+            padding: .6rem .9rem;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
+        }
+
+        .mode-toggle:hover {
+            background: #fff;
+            color: var(--dark-accent);
+            box-shadow: 0 10px 20px rgba(255,255,255,.25);
+            transform: translateY(-1px);
+        }
+
+        .mode-toggle.active {
+            background: #fff;
+            color: var(--dark-accent);
+        }
+
+        .cta-button {
+            --shine: linear-gradient(120deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.65) 20%, rgba(255,255,255,.0) 40%);
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            color: #fff;
+            border: none;
+            padding: .9rem 1.25rem;
+            border-radius: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+            letter-spacing: .3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 60%;
+            height: 220%;
+            background: var(--shine);
+            transform: rotate(25deg) translateX(-40%);
+            transition: transform .6s ease;
+            pointer-events: none;
+        }
+
+        .cta-button:hover::after {
+            transform: rotate(25deg) translateX(280%);
+        }
+
+        .cta-button.outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid rgba(255,255,255,.9);
+            box-shadow: none;
+        }
+
+        .cta-button.outline:hover {
+            background: #fff;
+            color: var(--dark-accent);
+        }
+
+        /* Support System Styles */
+        .support-container {
+            padding: 2rem 0;
+            background: radial-gradient(1200px 500px at -10% -10%, rgba(59, 130, 246, 0.08), transparent 60%),
+            radial-gradient(1200px 500px at 110% -10%, rgba(51, 65, 85, 0.10), transparent 60%),
+            linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-primary) 100%);
+            min-height: calc(100vh - 80px);
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9)) padding-box,
+            linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(51, 65, 85, 0.25)) border-box;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: var(--transition);
+            background: rgba(30, 41, 59, 0.7);
+            color: var(--text-primary);
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--dark-accent);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            transform: translateY(-1px);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .form-control:hover {
+            border-color: var(--dark-accent-soft);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23cbd5e1' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-color: rgba(30, 41, 59, 0.7);
+            padding-right: 40px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .form-actions button {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            color: var(--dark-text);
+            box-shadow: var(--shadow);
+            letter-spacing: 0.3px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, var(--dark-card-light) 0%, var(--dark-card) 100%);
+            color: var(--dark-text);
+            border: 1px solid var(--border-color);
+        }
+
+        .reset-btn:hover {
+            background: linear-gradient(135deg, var(--dark-card) 0%, var(--dark-card-light) 100%);
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+            color: rgb(22, 163, 74);
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-top: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: #fff;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .footer-column h3 {
+            color: #fff;
+            margin-bottom: 1.1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column p {
+            color: #cbd5e1;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: .7rem;
+            color: #e2e8f0;
+        }
+
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--dark-accent-soft);
+        }
+
+        .social-links {
+            display: flex;
+            gap: .8rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            color: #fff;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--dark-accent) 0%, var(--dark-accent-dark) 100%);
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: .9rem;
+            color: #94a3b8;
+        }
+
+        /* Dark mode toggle */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--dark-accent), var(--dark-accent-dark));
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg), var(--glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: .6rem;
+            }
+
+            nav ul {
+                margin-top: .5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            nav ul li {
+                margin: .25rem .5rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+<!-- Header -->
+<header>
+    <div class="container header-content">
+        <a class="logo" href="home.html" aria-label="SecureLife Home">
+            <i class="fas fa-shield-alt"></i>
+            <span>TOTALCARE</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="profile.html">My Profile</a></li>
+                <li><a href="policy.html">Plans</a></li>
+                <li><a href="claim.html">Claims</a></li>
+                <li><a href="getSupport.html">Support</a></li>
+            </ul>
+        </nav>
+        <div class="actions">
+            <button class="mode-toggle" id="proModeToggle" aria-pressed="false" title="Toggle Professional Mode">
+                <i class="fa-solid fa-briefcase"></i> Pro Mode
+            </button>
+            <button class="cta-button">Get a Quote</button>
+        </div>
+    </div>
+</header>
+
+<!-- Support System -->
+<div class="support-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="mb-8 text-center">
+            <h1 class="text-3xl font-bold mb-2">Customer Support</h1>
+            <p class="text-gray-400">We're here to help with any questions or issues</p>
+        </div>
+
+        <!-- Create Ticket Card -->
+        <div class="card">
+            <div style="padding: 30px;">
+                <form id="ticket-form">
+                    <div class="form-group">
+                        <label for="customer-name">Full Name *</label>
+                        <input type="text" id="customer-name" name="customer-name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="policy-number">Policy Number</label>
+                        <input type="text" id="policy-number" name="policy-number" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inquiry-type">Inquiry Type *</label>
+                        <select id="inquiry-type" name="inquiry-type" class="form-control" required>
+                            <option value="">Select Inquiry Type</option>
+                            <option value="policy">Policy Inquiry</option>
+                            <option value="claim">Claim Assistance</option>
+                            <option value="payment">Payment Issue</option>
+                            <option value="general">General Complaint</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="department">Department *</label>
+                        <select id="department" name="department" class="form-control" required>
+                            <option value="">Select Department</option>
+                            <option value="customer-service">Customer Services</option>
+                            <option value="claims">Claims</option>
+                            <option value="payments">Payments</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-number">Contact Number *</label>
+                        <input type="tel" id="contact-number" name="contact-number" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description *</label>
+                        <textarea id="description" name="description" class="form-control" required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn" id="submit-btn">Submit Ticket</button>
+                        <button type="reset" class="reset-btn">Reset Form</button>
+                    </div>
+                </form>
+
+                <div id="success-message" class="success-message">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    Your ticket has been submitted successfully! Your ticket ID is: <span id="ticket-id"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>SecureLife</h3>
+                <p>Providing financial security and peace of mind through comprehensive life insurance solutions.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="profile.html">My Profile</a></li>
+                    <li><a href="policy.html">Policy-View</a></li>
+                    <li><a href="claim.html">Claims</a></li>
+                    <li><a href="getSupport.html">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#plans">Term Life Insurance</a></li>
+                    <li><a href="#plans">Whole Life Insurance</a></li>
+                    <li><a href="#plans">Universal Life Insurance</a></li>
+                    <li><a href="#plans">Family Plans</a></li>
+                    <li><a href="#plans">Retirement Planning</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Insurance Ave, Secure City</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@securelife.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 SecureLife Insurance. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Dark Mode Toggle -->
+<button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle Dark Mode">
+    <i class="fas fa-moon" id="darkModeIcon"></i>
+</button>
+
+<script>
+    let currentEditId = null;
+    const apiBaseUrl = 'http://localhost:9091';
+
+    document.getElementById('ticket-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const ticket = {
+            customerName: document.getElementById('customer-name').value,
+            email: document.getElementById('email').value,
+            policyNumber: document.getElementById('policy-number').value,
+            inquiryType: document.getElementById('inquiry-type').value,
+            department: document.getElementById('department').value,
+            contactNumber: document.getElementById('contact-number').value,
+            subject: document.getElementById('subject').value,
+            description: document.getElementById('description').value,
+            status: 'open'
+        };
+
+        let response;
+        if (currentEditId) {
+            response = await fetch(`${apiBaseUrl}/tickets/${currentEditId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ticket)
+            });
+        } else {
+            response = await fetch(`${apiBaseUrl}/tickets`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ticket)
+            });
+        }
+
+        if (response.ok) {
+            const savedTicket = await response.json();
+            document.getElementById('ticket-id').textContent = savedTicket.id;
+            document.getElementById('success-message').style.display = 'block';
+            document.getElementById('ticket-form').reset();
+            document.getElementById('submit-btn').textContent = 'Submit Ticket';
+            currentEditId = null;
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                document.getElementById('success-message').style.display = 'none';
+            }, 5000);
+        } else {
+            alert('Error saving ticket');
+        }
+    });
+
+    // Dark Mode Functionality
+    function initDarkMode() {
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+            document.body.classList.add('dark-mode');
+            document.getElementById('darkModeIcon').classList.remove('fa-moon');
+            document.getElementById('darkModeIcon').classList.add('fa-sun');
+        }
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            document.getElementById('darkModeIcon').classList.remove('fa-moon');
+            document.getElementById('darkModeIcon').classList.add('fa-sun');
+        } else {
+            localStorage.setItem('theme', 'light');
+            document.getElementById('darkModeIcon').classList.remove('fa-sun');
+            document.getElementById('darkModeIcon').classList.add('fa-moon');
+        }
+    }
+
+    // Initialize dark mode and event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        initDarkMode();
+        document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+    });
+</script>
+</body>
+</html>
