@@ -859,7 +859,7 @@
         .copyright {
             text-align: center;
             padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255,255,255,0.08);
             font-size: .9rem;
             color: #cfd3da;
         }
@@ -1379,7 +1379,9 @@
                 const holder = document.getElementById('cardholderName')?.value || '';
                 if (!cardNumber || !expiryDate || !cvv || !holder) {
                     showNotification('Complete all card fields', 'error'); isValid = false;
-                } else if (!validateCardNumber(cardNumber)) { showError('cardNumber', 'Invalid card number'); isValid = false; }
+                }
+                // Card number validation removed: accept any input
+                // else if (!validateCardNumber(cardNumber)) { showError('cardNumber', 'Invalid card number'); isValid = false; }
                 else if (!validateExpiryDate()) { showError('expiryDate', 'Invalid expiry'); isValid = false; }
                 else if (!validateCVV(cvv)) { showError('cvv', 'Invalid CVV'); isValid = false; }
                 else if (!validateName(holder)) { showError('cardholderName', 'Invalid name'); isValid = false; }
@@ -1421,20 +1423,30 @@
 
         showNotification('Submitting payment...');
 
-        // Simulate API call
-        setTimeout(() => {
-            const mockResponse = {
-                transactionCode: 'TXN-' + Math.floor(Math.random() * 1000000),
-                customerName: usernameVal,
-                policyNumber: payload.policyNumber,
-                amount: amountNumber,
-                paymentMethod: payload.paymentMethod,
-                createdAt: new Date().toLocaleString()
-            };
-            showSuccessMessage(mockResponse);
-            verifyBtn.disabled = false;
-            verifyBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify Payment';
-        }, 2000);
+        // Real API call
+        fetch('http://localhost:9091/payments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Payment failed: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                showSuccessMessage(data);
+            })
+            .catch(error => {
+                showNotification('Payment failed: ' + error.message, 'error');
+            })
+            .finally(() => {
+                verifyBtn.disabled = false;
+                verifyBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify Payment';
+            });
     });
 
     // DONE BUTTON
@@ -1457,3 +1469,4 @@
 </script>
 </body>
 </html>
+

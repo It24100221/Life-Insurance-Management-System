@@ -1,4 +1,3 @@
-// src/main/java/com/example/insurancebackend/entity/Claim.java
 package com.example.insurancebackend.entity;
 
 import jakarta.persistence.*;

@@ -11,4 +11,3 @@ public class PaymentRequest {
     private String policyNumber;   // Optional policy number
     private String paymentMethod;  // cash, card, googlepay
 }
-

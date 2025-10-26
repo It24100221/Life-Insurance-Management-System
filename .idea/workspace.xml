@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dbf0b4f1-90ca-48b9-adc7-e46d58752347" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/controller/ClaimController.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/controller/ClaimController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/controller/PaymentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/controller/PaymentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/dto/PaymentCreateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/dto/PaymentCreateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/dto/PaymentPageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/dto/PaymentPageResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/dto/PaymentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/dto/PaymentRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/dto/PaymentResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/dto/PaymentResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/dto/PaymentUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/dto/PaymentUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/entity/Claim.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/entity/Claim.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/entity/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/entity/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/entity/Policy.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/entity/Policy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/repository/PaymentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/repository/PaymentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/service/ClaimService.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/service/ClaimService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/service/PaymentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/java/com/example/insurancebackend/service/PaymentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/Home.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/Home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/agent.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/agent.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/claim.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/claim.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/claim_officer.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/claim_officer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/feedback.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/feedback.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/getSupport.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/getSupport.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/payment.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/payment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/policy.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/policy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/src/main/resources/static/staff.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/src/main/resources/static/staff.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/com/example/insurancebackend/controller/ClaimController.class" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/com/example/insurancebackend/controller/ClaimController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/com/example/insurancebackend/entity/Claim.class" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/com/example/insurancebackend/entity/Claim.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/com/example/insurancebackend/service/ClaimService.class" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/com/example/insurancebackend/service/ClaimService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/Home.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/Home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/admin.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/admin.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/agent.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/agent.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/claim.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/claim.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/claim_officer.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/claim_officer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/getSupport.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/getSupport.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/payment.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/payment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/policy.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/policy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/classes/static/staff.html" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/classes/static/staff.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/insurance/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/HELP.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/InsuranceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/config/sec.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/controller/FeedbackController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/controller/PolicyController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/dto/PolicyPageResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/entity/Feedback.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/entity/Policy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/exception/ex.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/repository/FeedbackRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/repository/PolicyRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/java/com/example/insurancebackend/service/PolicyService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/resources/static/admin-control.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/resources/static/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/main/resources/static/policy-view.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/test/java/com/example/insurancebackend/InsuranceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/src/test/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/InsuranceApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/config/sec.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/controller/FeedbackController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/controller/PolicyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/dto/PolicyPageResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/entity/Feedback.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/entity/Policy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/exception/ex.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/repository/FeedbackRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/repository/PolicyRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/com/example/insurancebackend/service/PolicyService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/static/admin-control.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/static/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/classes/static/policy-view.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/test-classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/insurance4 Done/insurance3/insurance/target/test-classes/com/example/insurancebackend/InsuranceApplicationTests.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "IT24103206"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/It24100221/Life-Insurance-Management-System.git",
+    "accountId": "618ff8e8-5917-475b-94ea-60f1d83340c7"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="34SPNF00l5tfiiYaXRcMlIkqtgW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/user/Desktop/GIT",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="InsuranceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="insurancemanagementsystem" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.insurancebackend.InsuranceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.26927.53" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.26927.53" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dbf0b4f1-90ca-48b9-adc7-e46d58752347" name="Changes" comment="" />
+      <created>1761203957968</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761203957968</updated>
+      <workItem from="1761203959227" duration="42000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

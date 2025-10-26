@@ -15,4 +15,3 @@ public class PaymentCreateRequest {
     private BigDecimal amount;     // Required > 0
     private String paymentMethod;  // cash, card, googlepay
 }
-
